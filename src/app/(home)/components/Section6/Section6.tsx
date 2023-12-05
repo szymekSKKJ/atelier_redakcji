@@ -14,13 +14,15 @@ const Section6 = () => {
         <Image src={star} alt="Ikonka gwiazdki"></Image>
         <Image src={star} alt="Ikonka gwiazdki"></Image>
       </div>
-      <h2>
-        <mark>Opinie</mark> naszych klientów
-      </h2>
-      <CurvedLines></CurvedLines>
-      <p>
-        Nasi <mark>zleceniodawcy cenią sobie współpracę z nami</mark>, a to powód <br></br>do satysfakcji i dumy, który wiele dla nas znaczy
-      </p>
+      <header>
+        <h2>
+          <mark>Opinie</mark> naszych klientów
+        </h2>
+        <CurvedLines></CurvedLines>
+        <p>
+          Nasi <mark>zleceniodawcy cenią sobie współpracę z nami</mark>, a to powód <br></br>do satysfakcji i dumy, który wiele dla nas znaczy
+        </p>
+      </header>
       <OpinionsGallery></OpinionsGallery>
     </section>
   );

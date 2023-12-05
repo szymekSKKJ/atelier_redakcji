@@ -6,12 +6,12 @@ import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
 const Section2 = () => {
   return (
     <section className={`${styles.section}`}>
-      <div className={`${styles.wrapper}`}>
+      <header>
         <h2>
           Doskonale wiemy, że samodzielne pisanie pracy <mark>nie jest zadaniem prostym</mark>
         </h2>
         <CurvedLines></CurvedLines>
-      </div>
+      </header>
       <article>
         <h3>Proces twórczy wymaga:</h3>
         <div className={`${styles.articles}`}>

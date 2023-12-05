@@ -9,18 +9,20 @@ const Section10 = () => {
   return (
     <section className={`${styles.section}`}>
       <div className={`${styles.wrapper}`}>
-        <div className={`${styles.element} ${styles.left}`}>
+        <div className={`${styles.wrapper} ${styles.left}`}>
           <div className={`${styles.image}`}>
             <div className={`${styles.icon}`}>
               <Image src={phoneBlue} alt="Ikonka telefonu"></Image>
             </div>
           </div>
         </div>
-        <div className={`${styles.element} ${styles.right}`}>
-          <h2>Masz jakieś pytania?</h2>
-          <CurvedLines></CurvedLines>
-          <p className={`${styles.caption1}`}>Napisz do nas wiadomość na maila lub zadzwoń!</p>
-          <p className={`${styles.caption2}`}> Na pewno pomożemy :)</p>
+        <div className={`${styles.wrapper} ${styles.right}`}>
+          <header>
+            <h2>Masz jakieś pytania?</h2>
+            <CurvedLines></CurvedLines>
+            <p className={`${styles.caption1}`}>Napisz do nas wiadomość na maila lub zadzwoń!</p>
+            <p className={`${styles.caption2}`}> Na pewno pomożemy :)</p>
+          </header>
           <div className={`${styles.wrapper}`}>
             <span>
               <Image src={phone} alt="Ikonka poczty elektronicznej"></Image> +48 799 163 609

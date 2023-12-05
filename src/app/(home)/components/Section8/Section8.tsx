@@ -4,12 +4,14 @@ import styles from "./styles.module.scss";
 const Section8 = () => {
   return (
     <section className={`${styles.section}`}>
-      <h2>FAQ</h2>
-      <CurvedLines></CurvedLines>
-      <p className={styles.caption1}>Przygotowaliśmy najczęściej pojawiające się od Was pytania.</p>
-      <p className={`${styles.caption2}`}>
-        Prawdopodobnie znajdziesz odpowiedź na swoje pytanie poniżej, <br></br>a jeśli to coś nowego, napisz do nas - na pewno pomożemy!
-      </p>
+      <header>
+        <h2>FAQ</h2>
+        <CurvedLines></CurvedLines>
+        <p className={styles.caption1}>Przygotowaliśmy najczęściej pojawiające się od Was pytania.</p>
+        <p className={`${styles.caption2}`}>
+          Prawdopodobnie znajdziesz odpowiedź na swoje pytanie poniżej, a jeśli to coś nowego, napisz do nas - na pewno pomożemy!
+        </p>
+      </header>
       <div className={`${styles.questions}`}>
         <input type="checkbox" id="detail_1" hidden />
         <details open>

@@ -6,22 +6,28 @@
   background-color: white;
   padding: 120px 0px 120px 0px;
 
-  h2 {
-    font-weight: 800;
-    font-size: 44px;
-    color: #0e4d7a;
-    margin-bottom: 20px;
-  }
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  > p {
-    font-size: 20px;
-    text-align: center;
-  }
+    h2 {
+      font-weight: 800;
+      font-size: 44px;
+      color: #0e4d7a;
+      margin-bottom: 20px;
+    }
 
-  p.caption1 {
-    font-weight: 400;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    > p {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    p.caption1 {
+      font-weight: 400;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
   }
 
   .articles {

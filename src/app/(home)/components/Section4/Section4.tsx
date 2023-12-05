@@ -11,6 +11,7 @@ import image6 from "../../../../../public/home/section4/icons/licencjackie.svg";
 import image7 from "../../../../../public/home/section4/icons/magisterskie.svg";
 import image8 from "../../../../../public/home/section4/icons/writing.svg";
 import image9 from "../../../../../public/home/section4/icons/zaliczenia.svg";
+import Link from "next/link";
 
 const ArrowIcon = () => {
   return (
@@ -26,103 +27,82 @@ const Section4 = () => {
     {
       id: 1,
       image: image6,
-      content: (
-        <>
-          Prace<br></br>licenjcackie
-        </>
-      ),
+      content: <>Prace licenjcackie</>,
+      href: "/",
     },
     {
       id: 2,
       image: image4,
-      content: (
-        <>
-          Prace<br></br>inżynierskie
-        </>
-      ),
+      content: <>Prace inżynierskie</>,
+      href: "/",
     },
     {
       id: 3,
       image: image7,
-      content: (
-        <>
-          Prace<br></br>magisterskie
-        </>
-      ),
+      content: <>Prace magisterskie</>,
+      href: "/",
     },
     {
       id: 4,
       image: image5,
-      content: (
-        <>
-          Prace doktorskie<br></br>i habilitacyjne
-        </>
-      ),
+      content: <>Prace doktorskie i habilitacyjne</>,
+      href: "/",
     },
     {
       id: 5,
       image: image9,
-      content: (
-        <>
-          Prace<br></br>zaliczeniowe
-        </>
-      ),
+      content: <>Prace zaliczeniowe</>,
+      href: "/",
     },
     {
       id: 6,
       image: image1,
-      content: (
-        <>
-          Prace<br></br>dyplomowe
-        </>
-      ),
+      content: <>Prace dyplomowe</>,
+      href: "/",
     },
     {
       id: 7,
       image: image3,
-      content: (
-        <>
-          Publikacje<br></br>naukowe
-        </>
-      ),
+      content: <>Publikacje naukowe</>,
+      href: "/",
     },
     {
       id: 8,
       image: image2,
-      content: (
-        <>
-          Teksty<br></br>specjalistyczne
-        </>
-      ),
+      content: <>Teksty specjalistyczne</>,
+      href: "/",
     },
     {
       id: 9,
       image: image8,
       content: <>Inny tekst</>,
+      href: "/",
     },
   ];
 
   return (
     <section className={`${styles.section}`}>
-      <h2>
-        Wykonujemy korekty <mark>dowolnych tekstów</mark>
-      </h2>
-      <CurvedLines></CurvedLines>
-      <p className={`${styles.bold}`}>Pomagamy na każdym etapie pisania pracy,</p>
-      <p>niezależnie czy znajdujesz się napoczątku, czy na końcu swojej drogi.</p>
+      <header>
+        <h2>
+          Wykonujemy korekty <mark>dowolnych tekstów</mark>
+        </h2>
+        <CurvedLines></CurvedLines>
+        <p className={`${styles.bold}`}>Pomagamy na każdym etapie pisania pracy,</p>
+        <p>niezależnie czy znajdujesz się napoczątku, czy na końcu swojej drogi.</p>
+      </header>
       <div className={`${styles.articles}`}>
         {articles.map((articleData) => {
-          const { id, image, content } = articleData;
+          const { id, image, content, href } = articleData;
           return (
             <article key={id}>
               <figure>
                 <Image src={image} alt="Ikona artykułu"></Image>
                 <figcaption>{content}</figcaption>
               </figure>
-              <div className={`${styles.wrapper}`}>
-                <p>Dowiedz się więcej</p>
+              <Link href={href}>
+                Dowiedz się więcej
                 <ArrowIcon></ArrowIcon>
-              </div>
+              </Link>
             </article>
           );
         })}

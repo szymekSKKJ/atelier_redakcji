@@ -4,33 +4,42 @@
   flex-direction: column;
   align-items: center;
 
-  h2 {
-    font-weight: 800;
-    font-size: 44px;
-    color: #0e4d7a;
-    margin-bottom: 20px;
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    mark {
-      color: #18a77c;
+    h2 {
+      font-weight: 800;
+      font-size: 44px;
+      color: #0e4d7a;
+      margin-bottom: 20px;
+      max-width: 850px;
+      text-align: center;
+
+      mark {
+        color: #18a77c;
+      }
     }
-  }
 
-  > p {
-    font-size: 20px;
-    text-align: center;
-  }
+    > p {
+      font-size: 20px;
+      text-align: center;
+    }
 
-  p.caption1 {
-    font-weight: 700;
-    margin-top: 40px;
-    margin-bottom: 40px;
-  }
-
-  p.caption2 {
-    margin-bottom: 140px;
-
-    mark {
+    p.caption1 {
       font-weight: 700;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    p.caption2 {
+      margin-bottom: 140px;
+      max-width: 375px;
+
+      mark {
+        font-weight: 700;
+      }
     }
   }
 }

@@ -5,8 +5,7 @@
   margin: 200px auto 0px auto;
   align-items: center;
 
-  .wrapper {
-    width: 30%;
+  > header {
     flex-shrink: 0;
 
     h2 {
@@ -14,6 +13,7 @@
       font-size: 32px;
       font-weight: 800;
       margin-bottom: 20px;
+      max-width: 350px;
 
       mark {
         color: #18a77c;
@@ -21,7 +21,7 @@
     }
   }
 
-  > article {
+  article {
     padding: 40px;
     border: dashed 2px #a3bfd2;
     border-radius: 8px;

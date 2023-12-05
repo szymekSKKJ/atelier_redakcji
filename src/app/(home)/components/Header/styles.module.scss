@@ -1,5 +1,5 @@
 .main {
-  .header {
+  header {
     max-width: 1440px;
     height: 560px;
     background-color: darkcyan;
@@ -7,18 +7,18 @@
     border-radius: 16px;
     padding: 100px 120px 100px 120px;
 
-    p,
-    h1.main {
+    > h1 {
       font-size: 44px;
-      color: #fbfbfb;
       font-weight: 800;
-      max-width: 650px;
+      color: #fbfbfb;
+      max-width: 700px;
     }
 
-    p.sub_text {
+    p {
       color: #fbfbfb;
       font-size: 24px;
       margin-top: 20px;
+      font-weight: 800;
     }
 
     .buttons_wrapper {

@@ -8,11 +8,13 @@ import image3 from "../../../../../public/section9/image_2.svg";
 const Section9 = () => {
   return (
     <section className={styles.section}>
-      <h2>Zapraszamy na naszego bloga</h2>
-      <CurvedLines></CurvedLines>
-      <p className={styles.caption1}>
-        Znajdziesz tam praktyczne wskazówki dot. m.in.:<br></br> aspektów związanych z pisaniem prac oraz poprawnością językową.
-      </p>
+      <header>
+        <h2>Zapraszamy na naszego bloga</h2>
+        <CurvedLines></CurvedLines>
+        <p className={styles.caption1}>
+          Znajdziesz tam praktyczne wskazówki dot. m.in.:<br></br> aspektów związanych z pisaniem prac oraz poprawnością językową.
+        </p>
+      </header>
       <div className={`${styles.articles}`}>
         <article>
           <figure>
