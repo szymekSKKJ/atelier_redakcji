@@ -1,0 +1,8 @@
+.curved_lines {
+  display: flex;
+  flex-direction: column;
+
+  img:last-child {
+    margin-left: 4px;
+  }
+}

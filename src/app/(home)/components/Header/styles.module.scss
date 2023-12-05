@@ -1,0 +1,48 @@
+.main {
+  .header {
+    max-width: 1440px;
+    height: 560px;
+    background-color: darkcyan;
+    margin: 40px auto 120px auto;
+    border-radius: 16px;
+    padding: 100px 120px 100px 120px;
+
+    p,
+    h1.main {
+      font-size: 44px;
+      color: #fbfbfb;
+      font-weight: 800;
+      max-width: 650px;
+    }
+
+    p.sub_text {
+      color: #fbfbfb;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    .buttons_wrapper {
+      display: flex;
+      margin-top: 60px;
+      gap: 10px;
+
+      button {
+        padding: 20px 30px 20px 30px;
+        border-radius: 8px;
+        border: solid 2px transparent;
+        background-color: transparent;
+        color: white;
+        font-size: 20px;
+        font-weight: 700;
+
+        &:first-child {
+          border: solid 2px white;
+        }
+
+        &:nth-child(2) {
+          background-color: #18a77c;
+        }
+      }
+    }
+  }
+}

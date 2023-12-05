@@ -1,0 +1,18 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f3f6;
+
+  mark {
+    background-color: transparent;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+  }
+}
