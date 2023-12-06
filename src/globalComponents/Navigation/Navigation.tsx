@@ -74,22 +74,39 @@ const Navigation = () => {
   }, [isMobileMenuOpen]);
 
   return (
-    <nav className={`${styles.nav}`}>
-      {(() => {
-        const { id, content, styles: stylesLocal, href } = links[0];
+    <div className={`${styles.wrapper1}`}>
+      <nav className={`${styles.desktop}`}>
+        {(() => {
+          const { id, content, styles: stylesLocal, href } = links[0];
 
-        const formattedStyles = stylesLocal.join(" ");
+          const formattedStyles = stylesLocal.join(" ");
 
-        return (
-          <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
-            {content}
-          </Link>
-        );
-      })()}
-      <button className={`${styles.toggle_mobile_navigation}`} onClick={() => setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true))}>
-        <Image src={isMobileMenuOpen ? hamburgerClose : hamburger} alt="Ikonka menu"></Image>
-      </button>
-      <div className={`${styles.desktop}`}>
+          return (
+            <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
+              {content}
+            </Link>
+          );
+        })()}
+        <button className={`${styles.toggle_mobile_navigation}`} onClick={() => setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true))}>
+          <Image src={isMobileMenuOpen ? hamburgerClose : hamburger} alt="Ikonka menu"></Image>
+        </button>
+        <div className={`${styles.wrapper}`}>
+          {links.map((linkData, index) => {
+            if (index > 0) {
+              const { id, content, styles: stylesLocal, href } = linkData;
+
+              const formattedStyles = stylesLocal.join(" ");
+
+              return (
+                <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
+                  {content}
+                </Link>
+              );
+            }
+          })}
+        </div>
+      </nav>
+      <nav className={`${styles.mobile}  ${isMobileMenuOpen ? styles.open : ""}`}>
         {links.map((linkData, index) => {
           if (index > 0) {
             const { id, content, styles: stylesLocal, href } = linkData;
@@ -103,23 +120,8 @@ const Navigation = () => {
             );
           }
         })}
-      </div>
-      <div className={`${styles.mobile}  ${isMobileMenuOpen ? styles.open : ""}`}>
-        {links.map((linkData, index) => {
-          if (index > 0) {
-            const { id, content, styles: stylesLocal, href } = linkData;
-
-            const formattedStyles = stylesLocal.join(" ");
-
-            return (
-              <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
-                {content}
-              </Link>
-            );
-          }
-        })}
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 

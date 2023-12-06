@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
-import image1 from "../../../../../public/home/section1/image.png";
+import image1 from "../../../../../public/home/section1/image.jpg";
 import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
 import { Mulish } from "next/font/google";
 
@@ -9,7 +9,9 @@ const mulishFont = Mulish({ subsets: ["latin"] });
 const Section1 = () => {
   return (
     <section className={`${styles.section}`}>
-      <Image src={image1} alt="Grupa pracujących ludzi"></Image>
+      <div className={`${styles.wrapper_image}`}>
+        <Image src={image1} alt="Grupa pracujących ludzi"></Image>
+      </div>
       <div className={`${styles.wrapper}`}>
         <h2>Praca ze słowem to nasz tlen i energia do życia</h2>
         <CurvedLines></CurvedLines>

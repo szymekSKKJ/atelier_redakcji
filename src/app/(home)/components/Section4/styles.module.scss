@@ -7,6 +7,7 @@
   flex-direction: column;
   align-items: center;
   margin: 200px auto 0px auto;
+  padding: 0px 20px 0px 20px;
 
   header {
     display: flex;
@@ -22,10 +23,15 @@
       mark {
         color: #18a77c;
       }
+
+      @media screen and (max-width: 768px) {
+        font-size: 30px;
+      }
     }
 
     p {
       font-size: 20px;
+      text-align: center;
     }
 
     p.bold {
@@ -35,7 +41,7 @@
   }
 
   .articles {
-    width: 1000px;
+    max-width: 1000px;
     display: flex;
     flex-wrap: wrap;
     margin-top: 100px;
