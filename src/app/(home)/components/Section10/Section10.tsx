@@ -4,6 +4,7 @@ import mail from "../../../../../public/mail.svg";
 import phone from "../../../../../public/phone.svg";
 import Image from "next/image";
 import phoneBlue from "../../../../../public/phone_blue.svg";
+import person from "../../../../../public/home/section10/person.jpg";
 
 const Section10 = () => {
   return (
@@ -11,6 +12,9 @@ const Section10 = () => {
       <div className={`${styles.wrapper}`}>
         <div className={`${styles.wrapper} ${styles.left}`}>
           <div className={`${styles.image}`}>
+            <div className={`${styles.wrapper}`}>
+              <Image src={person} alt="person"></Image>
+            </div>
             <div className={`${styles.icon}`}>
               <Image src={phoneBlue} alt="Ikonka telefonu"></Image>
             </div>

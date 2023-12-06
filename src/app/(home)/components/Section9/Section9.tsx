@@ -1,9 +1,9 @@
 import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import image1 from "../../../../../public/section9/image.svg";
-import image2 from "../../../../../public/section9/image_1.svg";
-import image3 from "../../../../../public/section9/image_2.svg";
+import image1 from "../../../../../public/home/section9/image.svg";
+import image2 from "../../../../../public/home/section9/image_1.svg";
+import image3 from "../../../../../public/home/section9/image_2.svg";
 
 const Section9 = () => {
   return (

@@ -2,10 +2,15 @@
   header {
     max-width: 1440px;
     height: 560px;
-    background-color: darkcyan;
+    background-color: #0c282c;
+    background-image: linear-gradient(to right, #0c282c, #5fa2ab00), url("../../../../../public/home/header/hero_background.png");
+    background-position: 100% 55%;
+    background-repeat: no-repeat;
+    background-size: 66%;
     margin: 40px auto 120px auto;
     border-radius: 16px;
     padding: 100px 120px 100px 120px;
+    position: relative;
 
     > h1 {
       font-size: 44px;
