@@ -5,8 +5,13 @@ import Image from "next/image";
 import styles from "./styles.module.scss";
 import logo from "../../../public/logo.svg";
 import { usePathname } from "next/navigation";
+import hamburger from "../../../public/hamburger.svg";
+import hamburgerClose from "../../../public/hamburger_close.svg";
+import { useEffect, useState } from "react";
 
 const Navigation = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const pathname = usePathname();
 
   const links = [
@@ -60,10 +65,18 @@ const Navigation = () => {
     },
   ];
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMobileMenuOpen]);
+
   return (
     <nav className={`${styles.nav}`}>
-      {links.map((linkData) => {
-        const { id, content, styles: stylesLocal, href } = linkData;
+      {(() => {
+        const { id, content, styles: stylesLocal, href } = links[0];
 
         const formattedStyles = stylesLocal.join(" ");
 
@@ -72,7 +85,40 @@ const Navigation = () => {
             {content}
           </Link>
         );
-      })}
+      })()}
+      <button className={`${styles.toggle_mobile_navigation}`} onClick={() => setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true))}>
+        <Image src={isMobileMenuOpen ? hamburgerClose : hamburger} alt="Ikonka menu"></Image>
+      </button>
+      <div className={`${styles.desktop}`}>
+        {links.map((linkData, index) => {
+          if (index > 0) {
+            const { id, content, styles: stylesLocal, href } = linkData;
+
+            const formattedStyles = stylesLocal.join(" ");
+
+            return (
+              <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
+                {content}
+              </Link>
+            );
+          }
+        })}
+      </div>
+      <div className={`${styles.mobile}  ${isMobileMenuOpen ? styles.open : ""}`}>
+        {links.map((linkData, index) => {
+          if (index > 0) {
+            const { id, content, styles: stylesLocal, href } = linkData;
+
+            const formattedStyles = stylesLocal.join(" ");
+
+            return (
+              <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
+                {content}
+              </Link>
+            );
+          }
+        })}
+      </div>
     </nav>
   );
 };
