@@ -115,7 +115,7 @@ const Navigation = () => {
             const formattedStyles = stylesLocal.join(" ");
 
             return (
-              <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
+              <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
                 {content}
               </Link>
             );
