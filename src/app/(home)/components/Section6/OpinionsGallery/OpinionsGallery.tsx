@@ -10,6 +10,7 @@ const OpinionsGallery = () => {
   const wrapperElementRef = useRef<null | HTMLDivElement>(null);
 
   const [galleryOffest, setGalleryOffest] = useState(0);
+  const [currentVisibleOpinionsCount, setCurrentVisibleOpinionsCounts] = useState(3); // It depends of main wrapper element width
 
   const opinions = [
     {
@@ -57,6 +58,30 @@ const OpinionsGallery = () => {
   ];
 
   useEffect(() => {
+    const changeCurrentVisibleOpinionsCount = () => {
+      if (window.innerWidth > 1440) {
+        setCurrentVisibleOpinionsCounts(3);
+      } else if (window.innerWidth <= 1440 && window.innerWidth > 1024) {
+        setCurrentVisibleOpinionsCounts(2);
+      } else if (window.innerWidth <= 1024 && window.innerWidth > 768) {
+        setCurrentVisibleOpinionsCounts(2);
+      } else if (window.innerWidth <= 768 && window.innerWidth > 425) {
+        setCurrentVisibleOpinionsCounts(2);
+      } else if (window.innerWidth <= 425) {
+        setCurrentVisibleOpinionsCounts(1);
+      }
+    };
+
+    changeCurrentVisibleOpinionsCount();
+
+    window.addEventListener("resize", changeCurrentVisibleOpinionsCount);
+
+    return () => {
+      window.removeEventListener("resize", changeCurrentVisibleOpinionsCount);
+    };
+  }, []);
+
+  useEffect(() => {
     if (wrapperElementRef.current) {
       wrapperElementRef.current.style.setProperty("--gallery-offset", `${galleryOffest}`);
     }
@@ -66,16 +91,16 @@ const OpinionsGallery = () => {
     <div className={`${styles.wrapper}`} ref={wrapperElementRef}>
       <div className={`${styles.buttons}`}>
         <button
-          className={`${galleryOffest === -1 ? styles.light : ""}`}
+          className={`${galleryOffest === 0 ? styles.light : ""}`}
           onClick={() => {
-            setGalleryOffest((currentValue) => (currentValue >= 0 ? currentValue - 1 : currentValue));
+            setGalleryOffest((currentValue) => (currentValue > 0 ? currentValue - 1 : currentValue));
           }}>
           <Image src={arrowWhite} alt="Strzłka w lewo"></Image>
         </button>
         <button
-          className={`${galleryOffest === opinions.length - 3 ? styles.light : ""}`}
+          className={`${galleryOffest === opinions.length - currentVisibleOpinionsCount ? styles.light : ""}`}
           onClick={() => {
-            setGalleryOffest((currentValue) => (currentValue < opinions.length - 3 ? currentValue + 1 : currentValue));
+            setGalleryOffest((currentValue) => (currentValue < opinions.length - currentVisibleOpinionsCount ? currentValue + 1 : currentValue));
           }}>
           <Image src={arrowWhite} alt="Strzłka w prawo"></Image>
         </button>

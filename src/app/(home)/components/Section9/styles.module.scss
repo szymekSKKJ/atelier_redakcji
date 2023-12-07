@@ -5,6 +5,7 @@
   align-items: center;
   background-color: white;
   padding: 120px 0px 120px 0px;
+  padding: 0px 30px 0px 30px;
 
   header {
     display: flex;
@@ -16,6 +17,11 @@
       font-size: 44px;
       color: #0e4d7a;
       margin-bottom: 20px;
+      text-align: center;
+
+      @media screen and (max-width: 425px) {
+        font-size: 30px;
+      }
     }
 
     > p {
@@ -32,11 +38,17 @@
 
   .articles {
     width: 100%;
-    height: auto;
     max-width: 1180px;
+    height: auto;
     display: flex;
-    justify-content: space-between;
     flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+
+    @media screen and (max-width: 768px) {
+      gap: 80px;
+    }
 
     article {
       width: 380px;
@@ -47,15 +59,77 @@
       gap: 40px;
       flex-shrink: 0;
 
+      @media screen and (max-width: 1440px) {
+        width: 300px;
+      }
+
+      @media screen and (max-width: 1024px) {
+        width: calc(33% - 40px); // Minus gap ofarticle
+      }
+
+      @media screen and (max-width: 768px) {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+      }
+
+      @media screen and (max-width: 425px) {
+        align-items: flex-start;
+      }
+
       figure {
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
         gap: 40px;
+
+        @media screen and (max-width: 768px) {
+          width: 100%;
+          gap: 30px;
+          align-items: center;
+        }
+
+        @media screen and (max-width: 425px) {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        > .wrapper {
+          width: 100%;
+          height: auto;
+          overflow: hidden;
+          border-radius: 16px;
+          aspect-ratio: 380 / 285;
+
+          @media screen and (max-width: 768px) {
+            width: 75%;
+          }
+
+          @media screen and (max-width: 425px) {
+            width: 100%;
+          }
+
+          img {
+            width: 100%;
+            height: auto;
+          }
+        }
 
         figcaption {
           color: #0e4d7a;
           font-size: 32px;
           font-weight: 800;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          @media screen and (max-width: 1440px) {
+            font-size: 28px;
+          }
         }
       }
 
@@ -68,6 +142,18 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        @media screen and (max-width: 1440px) {
+          font-size: 18px;
+        }
+
+        @media screen and (max-width: 768px) {
+          text-align: center;
+        }
+
+        @media screen and (max-width: 425px) {
+          text-align: left;
+        }
       }
 
       button {

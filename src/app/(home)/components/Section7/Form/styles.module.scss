@@ -3,8 +3,10 @@
   max-width: 1180px;
   padding: 40px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: stretch;
+  justify-content: flex-start;
+  flex-direction: column;
   background-color: white;
 
   > p {
@@ -22,16 +24,26 @@
   }
 
   .input_wrapper {
+    width: calc(25% - 20px);
     height: 100px;
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 20px;
+
+    @media screen and (max-width: 1024px) {
+      width: calc(50% - 10px); // Minus half of gap of inputs_wrapper
+    }
+
+    @media screen and (max-width: 425px) {
+      width: 100%;
+    }
 
     label.placeholder_name {
-      height: 100%;
+      height: auto;
       color: #1a2125;
       font-size: 16px;
       font-weight: 700;
+      margin-bottom: 10px;
 
       p.mandatory_field {
         color: #7a8790;
@@ -73,15 +85,25 @@
   }
 
   .input_wrapper.checkboxs {
+    width: 100%;
+
+    @media screen and (max-width: 425px) {
+      margin-bottom: 60px;
+    }
+
     .checkboxs_wrapper {
       display: flex;
-      gap: 60px;
+      gap: 20px;
+      flex-wrap: wrap;
 
       .wrapper {
         display: flex;
-        justify-content: center;
         align-items: center;
         gap: 10px;
+
+        @media screen and (max-width: 425px) {
+          width: 100%;
+        }
 
         label {
           font-size: 16px;
@@ -102,15 +124,27 @@
   }
 
   .input_wrapper.textarea_wrapper {
-    height: 200px;
-    width: 100%;
+    width: calc(50% - 10px); // Minus half of gap of inputs_wrapper
+    min-height: 200px;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
   }
 
   .input_wrapper.drop_down_section_wrapper {
-    width: 100%;
+    width: calc(50% - 10px); // Minus half of gap of inputs_wrapper
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
 
     .drop_down_section {
-      min-height: 140px;
+      height: 100%;
       background-color: white;
       display: flex;
       justify-content: center;
@@ -120,6 +154,7 @@
       border-radius: 8px;
       flex-direction: column;
       gap: 10px;
+      padding: 30px;
 
       > p {
         text-align: center;
@@ -136,10 +171,12 @@
   .inputs_wrapper {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 20px;
 
     .input_wrapper {
-      margin-top: 0px;
+      //margin-top: 0px;
     }
   }
 
@@ -149,5 +186,6 @@
     border-radius: 8px;
     color: white;
     align-self: center;
+    margin-top: 40px;
   }
 }

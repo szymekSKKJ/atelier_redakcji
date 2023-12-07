@@ -5,20 +5,45 @@
   align-items: center;
   position: relative;
   margin-top: 100px;
-  --buttons-offest: 60px;
   position: relative;
+  transform-origin: top center;
 
+  --buttons-offest: 60px;
   --gallery-offset: 0;
 
-  .buttons {
+  @media screen and (max-width: 1440px) {
+    width: 800px;
+  }
+
+  @media screen and (max-width: 1024px) {
+    width: 650px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+
+  > .buttons {
     width: calc(100% + (2 * var(--buttons-offest)));
     height: 40px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     position: absolute;
     top: 50%;
     left: 0px;
     transform: translate(calc(-1 * var(--buttons-offest)), -50%);
+    gap: 20px;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      height: 60px;
+      left: 50%;
+      top: 100%;
+      transform: translate(-50%, -50%);
+      justify-content: center;
+      z-index: 1;
+    }
 
     button {
       width: 40px;
@@ -28,8 +53,16 @@
       align-items: center;
       background-color: #18a77c;
       border-radius: 100%;
-      position: absolute;
       transition: 500ms;
+
+      @media screen and (max-width: 768px) {
+        width: 60px;
+        height: 60px;
+
+        img {
+          scale: 1.36;
+        }
+      }
 
       &:first-child {
         left: 0px;
@@ -64,8 +97,12 @@
       gap: 40px;
       justify-content: flex-start;
       transition: 500ms;
-      transform: translateX(calc((var(--gallery-offset) * (-300px + (-40px)))));
-      translate: -50px;
+      padding: 0px 30px 0px 30px;
+      transform: translateX(calc((var(--gallery-offset) * (-300px + (-40px) + 15px)))); // article width and gap and half of padding
+
+      @media screen and (max-width: 1024px) {
+        transform: translateX(calc((var(--gallery-offset) * (-250px + (-40px)) + 30px))); // article width and gap and padding
+      }
 
       article {
         width: 300px;
@@ -77,18 +114,32 @@
         flex-direction: column;
         flex-shrink: 0;
 
+        @media screen and (max-width: 1024px) {
+          width: 250px;
+        }
+
         .username {
           margin-top: 10px;
           margin-bottom: 50px;
           color: #1d4676;
           font-size: 24px;
           font-weight: 800;
+
+          @media screen and (max-width: 1024px) {
+            width: 250px;
+            margin-bottom: 20px;
+          }
         }
 
         .description {
           color: #1a2125;
           font-size: 16px;
           font-weight: 400;
+          display: -webkit-box;
+          -webkit-line-clamp: 8;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }

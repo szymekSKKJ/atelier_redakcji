@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={mulishFont.className}>
         <Navigation></Navigation>
         {children}
-        {/* <Footer></Footer> */}
+        <Footer></Footer>
       </body>
     </html>
   );

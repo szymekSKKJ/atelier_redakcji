@@ -1,9 +1,9 @@
 import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import image1 from "../../../../../public/home/section9/image.svg";
-import image2 from "../../../../../public/home/section9/image_1.svg";
-import image3 from "../../../../../public/home/section9/image_2.svg";
+import image3 from "../../../../../public/home/section9/image1.jpg";
+import image2 from "../../../../../public/home/section9/image2.jpg";
+import image1 from "../../../../../public/home/section9/image3.jpg";
 
 const Section9 = () => {
   return (
@@ -18,7 +18,9 @@ const Section9 = () => {
       <div className={`${styles.articles}`}>
         <article>
           <figure>
-            <Image src={image1} alt="Cieszący się absolwent"></Image>
+            <div className={`${styles.wrapper}`}>
+              <Image src={image1} alt="Cieszący się absolwent"></Image>
+            </div>
             <figcaption>Czym jest i na czym polega praca doktorska?</figcaption>
           </figure>
           <p>Obrona pracy magisterskiej w wielu przypadkach kończy przygodę ze studiami i edukacją. Są jednak osoby, które...</p>
@@ -26,7 +28,9 @@ const Section9 = () => {
         </article>
         <article>
           <figure>
-            <Image src={image2} alt="Laptop na stoliku na dworze"></Image>
+            <div className={`${styles.wrapper}`}>
+              <Image src={image2} alt="Laptop na stoliku na dworze"></Image>
+            </div>
             <figcaption>Czym jest redakcja tekstu? Za kulisami pracy...</figcaption>
           </figure>
           <p>Na czym polega praca, jaką wykonuje redaktor tekstu? Kto może zostać redaktorem? Kiedy redakcja tekstu powinna...</p>
@@ -34,7 +38,9 @@ const Section9 = () => {
         </article>
         <article>
           <figure>
-            <Image src={image3} alt="Laptop na stoliku na dworze"></Image>
+            <div className={`${styles.wrapper}`}>
+              <Image src={image3} alt="Laptop na stoliku na dworze"></Image>
+            </div>
             <figcaption>Redakcja a korekta: dwie strony jednego procesu</figcaption>
           </figure>
           <p>Na czym polega praca, jaką wykonuje redaktor tekstu? Kto może zostać redaktorem? Kiedy redakcja tekstu powinna...</p>

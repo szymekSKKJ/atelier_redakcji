@@ -83,7 +83,7 @@ const Form = () => {
           </div>
         </div>
       </div>
-      <div className={`${styles.inputs_wrapper}`} style={{ marginTop: "40px" }}>
+      <div className={`${styles.inputs_wrapper}`}>
         <div className={`${styles.input_wrapper} ${styles.textarea_wrapper}`}>
           <label className={`${styles.placeholder_name}`}>
             Dodatkowe informacje

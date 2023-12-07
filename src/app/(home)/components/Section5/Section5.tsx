@@ -42,7 +42,7 @@ const Section5 = () => {
               color="#fbfbfb"
               incrementColor="#fbfbfb"
               decrementColor="#fbfbfb"
-              value={isSectionIntersecting ? 6 : 1}
+              value={isSectionIntersecting ? 6 : 0}
               decimalPrecision={0}></AnimatedCounter>
             +
           </div>
@@ -56,7 +56,7 @@ const Section5 = () => {
               color="#fbfbfb"
               incrementColor="#fbfbfb"
               decrementColor="#fbfbfb"
-              value={isSectionIntersecting ? 12 : 12}
+              value={isSectionIntersecting ? 12 : 0}
               decimalPrecision={0}></AnimatedCounter>
             +
           </div>
@@ -70,7 +70,7 @@ const Section5 = () => {
               color="#fbfbfb"
               incrementColor="#fbfbfb"
               decrementColor="#fbfbfb"
-              value={isSectionIntersecting ? 880 : 123}
+              value={isSectionIntersecting ? 880 : 0}
               decimalPrecision={0}></AnimatedCounter>
             +
           </div>
@@ -84,7 +84,7 @@ const Section5 = () => {
               color="#fbfbfb"
               incrementColor="#fbfbfb"
               decrementColor="#fbfbfb"
-              value={isSectionIntersecting ? 54000 : 12345}
+              value={isSectionIntersecting ? 54000 : 0}
               decimalPrecision={0}></AnimatedCounter>
             +
           </div>
