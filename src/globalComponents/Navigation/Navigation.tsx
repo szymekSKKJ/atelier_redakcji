@@ -106,6 +106,7 @@ const Navigation = () => {
           })}
         </div>
       </nav>
+      <button>Wyceń swój tekst</button>
       <nav className={`${styles.mobile}  ${isMobileMenuOpen ? styles.open : ""}`}>
         {links.map((linkData, index) => {
           if (index > 0) {
