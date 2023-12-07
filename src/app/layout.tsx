@@ -5,6 +5,7 @@ import Navigation from "@/globalComponents/Navigation/Navigation";
 
 export const metadata: Metadata = {
   title: "Atelier redakcji - strona główna",
+  description: "",
 };
 
 import { Mulish } from "next/font/google";

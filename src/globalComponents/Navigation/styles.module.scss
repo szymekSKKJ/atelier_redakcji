@@ -1,5 +1,8 @@
 .wrapper1 {
   width: 100%;
+  position: sticky;
+  top: 0px;
+  z-index: 1000000000;
 
   a {
     text-decoration: none;
@@ -28,9 +31,6 @@
   .desktop {
     background-color: white;
     filter: drop-shadow(0px 4px 40px #0e4d7a33);
-    position: sticky;
-    top: 0px;
-    z-index: 1000000000;
     display: flex;
     justify-content: center;
     align-items: center;
