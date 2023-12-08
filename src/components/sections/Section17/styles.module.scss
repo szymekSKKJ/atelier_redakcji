@@ -1,0 +1,54 @@
+.section {
+  width: 100%;
+  display: flex;
+  padding: 80px 0px 80px 0px;
+  margin: 120px auto 0px auto;
+  background-color: white;
+
+  > .wrapper {
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    align-items: center;
+    gap: 120px;
+    margin: 0px auto 0px auto;
+
+    article {
+      h2 {
+        color: #0e4d7a;
+        font-weight: 800;
+        font-size: 44px;
+        margin-bottom: 40px;
+
+        mark {
+          color: #18a77c;
+        }
+      }
+
+      p {
+        font-weight: 400;
+        font-size: 20px;
+      }
+
+      .caption1 {
+        margin-bottom: 40px;
+      }
+
+      .caption2 {
+        mark {
+          font-weight: 700;
+        }
+      }
+
+      button {
+        background-color: #18a77c;
+        border-radius: 8px;
+        font-style: 16px;
+        font-weight: 700px;
+        padding: 20px 30px 20px 30px;
+        color: white;
+        margin-top: 40px;
+      }
+    }
+  }
+}

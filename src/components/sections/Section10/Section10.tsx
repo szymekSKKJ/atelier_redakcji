@@ -27,11 +27,11 @@ const Section10 = () => {
           <p className={`${styles.caption2}`}> Na pewno pomożemy :)</p>
         </header>
         <div className={`${styles.wrapper}`} role="group">
-          <span>
+          <span role="group">
             <Image src={phone} alt="Ikonka poczty elektronicznej"></Image> +48 799 163 609
           </span>
           lub
-          <span>
+          <span role="group">
             <Image src={mail} alt="Ikonka telefonu "></Image>kontakt@atelier-redakcji.eu
           </span>
         </div>
