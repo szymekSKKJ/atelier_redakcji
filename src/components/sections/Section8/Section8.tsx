@@ -12,7 +12,7 @@ const Section8 = () => {
           Prawdopodobnie znajdziesz odpowiedź na swoje pytanie poniżej, a jeśli to coś nowego, napisz do nas - na pewno pomożemy!
         </p>
       </header>
-      <div className={`${styles.questions}`}>
+      <div className={`${styles.questions}`} role="group">
         <input type="checkbox" id="detail_1" hidden />
         <details open>
           <summary>

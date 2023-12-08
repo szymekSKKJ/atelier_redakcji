@@ -88,8 +88,8 @@ const OpinionsGallery = () => {
   }, [galleryOffest]);
 
   return (
-    <div className={`${styles.wrapper}`} ref={wrapperElementRef}>
-      <div className={`${styles.buttons}`}>
+    <div className={`${styles.wrapper}`} ref={wrapperElementRef} role="group">
+      <div className={`${styles.buttons}`} role="group">
         <button
           className={`${galleryOffest === 0 ? styles.light : ""}`}
           onClick={() => {
@@ -105,8 +105,8 @@ const OpinionsGallery = () => {
           <Image src={arrowWhite} alt="Strzłka w prawo"></Image>
         </button>
       </div>
-      <div className={`${styles.wrapper_inside}`}>
-        <div className={`${styles.opinions}`}>
+      <div className={`${styles.wrapper_inside}`} role="group">
+        <div className={`${styles.opinions}`} role="group">
           {opinions.map((opinionData) => {
             const { id, username, description } = opinionData;
             return (

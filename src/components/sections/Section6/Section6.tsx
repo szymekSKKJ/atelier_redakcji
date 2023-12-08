@@ -7,7 +7,7 @@ import CurvedLines from "@/design/CurvedLines/CurvedLines";
 const Section6 = () => {
   return (
     <section className={`${styles.section}`}>
-      <div className={`${styles.stars}`}>
+      <div className={`${styles.stars}`} role="group">
         <Image src={star} alt="Ikonka gwiazdki"></Image>
         <Image src={star} alt="Ikonka gwiazdki"></Image>
         <Image src={star} alt="Ikonka gwiazdki"></Image>

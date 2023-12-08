@@ -15,7 +15,7 @@ import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const ArrowIcon = () => {
   return (
-    <div className={`${styles.arrow_icon}`}>
+    <div className={`${styles.arrow_icon}`} role="group">
       <Image src={Arrow} alt="Ikonka strzałki"></Image>
       <Image src={Arrow} alt="Ikonka strzałki"></Image>
     </div>
@@ -90,7 +90,7 @@ const Section4 = () => {
         <p className={`${styles.bold}`}>Pomagamy na każdym etapie pisania pracy,</p>
         <p>niezależnie czy znajdujesz się napoczątku, czy na końcu swojej drogi.</p>
       </header>
-      <div className={`${styles.articles}`}>
+      <div className={`${styles.articles}`} role="group">
         {articles.map((articleData) => {
           const { id, image, content, href } = articleData;
           return (

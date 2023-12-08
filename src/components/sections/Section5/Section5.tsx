@@ -34,9 +34,9 @@ const Section5 = () => {
     <section className={`${styles.section}`} ref={sectionElementRef}>
       <h2>Atelier redakcji tekstu w liczbach</h2>
       <CurvedLines></CurvedLines>
-      <div className={`${styles.articles}`}>
+      <div className={`${styles.articles}`} role="group">
         <article>
-          <div className={`${styles.animated_counter}`}>
+          <div className={`${styles.animated_counter}`} role="group">
             <AnimatedCounter
               fontSize="56px"
               color="#fbfbfb"
@@ -50,7 +50,7 @@ const Section5 = () => {
           <p>doświadczenia</p>
         </article>
         <article>
-          <div className={`${styles.animated_counter}`}>
+          <div className={`${styles.animated_counter}`} role="group">
             <AnimatedCounter
               fontSize="56px"
               color="#fbfbfb"
@@ -64,7 +64,7 @@ const Section5 = () => {
           <p>w zespole</p>
         </article>
         <article>
-          <div className={`${styles.animated_counter}`}>
+          <div className={`${styles.animated_counter}`} role="group">
             <AnimatedCounter
               fontSize="56px"
               color="#fbfbfb"
@@ -78,7 +78,7 @@ const Section5 = () => {
           <p>klientów</p>
         </article>
         <article>
-          <div className={`${styles.animated_counter}`}>
+          <div className={`${styles.animated_counter}`} role="group">
             <AnimatedCounter
               fontSize="56px"
               color="#fbfbfb"

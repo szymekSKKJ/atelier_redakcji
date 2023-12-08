@@ -1,16 +1,29 @@
-.section {
+.header {
   width: 100%;
   max-width: 1440px;
   padding: 150px 130px 150px 130px;
   border-radius: 16px;
-  // background: linear-gradient(98deg, rgba(26, 12, 44, 0.4) 0%, rgba(150, 59, 141, 0) 73.75%),
-  //   radial-gradient(164% 81% at 54.86% 0%, rgba(12, 40, 44, 0.3) 0%, rgba(83, 146, 155, 0) 78.78%),
-  //   linear-gradient(90deg, #0c282c 36.39%, rgba(95, 162, 171, 0) 88.3%), linear-gradient(90deg, #0c282c 51.46%, rgba(95, 162, 171, 0) 88.3%),
-  //   url(<path-to-image>), lightgray 734.811px -34.611px / 67.096% 115.037% no-repeat;
+  background-color: #0c282c;
+  background-image: linear-gradient(to right, #0c282c, #5fa2ab00), url("../../../../public/sections/sections13/background.jpg");
+  background-position: 150% 55%;
+  background-repeat: no-repeat;
+  background-size: 66%;
+  margin: 40px auto 120px auto;
 
   h1 {
     font-size: 44px;
     font-weight: 800;
     margin-bottom: 40px;
+    max-width: 600px;
+  }
+
+  h1,
+  .caption1 {
+    color: #fbfbfb;
+  }
+
+  .caption1 {
+    font-size: 24px;
+    max-width: 550px;
   }
 }

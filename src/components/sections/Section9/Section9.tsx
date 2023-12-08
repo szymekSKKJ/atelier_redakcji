@@ -15,10 +15,10 @@ const Section9 = () => {
           Znajdziesz tam praktyczne wskazówki dot. m.in.:<br></br> aspektów związanych z pisaniem prac oraz poprawnością językową.
         </p>
       </header>
-      <div className={`${styles.articles}`}>
+      <div className={`${styles.articles}`} role="group">
         <article>
           <figure>
-            <div className={`${styles.wrapper}`}>
+            <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
               <Image src={image1} alt="Cieszący się absolwent"></Image>
             </div>
             <figcaption>Czym jest i na czym polega praca doktorska?</figcaption>
@@ -28,7 +28,7 @@ const Section9 = () => {
         </article>
         <article>
           <figure>
-            <div className={`${styles.wrapper}`}>
+            <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
               <Image src={image2} alt="Laptop na stoliku na dworze"></Image>
             </div>
             <figcaption>Czym jest redakcja tekstu? Za kulisami pracy...</figcaption>
@@ -38,7 +38,7 @@ const Section9 = () => {
         </article>
         <article>
           <figure>
-            <div className={`${styles.wrapper}`}>
+            <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
               <Image src={image3} alt="Laptop na stoliku na dworze"></Image>
             </div>
             <figcaption>Redakcja a korekta: dwie strony jednego procesu</figcaption>

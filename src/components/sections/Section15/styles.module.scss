@@ -1,0 +1,64 @@
+.section {
+  width: 100%;
+  max-width: 1180px;
+  display: flex;
+  gap: 120px;
+  margin: 160px auto 0px auto;
+
+  .wrapper_left {
+    width: 50%;
+
+    h2 {
+      color: #0e4d7a;
+      font-weight: 800;
+      font-size: 44px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+    .caption1 {
+      font-weight: 700;
+      margin-top: 40px;
+    }
+
+    .caption2 {
+      font-weight: 700;
+      margin-top: 40px;
+    }
+  }
+
+  .wrapper_right {
+    width: 50%;
+    background-color: #ffffff;
+    padding: 60px 80px 60px 80px;
+    border-radius: 16px;
+    gap: 30px;
+
+    .caption1 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    ul {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      list-style: none;
+
+      li {
+        &::before {
+          content: url("../../../../public/check_icon.svg");
+          padding-right: 10px;
+        }
+
+        mark {
+          color: #0e4d7a;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

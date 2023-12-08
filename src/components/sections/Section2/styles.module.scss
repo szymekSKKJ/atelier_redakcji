@@ -51,24 +51,23 @@
       margin-bottom: 20px;
     }
 
-    .articles {
+    ul {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
+      list-style: none;
 
-      > article {
+      li {
         background-color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
         border-radius: 10000px;
-        gap: 10px;
+        padding: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #0e4d7a;
 
-        p {
-          font-size: 14px;
-          font-weight: 700;
-          color: #0e4d7a;
+        &::before {
+          content: url("../../../../public/check_icon.svg");
+          padding-right: 10px;
         }
       }
     }

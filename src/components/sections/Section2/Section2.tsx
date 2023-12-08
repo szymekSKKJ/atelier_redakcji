@@ -14,28 +14,13 @@ const Section2 = () => {
       </header>
       <article>
         <h3>Proces twórczy wymaga:</h3>
-        <div className={`${styles.articles}`}>
-          <article>
-            <Image src={checkIcon} alt="Check icon"></Image>
-            <p>systematyczności i doskonałej organizacji</p>
-          </article>
-          <article>
-            <Image src={checkIcon} alt="Check icon"></Image>
-            <p>wyszukiwania źródeł</p>
-          </article>
-          <article>
-            <Image src={checkIcon} alt="Check icon"></Image>
-            <p>samozaparcia i żelaznej dyscypliny</p>
-          </article>
-          <article>
-            <Image src={checkIcon} alt="Check icon"></Image>
-            <p>umiejętności heurystycznych</p>
-          </article>
-          <article>
-            <Image src={checkIcon} alt="Check icon"></Image>
-            <p>wykorzystania wiedzy z różnych etapów studiów</p>
-          </article>
-        </div>
+        <ul>
+          <li>systematyczności i doskonałej organizacji</li>
+          <li>wyszukiwania źródeł</li>
+          <li>samozaparcia i żelaznej dyscypliny</li>
+          <li>umiejętności heurystycznych</li>
+          <li>wykorzystania wiedzy z różnych etapów studiów</li>
+        </ul>
       </article>
     </section>
   );
