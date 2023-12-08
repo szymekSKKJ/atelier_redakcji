@@ -1,7 +1,7 @@
 "use client";
 
-import quite from "../../../../../../public/quote.svg";
-import arrowWhite from "../../../../../../public/arrow_white.svg";
+import quote from "../../../../../public/quote.svg";
+import arrowWhite from "../../../../../public/arrow_white.svg";
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import { useEffect, useRef, useState } from "react";
@@ -111,7 +111,7 @@ const OpinionsGallery = () => {
             const { id, username, description } = opinionData;
             return (
               <article key={id}>
-                <Image src={quite} alt="Ikonka czudzysłowia"></Image>
+                <Image src={quote} alt="Ikonka czudzysłowia"></Image>
                 <p className={styles.username}>{username}</p>
                 <p className={styles.description}>{description}</p>
               </article>

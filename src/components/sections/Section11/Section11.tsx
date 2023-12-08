@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import documentBlue from "../../../../../public/document_blue.svg";
+import documentBlue from "../../../../public/document_blue.svg";
 
 const Section11 = () => {
   return (

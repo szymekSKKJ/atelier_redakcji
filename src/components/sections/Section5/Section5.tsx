@@ -1,8 +1,8 @@
 "use client";
-import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
 import { AnimatedCounter } from "react-animated-counter";
 import { useEffect, useRef, useState } from "react";
+import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 // Zmienić value of counter gdy ta sekcja będzie widoczna #SKKJ
 

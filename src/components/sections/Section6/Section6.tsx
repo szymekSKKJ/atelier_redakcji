@@ -1,8 +1,8 @@
 import styles from "./styles.module.scss";
-import star from "../../../../../public/star.svg";
+import star from "../../../../public/star.svg";
 import Image from "next/image";
-import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
 import OpinionsGallery from "./OpinionsGallery/OpinionsGallery";
+import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const Section6 = () => {
   return (

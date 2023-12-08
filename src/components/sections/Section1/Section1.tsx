@@ -1,8 +1,9 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
-import image1 from "../../../../../public/home/section1/image.jpg";
-import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
+import image1 from "../../../../public/home/section1/image.jpg";
+
 import { Mulish } from "next/font/google";
+import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 

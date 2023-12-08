@@ -1,6 +1,6 @@
-import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
 import Form from "./Form/Form";
+import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const Section7 = () => {
   return (

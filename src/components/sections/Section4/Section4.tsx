@@ -1,17 +1,17 @@
-import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import Arrow from "../../../../../public/arrow.svg";
-import image1 from "../../../../../public/home/section4/icons/cala-oferta.svg";
-import image2 from "../../../../../public/home/section4/icons/contract-2.svg";
-import image3 from "../../../../../public/home/section4/icons/creative-writing.svg";
-import image4 from "../../../../../public/home/section4/icons/inzynierskie.svg";
-import image5 from "../../../../../public/home/section4/icons/doktorackie.svg";
-import image6 from "../../../../../public/home/section4/icons/licencjackie.svg";
-import image7 from "../../../../../public/home/section4/icons/magisterskie.svg";
-import image8 from "../../../../../public/home/section4/icons/writing.svg";
-import image9 from "../../../../../public/home/section4/icons/zaliczenia.svg";
+import Arrow from "../../../../public/arrow.svg";
+import image1 from "../../../../public/home/section4/icons/cala-oferta.svg";
+import image2 from "../../../../public/home/section4/icons/contract-2.svg";
+import image3 from "../../../../public/home/section4/icons/creative-writing.svg";
+import image4 from "../../../../public/home/section4/icons/inzynierskie.svg";
+import image5 from "../../../../public/home/section4/icons/doktorackie.svg";
+import image6 from "../../../../public/home/section4/icons/licencjackie.svg";
+import image7 from "../../../../public/home/section4/icons/magisterskie.svg";
+import image8 from "../../../../public/home/section4/icons/writing.svg";
+import image9 from "../../../../public/home/section4/icons/zaliczenia.svg";
 import Link from "next/link";
+import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const ArrowIcon = () => {
   return (

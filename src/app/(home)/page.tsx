@@ -1,21 +1,23 @@
-import Header from "./components/Header/Header";
-import Section1 from "./components/Section1/Section1";
-import Section10 from "./components/Section10/Section10";
-import Section11 from "./components/Section11/Section11";
-import Section2 from "./components/Section2/Section2";
-import Section3 from "./components/Section3/Section3";
-import Section4 from "./components/Section4/Section4";
-import Section5 from "./components/Section5/Section5";
-import Section6 from "./components/Section6/Section6";
-import Section7 from "./components/Section7/Section7";
-import Section8 from "./components/Section8/Section8";
-import Section9 from "./components/Section9/Section9";
+import Section1 from "@/components/sections/Section1/Section1";
 import styles from "./styles.module.scss";
+import Section2 from "@/components/sections/Section2/Section2";
+import Section12 from "@/components/sections/Section12/Section12";
+import Section3 from "@/components/sections/Section3/Section3";
+import Section4 from "@/components/sections/Section4/Section4";
+import Section5 from "@/components/sections/Section5/Section5";
+import Section6 from "@/components/sections/Section6/Section6";
+import Section7 from "@/components/sections/Section7/Section7";
+import Section8 from "@/components/sections/Section8/Section8";
+import Section9 from "@/components/sections/Section9/Section9";
+import Section10 from "@/components/sections/Section10/Section10";
+import Section11 from "@/components/sections/Section11/Section11";
 
 const Home = () => {
   return (
     <div className={styles.home}>
-      <Header></Header>
+      <main>
+        <Section12></Section12>
+      </main>
       <Section1></Section1>
       <Section2></Section2>
       <Section3></Section3>

@@ -1,4 +1,4 @@
-import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
+import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
 
 const Section8 = () => {

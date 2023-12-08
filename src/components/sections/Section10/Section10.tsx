@@ -1,10 +1,10 @@
-import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
-import mail from "../../../../../public/mail.svg";
-import phone from "../../../../../public/phone.svg";
+import mail from "../../../../public/mail.svg";
+import phone from "../../../../public/phone.svg";
 import Image from "next/image";
-import phoneBlue from "../../../../../public/phone_blue.svg";
-import person from "../../../../../public/home/section10/person.jpg";
+import phoneBlue from "../../../../public/phone_blue.svg";
+import person from "../../../../public/home/section10/person.jpg";
+import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const Section10 = () => {
   return (

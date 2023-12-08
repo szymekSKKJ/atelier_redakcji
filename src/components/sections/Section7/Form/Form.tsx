@@ -1,6 +1,6 @@
 import { Mulish } from "next/font/google";
 import styles from "./styles.module.scss";
-import document from "../../../../../../public/document.svg";
+import document from "../../../../../public/document.svg";
 import Image from "next/image";
 
 const mulishFont = Mulish({ subsets: ["latin"] });

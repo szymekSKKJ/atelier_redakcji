@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
-import checkIcon from "../../../../../public/check_icon.svg";
+import checkIcon from "../../../../public/check_icon.svg";
 import Image from "next/image";
-import CurvedLines from "@/globalComponents/CurvedLines/CurvedLines";
+import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const Section2 = () => {
   return (
