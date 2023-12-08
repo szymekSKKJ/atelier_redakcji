@@ -3,7 +3,7 @@ import mail from "../../../../public/mail.svg";
 import phone from "../../../../public/phone.svg";
 import Image from "next/image";
 import phoneBlue from "../../../../public/phone_blue.svg";
-import person from "../../../../public/home/section10/person.jpg";
+import person from "../../../../public/sections/section10/person.jpg";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const Section10 = () => {

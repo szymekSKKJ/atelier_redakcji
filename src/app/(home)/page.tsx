@@ -1,5 +1,4 @@
 import Section1 from "@/components/sections/Section1/Section1";
-import styles from "./styles.module.scss";
 import Section2 from "@/components/sections/Section2/Section2";
 import Section12 from "@/components/sections/Section12/Section12";
 import Section3 from "@/components/sections/Section3/Section3";
@@ -14,7 +13,7 @@ import Section11 from "@/components/sections/Section11/Section11";
 
 const Home = () => {
   return (
-    <div className={styles.home}>
+    <>
       <main>
         <Section12></Section12>
       </main>
@@ -29,7 +28,7 @@ const Home = () => {
       <Section9></Section9>
       <Section10></Section10>
       <Section11></Section11>
-    </div>
+    </>
   );
 };
 
