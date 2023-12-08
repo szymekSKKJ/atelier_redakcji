@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 const Section15 = () => {
   return (
     <section className={`${styles.section}`}>
-      <article className={`${styles.wrapper_left}`} role="group">
+      <article className={`${styles.wrapper_left}`}>
         <h2>Dlaczego my?</h2>
         <CurvedLines></CurvedLines>
         <p className={`${styles.caption1}`}>
@@ -14,7 +14,7 @@ const Section15 = () => {
           Nie pozwalamy sobie na newralgiczne błędy, a już w zupełności nie doświadczysz u nas niedotrzymywania danego słowa.
         </p>
       </article>
-      <article className={`${styles.wrapper_right}`} role="group">
+      <article className={`${styles.wrapper_right}`}>
         <p className={`${styles.caption1}`}>Współpracując z nami, zapewniamy:</p>
         <ul>
           <li>

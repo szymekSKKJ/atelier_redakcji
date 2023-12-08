@@ -6,7 +6,7 @@ import Footer from "@/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Atelier redakcji - strona główna",
-  description: "",
+  description: "Test description",
 };
 
 const mulishFont = Mulish({ subsets: ["latin"] });
