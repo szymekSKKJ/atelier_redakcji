@@ -2,15 +2,35 @@
   width: 100%;
   max-width: 1180px;
   margin: 160px auto 0px auto;
+  padding: 0px 30px 0px 30px;
 
   > .wrapper {
+    width: 100%;
     display: flex;
     gap: 120px;
     align-items: center;
 
+    @media screen and (max-width: 1440px) {
+      gap: 80px;
+    }
+
+    @media screen and (max-width: 1024px) {
+      gap: 40px;
+    }
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+    }
+
     .left {
+      width: 100%;
+
+      @media screen and (max-width: 768px) {
+        width: auto;
+      }
+
       > .wrapper {
-        width: 480px;
+        max-width: 480px;
         aspect-ratio: 480 / 560;
         transform: rotateY(190deg);
         justify-content: center;
@@ -29,11 +49,18 @@
     }
 
     .right {
+      width: 100%;
+
       h2 {
         color: #0e4d7a;
         font-size: 44px;
         margin-bottom: 20px;
         max-width: 500px;
+        font-weight: 800;
+
+        @media screen and (max-width: 768px) {
+          font-size: 30px;
+        }
 
         mark {
           color: #18a77c;
@@ -43,6 +70,11 @@
       p {
         font-size: 20px;
         max-width: 450px;
+
+        @media screen and (max-width: 768px) {
+          max-width: unset;
+          font-size: 18px;
+        }
       }
 
       .caption1 {
@@ -68,6 +100,10 @@
           font-size: 20px;
           list-style: none;
 
+          @media screen and (max-width: 768px) {
+            font-size: 18px;
+          }
+
           &::before {
             content: "\2022";
             color: #18a77c;
@@ -78,7 +114,7 @@
     }
   }
 
-  h2 {
+  > h2 {
     max-width: 675px;
     color: #0e4d7a;
     font-size: 44px;
@@ -86,6 +122,12 @@
     margin-top: 160px;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+
+    @media screen and (max-width: 768px) {
+      font-size: 30px;
+      max-width: unset;
+    }
 
     mark {
       color: #18a77c;

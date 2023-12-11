@@ -9,9 +9,9 @@ import Button from "@/components/UI/Button/Button";
 const Section1 = () => {
   return (
     <section className={`${styles.section}`}>
-      <article className={`${styles.wrapper_image}`}>
+      <div className={`${styles.wrapper_image}`} role="img">
         <Image src={image1} alt="Grupa pracujących ludzi"></Image>
-      </article>
+      </div>
       <article className={`${styles.wrapper}`}>
         <h2>Praca ze słowem to nasz tlen i energia do życia</h2>
         <CurvedLines></CurvedLines>

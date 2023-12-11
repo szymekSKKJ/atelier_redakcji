@@ -1,7 +1,7 @@
 import { Mulish } from "next/font/google";
 import styles from "./styles.module.scss";
 
-type themeType = "green-white" | "transparent-white";
+type themeType = "green-white" | "transparent-white" | "transparent-blue";
 
 interface props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   theme?: themeType;
