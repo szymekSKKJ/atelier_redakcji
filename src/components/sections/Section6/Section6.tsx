@@ -20,7 +20,8 @@ const Section6 = () => {
         </h2>
         <CurvedLines></CurvedLines>
         <p>
-          Nasi <mark>zleceniodawcy cenią sobie współpracę z nami</mark>, a to powód <br></br>do satysfakcji i dumy, który wiele dla nas znaczy
+          Nasi <mark>zleceniodawcy cenią sobie współpracę z nami</mark>, a to powód <br></br>do satysfakcji i dumy, który wiele dla nas znaczy{" "}
+          <span>&#9829;</span>
         </p>
       </header>
       <OpinionsGallery></OpinionsGallery>

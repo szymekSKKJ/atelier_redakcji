@@ -13,7 +13,7 @@ import Section9 from "@/components/sections/Section9/Section9";
 
 const WhyUs = () => {
   return (
-    <div className={`${styles.why_us}`}>
+    <>
       <main>
         <Section13></Section13>
       </main>
@@ -27,7 +27,7 @@ const WhyUs = () => {
       <Section9></Section9>
       <Section10></Section10>
       <Section11></Section11>
-    </div>
+    </>
   );
 };
 
