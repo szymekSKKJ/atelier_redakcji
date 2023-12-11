@@ -1,7 +1,6 @@
 import { Mulish } from "next/font/google";
 import styles from "./styles.module.scss";
-
-const mulishFont = Mulish({ subsets: ["latin"] });
+import Button from "@/components/UI/Button/Button";
 
 const Section12 = () => {
   return (
@@ -9,8 +8,11 @@ const Section12 = () => {
       <h1>Piszesz licencjat, magisterkę, doktorat? A może książkę lub artykuł?</h1>
       <p>Dobrze, że jesteś! Poprawimy Twój tekst!</p>
       <div className={`${styles.buttons_wrapper}`} role="group">
-        <button className={`${mulishFont.className}`}>Poznaj ofertę</button>
-        <button className={`${mulishFont.className}`}>Wyślij swój tekst do wyceny</button>
+        <Button theme="transparent-white" style={{ padding: "20px 30px 20px 30px", fontSize: "20px" }}>
+          Poznaj ofertę
+        </Button>
+
+        <Button style={{ padding: "20px 30px 20px 30px", fontSize: "20px" }}>Wyślij swój tekst do wyceny</Button>
       </div>
     </header>
   );

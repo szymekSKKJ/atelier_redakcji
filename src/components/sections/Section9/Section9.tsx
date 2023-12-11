@@ -4,6 +4,7 @@ import image3 from "../../../../public/sections/section9/image1.jpg";
 import image2 from "../../../../public/sections/section9/image2.jpg";
 import image1 from "../../../../public/sections/section9/image3.jpg";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
+import Button from "@/components/UI/Button/Button";
 
 const Section9 = () => {
   return (
@@ -24,7 +25,7 @@ const Section9 = () => {
             <figcaption>Czym jest i na czym polega praca doktorska?</figcaption>
           </figure>
           <p>Obrona pracy magisterskiej w wielu przypadkach kończy przygodę ze studiami i edukacją. Są jednak osoby, które...</p>
-          <button>Czytaj więcej</button>
+          <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Czytaj więcej</Button>
         </article>
         <article>
           <figure>
@@ -34,7 +35,7 @@ const Section9 = () => {
             <figcaption>Czym jest redakcja tekstu? Za kulisami pracy...</figcaption>
           </figure>
           <p>Na czym polega praca, jaką wykonuje redaktor tekstu? Kto może zostać redaktorem? Kiedy redakcja tekstu powinna...</p>
-          <button>Czytaj więcej</button>
+          <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Czytaj więcej</Button>
         </article>
         <article>
           <figure>
@@ -44,7 +45,7 @@ const Section9 = () => {
             <figcaption>Redakcja a korekta: dwie strony jednego procesu</figcaption>
           </figure>
           <p>Na czym polega praca, jaką wykonuje redaktor tekstu? Kto może zostać redaktorem? Kiedy redakcja tekstu powinna...</p>
-          <button>Czytaj więcej</button>
+          <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Czytaj więcej</Button>
         </article>
       </div>
     </section>

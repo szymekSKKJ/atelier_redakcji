@@ -1,0 +1,24 @@
+.green_white {
+  background-color: #18a77c;
+  color: white;
+}
+
+.transparent_white {
+  background-color: transparent;
+  border: solid 2px white;
+  color: white;
+}
+
+.transparent_blue {
+  background-color: transparent;
+  border: solid 2px #0e4d7a;
+  color: #0e4d7a;
+}
+
+.button {
+  border-radius: 8px;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 16px;
+  white-space: nowrap;
+}

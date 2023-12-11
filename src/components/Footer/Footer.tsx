@@ -3,6 +3,7 @@ import sygnet from "../../../public/logoFooter/sygnet.svg";
 import text from "../../../public/logoFooter/text.svg";
 import Image from "next/image";
 import Link from "next/link";
+import Button from "../UI/Button/Button";
 
 const Footer = () => {
   return (
@@ -32,7 +33,7 @@ const Footer = () => {
               </div>
             </nav>
           </div>
-          <button>Wyceń swój tekst</button>
+          <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }}>Wyceń swój tekst</Button>
         </div>
         <span>
           <p>Copyright © 2022-2023 atelier-redakcji.eu</p>

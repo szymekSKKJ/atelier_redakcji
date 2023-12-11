@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import documentBlue from "../../../../public/document_blue.svg";
+import Button from "@/components/UI/Button/Button";
 
 const Section11 = () => {
   return (
@@ -14,7 +15,7 @@ const Section11 = () => {
           Skorzystaj zatem z prostego i intuicyjnego formularza, w którym wstawisz swój plik, a my wrócimy do Ciebie zi nformacjami i wyceną.
         </p>
       </header>
-      <button>Wyceń swój tekst</button>
+      <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Wyceń swój tekst</Button>
     </section>
   );
 };

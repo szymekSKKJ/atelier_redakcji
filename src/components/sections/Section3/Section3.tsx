@@ -1,3 +1,4 @@
+import Button from "@/components/UI/Button/Button";
 import styles from "./styles.module.scss";
 
 const Section3 = () => {
@@ -6,7 +7,7 @@ const Section3 = () => {
       <h2>
         Nie wszyscy są w stanie spełnić te warunki - <mark>my jesteśmy!</mark>
       </h2>
-      <button>Wyceń swój tekst</button>
+      <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Wyceń swój tekst</Button>
       <p>
         Stawki za korektę i redakcję zaczynają się już od <mark>9 zł brutto za stronę A4.</mark>
       </p>

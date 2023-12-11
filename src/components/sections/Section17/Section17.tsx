@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import warranty from "../../../../public/warranty.svg";
 import Image from "next/image";
+import Button from "@/components/UI/Button/Button";
 
 const Section17 = () => {
   return (
@@ -19,7 +20,7 @@ const Section17 = () => {
             Dlatego zapewniamy, że <mark>tekst będzie spełniał wszelkie wymogi uczelniane, redakcyjne i językowe.</mark> Dostaniesz tekst gotowy w 100% do
             publikacji/wydruku.
           </p>
-          <button>Wyceń swój tekst</button>
+          <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Wyceń swój tekst</Button>
         </article>
       </div>
     </section>

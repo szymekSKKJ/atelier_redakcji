@@ -2,6 +2,7 @@ import { Mulish } from "next/font/google";
 import styles from "./styles.module.scss";
 import document from "../../../../../public/document.svg";
 import Image from "next/image";
+import Button from "@/components/UI/Button/Button";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 
@@ -115,7 +116,7 @@ const Form = () => {
           </div>
         </div>
       </div>
-      <button type="submit">Wyślij zapytanie</button>
+      <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Wyślij zapytanie</Button>
     </form>
   );
 };

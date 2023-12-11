@@ -71,28 +71,5 @@
     @media screen and (max-width: 425px) {
       align-items: stretch;
     }
-
-    button {
-      padding: 20px 30px 20px 30px;
-      border-radius: 8px;
-      border: solid 2px transparent;
-      background-color: transparent;
-      color: white;
-      font-size: 20px;
-      font-weight: 700;
-      white-space: nowrap;
-
-      @media screen and (max-width: 1024px) {
-        font-size: 16px;
-      }
-
-      &:first-child {
-        border: solid 2px white;
-      }
-
-      &:nth-child(2) {
-        background-color: #18a77c;
-      }
-    }
   }
 }

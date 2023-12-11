@@ -172,18 +172,10 @@
     align-items: stretch;
     flex-wrap: wrap;
     gap: 20px;
-
-    .input_wrapper {
-      //margin-top: 0px;
-    }
   }
 
-  button[type="submit"] {
-    background-color: #18a77c;
-    padding: 20px 30px 20px 30px;
-    border-radius: 8px;
-    color: white;
-    align-self: center;
+  button {
     margin-top: 40px;
+    align-self: center;
   }
 }

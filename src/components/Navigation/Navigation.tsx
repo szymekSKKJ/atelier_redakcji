@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import hamburger from "../../../public/hamburger.svg";
 import hamburgerClose from "../../../public/hamburger_close.svg";
 import { useEffect, useState } from "react";
+import Button from "../UI/Button/Button";
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -106,7 +107,7 @@ const Navigation = () => {
           })}
         </div>
       </nav>
-      <button>Wyceń swój tekst</button>
+      <Button style={{ padding: "15px 20px 15px 20px" }}>Wyceń swój tekst</Button>
       <nav className={`${styles.mobile}  ${isMobileMenuOpen ? styles.open : ""}`}>
         {links.map((linkData, index) => {
           if (index > 0) {

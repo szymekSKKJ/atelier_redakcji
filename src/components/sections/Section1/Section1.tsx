@@ -4,8 +4,7 @@ import image1 from "../../../../public/sections/section1/image.jpg";
 
 import { Mulish } from "next/font/google";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
-
-const mulishFont = Mulish({ subsets: ["latin"] });
+import Button from "@/components/UI/Button/Button";
 
 const Section1 = () => {
   return (
@@ -28,7 +27,7 @@ const Section1 = () => {
           <p>
             <mark className={`${styles.bold}`}>Masz jakiś tekst do sprawdzenia? Chętnie pomożemy!</mark>
           </p>
-          <button className={`${mulishFont.className}`}>Wyceń swój tekst</button>
+          <Button style={{ padding: "20px 30px 20px 30px" }}>Wyceń swój tekst</Button>
         </div>
       </article>
     </section>
