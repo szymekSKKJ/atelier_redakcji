@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import Arrow from "../../../../public/arrow.svg";
+import arrow from "../../../../public/arrow.svg";
 import image1 from "../../../../public/sections/section4/icons/cala-oferta.svg";
 import image2 from "../../../../public/sections/section4/icons/contract-2.svg";
 import image3 from "../../../../public/sections/section4/icons/creative-writing.svg";
@@ -16,8 +16,8 @@ import CurvedLines from "@/design/CurvedLines/CurvedLines";
 const ArrowIcon = () => {
   return (
     <div className={`${styles.arrow_icon}`} role="group">
-      <Image src={Arrow} alt="Ikonka strzałki"></Image>
-      <Image src={Arrow} alt="Ikonka strzałki"></Image>
+      <Image src={arrow} alt="Ikonka strzałki"></Image>
+      <Image src={arrow} alt="Ikonka strzałki"></Image>
     </div>
   );
 };
