@@ -64,12 +64,6 @@ const Navigation = () => {
       styles: [],
       href: "/blog",
     },
-    {
-      id: 9,
-      content: "Wyceń swój tekst",
-      styles: [],
-      href: "/rateYourText",
-    },
   ];
 
   useEffect(() => {
@@ -111,6 +105,7 @@ const Navigation = () => {
               );
             }
           })}
+          <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }}>Wyceń swój tekst</Button>
         </div>
       </nav>
       <Button style={{ padding: "15px 20px 15px 20px" }}>Wyceń swój tekst</Button>
@@ -128,6 +123,7 @@ const Navigation = () => {
             );
           }
         })}
+        <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }}>Wyceń swój tekst</Button>
       </nav>
     </div>
   );

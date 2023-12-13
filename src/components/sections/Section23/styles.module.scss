@@ -10,6 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: 250ms;
 
     img {
       aspect-ratio: 1/1;
@@ -222,6 +223,7 @@
         mark {
           color: #18a77c;
           font-weight: 800;
+          cursor: pointer;
         }
       }
 
@@ -244,6 +246,15 @@
           font-weight: 700;
           display: flex;
           gap: 5px;
+          transition: 250ms;
+
+          &:hover {
+            filter: brightness(1.125);
+
+            .arrow_icon {
+              translate: 5px 0px;
+            }
+          }
         }
       }
     }

@@ -1,18 +1,32 @@
 .green_white {
   background-color: #18a77c;
   color: white;
+
+  &:hover {
+    background-color: #19ba8a;
+  }
 }
 
 .transparent_white {
   background-color: transparent;
   border: solid 2px white;
   color: white;
+
+  &:hover {
+    background-color: white;
+    color: #18a77c;
+  }
 }
 
 .transparent_blue {
   background-color: transparent;
   border: solid 2px #0e4d7a;
   color: #0e4d7a;
+
+  &:hover {
+    background-color: #0e4d7a;
+    color: white;
+  }
 }
 
 .button {
@@ -21,4 +35,5 @@
   font-weight: 700;
   font-size: 16px;
   white-space: nowrap;
+  transition: 250ms;
 }

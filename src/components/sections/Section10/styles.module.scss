@@ -200,6 +200,12 @@
       mark {
         color: #18a77c;
         text-decoration: underline;
+        cursor: pointer;
+        transition: 250ms;
+
+        &:hover {
+          filter: brightness(1.125);
+        }
       }
     }
   }

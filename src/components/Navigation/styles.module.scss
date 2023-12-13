@@ -9,6 +9,11 @@
     color: #0e4d7a;
     font-weight: 700;
     font-size: 16px;
+    transition: 250ms;
+
+    &:hover {
+      color: #1573b7;
+    }
 
     @media screen and (max-width: 1024px) {
       font-size: 14px;
@@ -17,15 +22,6 @@
 
   a.active {
     color: #18a77c;
-  }
-
-  a:last-child {
-    background-color: #18a77c;
-    padding: 15px 20px 15px 20px;
-    border-radius: 8px;
-    color: white;
-    text-align: center;
-    min-width: 120px;
   }
 
   .desktop {
@@ -127,10 +123,6 @@
 
     a {
       padding: 20px 0px 20px 0px;
-    }
-
-    a:last-child {
-      padding: 15px 20px 15px 20px;
     }
   }
 

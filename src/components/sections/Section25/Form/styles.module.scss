@@ -32,6 +32,15 @@
       border: none;
       outline: none;
       font-size: 18px;
+      outline: solid transparent 2px;
+
+      &:focus {
+        outline-color: #18a77c;
+      }
+
+      &:valid {
+        outline-color: #18a77c;
+      }
     }
   }
 

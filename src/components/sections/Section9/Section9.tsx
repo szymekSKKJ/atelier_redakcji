@@ -25,7 +25,9 @@ const Section9 = () => {
             <figcaption>Czym jest i na czym polega praca doktorska?</figcaption>
           </figure>
           <p>Obrona pracy magisterskiej w wielu przypadkach kończy przygodę ze studiami i edukacją. Są jednak osoby, które...</p>
-          <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Czytaj więcej</Button>
+          <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>
+            Czytaj więcej
+          </Button>
         </article>
         <article>
           <figure>
@@ -35,7 +37,9 @@ const Section9 = () => {
             <figcaption>Czym jest redakcja tekstu? Za kulisami pracy...</figcaption>
           </figure>
           <p>Na czym polega praca, jaką wykonuje redaktor tekstu? Kto może zostać redaktorem? Kiedy redakcja tekstu powinna...</p>
-          <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Czytaj więcej</Button>
+          <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>
+            Czytaj więcej
+          </Button>
         </article>
         <article>
           <figure>
@@ -45,7 +49,9 @@ const Section9 = () => {
             <figcaption>Redakcja a korekta: dwie strony jednego procesu</figcaption>
           </figure>
           <p>Na czym polega praca, jaką wykonuje redaktor tekstu? Kto może zostać redaktorem? Kiedy redakcja tekstu powinna...</p>
-          <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Czytaj więcej</Button>
+          <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>
+            Czytaj więcej
+          </Button>
         </article>
       </div>
     </section>
