@@ -1,0 +1,97 @@
+.section {
+  header {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(98deg, rgba(26, 12, 44, 0.4) 0%, rgba(150, 59, 141, 0) 73.75%),
+      radial-gradient(164% 81% at 54.86% 0%, rgba(12, 40, 44, 0.3) 0%, rgba(83, 146, 155, 0) 78.78%),
+      linear-gradient(90deg, #0c282c 36.39%, rgba(95, 162, 171, 0) 100%), #0c282c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    p {
+      font-size: 20px;
+      color: #fbfbfb;
+      font-weight: 400;
+    }
+
+    hr {
+      width: 30px;
+      border-color: #fbfbfb;
+    }
+
+    h1 {
+      font-size: 44px;
+      color: white;
+      font-weight: 800;
+
+      @media screen and (max-width: 768px) {
+        font-size: 30px;
+      }
+    }
+  }
+
+  > .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 30px 0px 30px;
+
+    @media screen and (max-width: 768px) {
+      align-items: flex-start;
+    }
+
+    h2 {
+      max-width: 800px;
+      color: #0e4d7a;
+      font-weight: 800;
+      font-size: 44px;
+      text-align: center;
+      margin-bottom: 20px;
+      margin-top: 100px;
+
+      @media screen and (max-width: 768px) {
+        font-size: 30px;
+        text-align: left;
+      }
+
+      mark {
+        color: #18a77c;
+      }
+    }
+
+    > .wrapper {
+      width: 100%;
+      max-width: 1180px;
+      display: flex;
+      gap: 20px;
+      margin-top: 60px;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+      }
+
+      article {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        p {
+          font-size: 20px;
+        }
+
+        .caption1 {
+          font-weight: 700;
+        }
+
+        .caption2 {
+          mark {
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,10 @@
   padding: 0px;
   box-sizing: border-box;
   color: #1a2125;
+
+  &::selection {
+    background-color: #79ecc9;
+  }
 }
 
 body {
