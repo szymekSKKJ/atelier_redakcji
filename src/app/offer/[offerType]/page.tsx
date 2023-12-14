@@ -11,7 +11,6 @@ import Section5 from "@/components/sections/Section5/Section5";
 import Section6 from "@/components/sections/Section6/Section6";
 import Section8 from "@/components/sections/Section8/Section8";
 import Section9 from "@/components/sections/Section9/Section9";
-import styles from "./styles.module.scss";
 import Section32 from "@/components/sections/Section32/Section32";
 
 const sectionsContentData = [
