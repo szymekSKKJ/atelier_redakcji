@@ -1,14 +1,27 @@
 import { Mulish } from "next/font/google";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import document from "../../../../../public/document.svg";
 import Button from "@/components/UI/Button/Button";
+import document from "../../../../public/document.svg";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 
-const Form = () => {
+type themeType = "dark" | "light";
+
+const stylesModules = [
+  { id: 1, key: "dark", style: styles.dark },
+  { id: 2, key: "light", style: styles.light },
+];
+
+interface props {
+  theme?: themeType;
+}
+
+const CustomOfferForm = ({ theme = "dark" }: props) => {
+  const foundStyle = stylesModules.find((styleData) => styleData.key === theme);
+
   return (
-    <form className={`${styles.form}`}>
+    <form className={`${styles.form} ${foundStyle?.style}`}>
       <div className={`${styles.input_wrapper}`}>
         <label>
           Imię<br></br>
@@ -52,4 +65,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default CustomOfferForm;

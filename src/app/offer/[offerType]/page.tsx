@@ -1,3 +1,4 @@
+import CustomOfferForm from "@/components/Forms/CustomOfferForm/CustomOfferForm";
 import Section10 from "@/components/sections/Section10/Section10";
 import Section11 from "@/components/sections/Section11/Section11";
 import Section17 from "@/components/sections/Section17/Section17";
@@ -10,6 +11,8 @@ import Section5 from "@/components/sections/Section5/Section5";
 import Section6 from "@/components/sections/Section6/Section6";
 import Section8 from "@/components/sections/Section8/Section8";
 import Section9 from "@/components/sections/Section9/Section9";
+import styles from "./styles.module.scss";
+import Section32 from "@/components/sections/Section32/Section32";
 
 const sectionsContentData = [
   {
@@ -1560,17 +1563,6 @@ const sectionsContentData = [
       ],
     },
   },
-  // {
-  //   key: "inny-tekst",
-  //   section27: {
-  //     headerTitlte: "Inny tekst",
-  //     title: (
-  //       <>
-  //         Czym powinien charakteryzować się <mark>inny tekst?</mark>
-  //       </>
-  //     ),
-  //   },
-  // },
 ];
 
 const OfferType = ({ params }: { params: { offerType: string } }) => {
@@ -1595,6 +1587,8 @@ const OfferType = ({ params }: { params: { offerType: string } }) => {
         <Section11></Section11>
       </>
     );
+  } else {
+    return <Section32></Section32>;
   }
 };
 
