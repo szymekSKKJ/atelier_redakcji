@@ -88,14 +88,15 @@
         font-size: 16px;
         color: #18a77c;
         cursor: pointer;
-        transition: filter 250ms;
+        transition: 250ms;
 
         &:hover {
           text-decoration: underline;
           filter: brightness(1.125);
+          translate: -5px 0px;
 
           .arrow_icon {
-            translate: 5px 0px;
+            translate: 10px 0px;
           }
         }
       }
