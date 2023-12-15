@@ -1,122 +1,142 @@
+"use client";
+
 import { Mulish } from "next/font/google";
 import styles from "./styles.module.scss";
 import document from "../../../../../public/document.svg";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
+import { MouseEvent } from "react";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
+
+const toggleRequiredAttributeToCheckboxElements = (event: MouseEvent<HTMLInputElement>) => {
+  const checboxWrapperElement = event.currentTarget.parentElement!.parentElement as HTMLDivElement;
+  const checboxElements = [...checboxWrapperElement.querySelectorAll('input[type="checkbox"]')] as HTMLInputElement[];
+
+  const isAnyInputChecked = checboxElements.some((inputElement) => inputElement.checked);
+
+  if (isAnyInputChecked) {
+    checboxElements.forEach((inputElement) => {
+      inputElement.removeAttribute("required");
+    });
+  } else {
+    checboxElements.forEach((inputElement) => {
+      inputElement.setAttribute("required", "");
+    });
+  }
+};
 
 const Form = () => {
   return (
     <form className={`${styles.form}`}>
-      <p>1. Dane kontaktowe:</p>
-      <div className={`${styles.inputs_wrapper}`} role="group">
-        <div className={`${styles.input_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>
-            Imię <p className={`${styles.mandatory_field}`}>(pole obowiązkowe)</p>
-          </label>
-          <input type="text" placeholder="Imię" pattern="[A-Za-z0-9]{1,20}" required></input>
-        </div>
-        <div className={`${styles.input_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>
-            Adres email <p className={`${styles.mandatory_field}`}>(pole obowiązkowe)</p>
-          </label>
-          <input type="text" placeholder="Adres email" pattern="[A-Za-z0-9]{1,20}" required></input>
-        </div>
-        <div className={`${styles.input_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>Numer telefonu</label>
-          <input type="text" placeholder="Numer telefonu" pattern="[A-Za-z0-9]{1,20}" required></input>
-        </div>
-        <div className={`${styles.input_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>
-            Nazwa firmy <p className={`${styles.mandatory_field}`}>(pole obowiązkowe)</p>
-          </label>
-          <input type="text" placeholder="Nazwa firmy" pattern="[A-Za-z0-9]{1,20}" required></input>
-        </div>
-      </div>
-      <p>2. Informacje dotyczące Twojego tekstu:</p>
-      <div className={`${styles.inputs_wrapper}`} role="group">
-        <div className={`${styles.input_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>
-            Rodzaj tekstu <p className={`${styles.mandatory_field}`}>(pole obowiązkowe)</p>
-          </label>
-          <input type="text" placeholder="Rodzaj tekstu" pattern="[A-Za-z0-9]{1,20}" required></input>
-        </div>
-        <div className={`${styles.input_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>
-            Termin realizacji <p className={`${styles.mandatory_field}`}>(pole obowiązkowe)</p>
-          </label>
-          <input type="text" placeholder="Termin realizacji" pattern="[A-Za-z0-9]{1,20}" required></input>
-        </div>
-        <div className={`${styles.input_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>Ilość stron</label>
-          <input type="text" placeholder="Ilość stron" pattern="[A-Za-z0-9]{1,20}" required></input>
-        </div>
-        <div className={`${styles.input_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>
-            Ilośc znaków ze spacją <p className={`${styles.mandatory_field}`}>(pole obowiązkowe)</p>
-          </label>
-          <input type="text" placeholder="Ilośc znaków ze spacją" pattern="[A-Za-z0-9]{1,20}" required></input>
-        </div>
-      </div>
-      <div className={`${styles.input_wrapper}`} role="group">
-        <label className={`${styles.placeholder_name}`}>
-          Temat przewodni utworu <p className={`${styles.mandatory_field}`}>(pole obowiązkowe)</p>
-        </label>
-        <input type="text" placeholder="Temat przewodni utworu" pattern="[A-Za-z0-9]{1,20}" required></input>
-      </div>
-      <div className={`${styles.input_wrapper} ${styles.checkboxs}`} role="group">
-        <label className={`${styles.placeholder_name}`}>
-          Czego potrzebujesz <p className={`${styles.mandatory_field}`}>(pole obowiązkowe)</p>
-        </label>
-        <div className={`${styles.checkboxs_wrapper}`} role="group">
-          <div className={`${styles.wrapper}`} role="group">
-            <input type="checkbox" required id="input_99"></input>
-            <label htmlFor="input_99">Koretka</label>
-          </div>
-          <div className={`${styles.wrapper}`} role="group">
-            <input type="checkbox" required id="input_98"></input>
-            <label htmlFor="input_98">Redakcja</label>
-          </div>
-          <div className={`${styles.wrapper}`} role="group">
-            <input type="checkbox" required id="input_97"></input>
-            <label htmlFor="input_97">Formatowanie</label>
-          </div>
-        </div>
-      </div>
-      <div className={`${styles.inputs_wrapper}`} role="group">
-        <div className={`${styles.input_wrapper} ${styles.textarea_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>
-            Dodatkowe informacje
-            <p className={`${styles.mandatory_field}`}>Możesz w skrócie opisać, z czym się borykasz w swoim tekście i czego od nas potrzebujesz.</p>
-          </label>
-          <textarea className={`${mulishFont.className}`} placeholder="Dodatkowe informacje" required></textarea>
-        </div>
-        <div className={`${styles.input_wrapper} ${styles.drop_down_section_wrapper}`} role="group">
-          <label className={`${styles.placeholder_name}`}>
-            Załącz plik
-            <p className={`${styles.mandatory_field}`}>(Pole obowiązkowe)</p>
-          </label>
-          <div className={`${styles.drop_down_section}`} role="group">
-            <Image src={document} alt="Ikonka dokumentu"></Image>
-            <p>
-              Przeciągnij plik tutaj lub <mark> wybierz z komputera</mark>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className={`${styles.input_wrapper} ${styles.checkboxs} ${styles.agree}`} role="group">
-        <div className={`${styles.checkboxs_wrapper}`} role="group">
-          <div className={`${styles.wrapper}`} role="group">
-            <input type="checkbox" id="agree"></input>
-            <label htmlFor="agree">
-              Wysyłając zgłoszenie, wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na pytanie. Więcej informacji w Polityce
-              prywatności.
+      <section>
+        <p className={`${styles.title}`}>1. Dane kontaktowe:</p>
+        <div className={`${styles.row}`}>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Imię <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
             </label>
+            <input type="text" placeholder="Imię" required></input>
+          </div>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Adres e-mail <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
+            </label>
+            <input type="text" placeholder="Adres e-mail" required></input>
+          </div>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>Numer telefonu</label>
+            <input type="text" placeholder="Numer telefonu" required></input>
+          </div>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>Nazwa firmy</label>
+            <input type="text" placeholder="Nazwa firmy" required></input>
           </div>
         </div>
-      </div>
-      <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Wyślij zapytanie</Button>
+      </section>
+      <section>
+        <p className={`${styles.title}`}>2. Informacje dotyczące Twojej tekstu:</p>
+        <div className={`${styles.row}`}>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Rodzaj tekstu <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
+            </label>
+            <input type="text" placeholder="Rodzaj tekstu" required></input>
+          </div>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Termin realizacji <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
+            </label>
+            <input type="date" placeholder="Termin realizacji" required></input>
+          </div>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Ilość stron <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
+            </label>
+            <input type="text" placeholder="Ilość stron" required></input>
+          </div>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Ilość znaków ze spacją <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
+            </label>
+            <input type="text" placeholder="Ilość znaków ze spacją" required></input>
+          </div>
+        </div>
+        <div className={`${styles.row}`}>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Temat przewodni utworu <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
+            </label>
+            <input type="text" placeholder="Temat przewodni utworu" required></input>
+          </div>
+        </div>
+        <div className={`${styles.row}`}>
+          <div className={`${styles.checkbox_inputs_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Czego potrzebujesz? <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
+            </label>
+            <div className={`${styles.wrapper}`}>
+              <div className={`${styles.input_wrapper}`}>
+                <label>Korekta</label>
+                <input type="checkbox" required></input>
+              </div>
+              <div className={`${styles.input_wrapper}`}>
+                <label>Redakcja</label>
+                <input type="checkbox" required></input>
+              </div>
+              <div className={`${styles.input_wrapper}`}>
+                <label>Formatowanie</label>
+                <input type="checkbox" required></input>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={`${styles.row}`}>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Dodatkowe informacje
+              <em className={`${styles.mandatory_field}`}>(Możesz w skrócie opisać, z czym się borykasz w swoim tekście i czego od nas potrzebujesz)</em>
+            </label>
+            <textarea className={`${mulishFont.className}`} placeholder="Dodatkowe informacje" required></textarea>
+          </div>
+          <div className={`${styles.input_wrapper}`}>
+            <label className={`${styles.title}`}>
+              Załącz plik
+              <em className={`${styles.mandatory_field}`}>(Pole obowiązkowe)</em>
+            </label>
+            <div className={`${styles.drop_down_section}`}>
+              <input type="file" id="fileInput" required></input>
+              <label htmlFor="fileInput">
+                <Image src={document} alt="Ikonka dokumentu"></Image>
+                <p>
+                  Przeciągnij plik tutaj lub <mark>wybierz z komputera</mark>
+                </p>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+      <Button style={{ padding: "20px 30px 20px 30px", alignSelf: "center" }}>Wyślij zapytanie</Button>
     </form>
   );
 };
