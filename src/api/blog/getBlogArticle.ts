@@ -1,5 +1,5 @@
 import { db, storage } from "@/firebaseConfig";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { Timestamp, collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 
 const getBlogArticle = async (id: string) => {
@@ -10,7 +10,7 @@ const getBlogArticle = async (id: string) => {
   if (chaptersQuerySnapshot.size === 0) {
     return undefined;
   } else {
-    const { mainImageAlt } = articleDocSnap.data()!;
+    const { mainImageAlt, createdAt } = articleDocSnap.data()! as { mainImageAlt: string; createdAt: Timestamp };
 
     const chapters = await Promise.all(
       chaptersQuerySnapshot.docs.map(async (doc) => {
@@ -45,6 +45,7 @@ const getBlogArticle = async (id: string) => {
       mainImage: mainImage,
       chapters: chapters,
       mainImageAlt: mainImageAlt,
+      createdAt: createdAt,
     };
 
     return articleData;

@@ -1,11 +1,13 @@
+import { Timestamp } from "firebase/firestore";
 import Section13 from "../sections/Section13/Section13";
-import styes from "./styles.module.scss";
+import styles from "./styles.module.scss";
 import Image from "next/image";
 
 interface componentProps {
   data: {
     mainImage: string;
     mainImageAlt: string;
+    createdAt: Timestamp;
     chapters: {
       order: number;
       title: string;
@@ -18,10 +20,10 @@ interface componentProps {
 }
 
 const BlogArticle = ({ data }: componentProps) => {
-  const { chapters, mainImage, mainImageAlt } = data;
+  const { chapters, mainImage, mainImageAlt, createdAt } = data;
 
   return (
-    <section className={`${styes.section}`}>
+    <section className={`${styles.section}`}>
       {chapters.map((chapterData, index) => {
         const { title, paragraphs, order } = chapterData;
 
@@ -31,7 +33,14 @@ const BlogArticle = ({ data }: componentProps) => {
               <main>
                 <article key={order}>
                   <h1>{title}</h1>
-                  <div className={`${styes.paragraphs}`}>
+                  <p className={`${styles.date}`}>
+                    {new Date(createdAt.seconds * 1000).toLocaleDateString("pl-PL", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                  <div className={`${styles.paragraphs}`}>
                     {paragraphs.map((paragraphData) => {
                       const { content, order } = paragraphData;
 
@@ -39,7 +48,7 @@ const BlogArticle = ({ data }: componentProps) => {
                     })}
                   </div>
                 </article>
-                <div className={`${styes.banner}`}>
+                <div className={`${styles.banner}`}>
                   <Image src={mainImage} width={1180} height={1180} alt={mainImageAlt}></Image>
                 </div>
                 <ol>
@@ -58,7 +67,7 @@ const BlogArticle = ({ data }: componentProps) => {
             <>
               <article key={order}>
                 <h2>{title}</h2>
-                <div className={`${styes.paragraphs}`}>
+                <div className={`${styles.paragraphs}`}>
                   {paragraphs.map((paragraphData) => {
                     const { content, order } = paragraphData;
 

@@ -99,7 +99,12 @@ const Navigation = () => {
               const formattedStyles = stylesLocal.join(" ");
 
               return (
-                <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
+                <Link
+                  key={id}
+                  href={href}
+                  className={`${formattedStyles} ${
+                    href === "/" ? (pathname === href ? styles.active : "") : pathname.includes(href.split("/").splice(-1, 1).join("")) ? styles.active : ""
+                  }`}>
                   {content}
                 </Link>
               );
