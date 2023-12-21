@@ -1,14 +1,17 @@
 .header {
   width: 100%;
   max-width: 1440px;
-  padding: 150px 130px 150px 130px;
+  padding: 125px 130px 125px 130px;
   border-radius: 16px;
   background-color: #0c282c;
   background-image: linear-gradient(to right, #0c282c, #5fa2ab00), url("../../../../public/sections/section13/background.jpg");
-  background-position: 150% 55%;
+  background-position: 400% 0%;
   background-repeat: no-repeat;
-  background-size: 66%;
+  background-size: 90%;
   margin: 40px auto 120px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 
   @media screen and (max-width: 1440px) {
     width: calc(1024px - 2 * (20px));
@@ -18,20 +21,19 @@
   @media screen and (max-width: 1024px) {
     width: calc(768px - 2 * (20px));
     padding: 32px 60px 32px 60px;
-    background-size: 68%;
   }
 
   @media screen and (max-width: 768px) {
     border-radius: 0px;
     width: 100dvw;
     padding: 42px 30px 42px 30px;
-    background-size: 130%;
-    background-position: -100% 0%;
+    background-size: 170%;
+    background-position: -20% 0%;
   }
 
   @media screen and (max-width: 425px) {
-    background-size: 225%;
-    background-position: -5% 0%;
+    background-size: 300%;
+    background-position: 5% 0%;
   }
 
   h1,
@@ -42,7 +44,6 @@
   h1 {
     font-size: 44px;
     font-weight: 800;
-    margin-bottom: 40px;
     max-width: 600px;
 
     @media screen and (max-width: 1024px) {
@@ -62,5 +63,9 @@
     @media screen and (max-width: 1024px) {
       font-size: 22px;
     }
+  }
+
+  button {
+    align-self: flex-start;
   }
 }

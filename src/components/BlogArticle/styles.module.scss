@@ -7,6 +7,8 @@
   gap: 120px;
 
   article {
+    padding: 0px 30px 0px 30px;
+
     h2 {
       color: #0e4d7a;
       font-size: 32px;
@@ -19,8 +21,16 @@
       gap: 60px;
       margin-top: 60px;
 
+      @media screen and (max-width: 768px) {
+        margin-top: 20px;
+      }
+
       p {
         font-size: 20px;
+
+        @media screen and (max-width: 768px) {
+          font-size: 18px;
+        }
       }
     }
   }
@@ -32,22 +42,30 @@
       font-size: 44px;
       color: #0e4d7a;
       font-weight: 800;
+
+      @media screen and (max-width: 768px) {
+        font-size: 30px;
+      }
     }
 
     .paragraphs {
       p {
         font-size: 24px;
+
+        @media screen and (max-width: 768px) {
+          font-size: 18px;
+        }
       }
     }
 
     .banner {
-      width: 100%;
+      width: calc(100% - 2 * 30px); // Minus paddung
       height: 420px;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      margin: 80px 0px 80px 0px;
+      margin: 80px auto 80px auto;
       border-radius: 16px;
       position: relative;
 
@@ -60,22 +78,44 @@
         top: 0px;
         left: 0px;
       }
+
+      @media screen and (max-width: 768px) {
+        aspect-ratio: 1/1;
+        height: auto;
+        max-width: 425px;
+      }
+
+      img {
+        @media screen and (max-width: 768px) {
+          width: 100%;
+          height: auto;
+        }
+      }
     }
 
     ol {
       display: flex;
       flex-direction: column;
       gap: 30px;
+      padding: 0px 30px 0px 30px;
 
       p {
         color: #0e4d7a;
         font-size: 24px;
         font-weight: 800;
+
+        @media screen and (max-width: 768px) {
+          font-size: 22px;
+        }
       }
 
       li {
         font-size: 20px;
         margin-left: 24px;
+
+        @media screen and (max-width: 768px) {
+          font-size: 18px;
+        }
       }
     }
   }

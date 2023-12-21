@@ -1,3 +1,4 @@
+import Section13 from "../sections/Section13/Section13";
 import styes from "./styles.module.scss";
 import Image from "next/image";
 
@@ -21,7 +22,7 @@ const BlogArticle = ({ data }: componentProps) => {
 
   return (
     <section className={`${styes.section}`}>
-      {chapters.map((chapterData) => {
+      {chapters.map((chapterData, index) => {
         const { title, paragraphs, order } = chapterData;
 
         if (order === 1) {
@@ -54,16 +55,19 @@ const BlogArticle = ({ data }: componentProps) => {
           );
         } else {
           return (
-            <article key={order}>
-              <h2>{title}</h2>
-              <div className={`${styes.paragraphs}`}>
-                {paragraphs.map((paragraphData) => {
-                  const { content, order } = paragraphData;
+            <>
+              <article key={order}>
+                <h2>{title}</h2>
+                <div className={`${styes.paragraphs}`}>
+                  {paragraphs.map((paragraphData) => {
+                    const { content, order } = paragraphData;
 
-                  return <p key={order} dangerouslySetInnerHTML={{ __html: content }}></p>;
-                })}
-              </div>
-            </article>
+                    return <p key={order} dangerouslySetInnerHTML={{ __html: content }}></p>;
+                  })}
+                </div>
+              </article>
+              {Math.floor(chapters.length / 2) === index && <Section13></Section13>}
+            </>
           );
         }
       })}

@@ -5,32 +5,10 @@ import BlogArticlesBrief from "@/components/BlogArticlesBrief/BlogArticlesBrief"
 import { db } from "@/firebaseConfig";
 import { collection, documentId, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import getBlogArticlesBrief from "@/api/blog/getBlogArticlesBrief";
 
 const Section9 = async () => {
-  const blogArticlesQuerySnapshot = await getDocs(query(collection(db, "blogArticles"), orderBy(documentId()), limit(3)));
-
-  const blogArticles: {
-    id: string;
-    image: string;
-    title: string;
-    brief: string;
-    mainImageAlt: string;
-  }[] = await Promise.all(
-    blogArticlesQuerySnapshot.docs.map(async (doc) => {
-      const { title, brief, mainImageAlt } = doc.data();
-
-      const storage = getStorage();
-      const image = await getDownloadURL(ref(storage, `blogArticles/${doc.id}/main.jpg`));
-
-      return {
-        id: doc.id,
-        image: image,
-        title: title,
-        brief: brief,
-        mainImageAlt: mainImageAlt,
-      };
-    })
-  );
+  const blogArticles = await getBlogArticlesBrief(3);
 
   return (
     <section className={styles.section}>
