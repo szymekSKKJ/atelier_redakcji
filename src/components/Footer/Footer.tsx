@@ -38,7 +38,7 @@ const Footer = () => {
         <span>
           <p>Copyright © 2022-2023 atelier-redakcji.eu</p>
           <p>Projekt strony: Damian Kiliszek</p>
-          <p>Wdrożenie: Szymon Stępniak</p>
+          <p>Wdrożenie: Szymon Stępniak#SKKJ</p>
         </span>
       </div>
       <div className={`${styles.disclaimer}`}>
