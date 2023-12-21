@@ -11,6 +11,24 @@
 
 html {
   scroll-behavior: smooth;
+
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f3f6;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #18a77c;
+    border-radius: 1000px;
+    border: solid 6px #f1f3f6;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #19ba8a;
+  }
 }
 
 body {

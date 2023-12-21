@@ -25,7 +25,7 @@ const BlogArticle = ({ data }: componentProps) => {
       {chapters.map((chapterData, index) => {
         const { title, paragraphs, order } = chapterData;
 
-        if (order === 1) {
+        if (index === 0) {
           return (
             <>
               <main>
