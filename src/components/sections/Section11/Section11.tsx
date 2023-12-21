@@ -38,7 +38,9 @@ const Section11 = ({ type = "landing page" }: componentProps) => {
           </>
         )}
       </header>
-      <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Wyceń swój tekst</Button>
+      <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute="/#mainForm">
+        Wyceń swój tekst
+      </Button>
     </section>
   );
 };

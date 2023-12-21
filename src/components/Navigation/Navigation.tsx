@@ -140,10 +140,14 @@ const Navigation = () => {
               );
             }
           })}
-          <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }}>Wyceń swój tekst</Button>
+          <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }} changeRoute="/#mainForm">
+            Wyceń swój tekst
+          </Button>
         </div>
       </nav>
-      <Button style={{ padding: "15px 20px 15px 20px" }}>Wyceń swój tekst</Button>
+      <Button style={{ padding: "15px 20px 15px 20px" }} changeRoute="/#mainForm">
+        Wyceń swój tekst
+      </Button>
       <nav className={`${styles.mobile}  ${isMobileMenuOpen ? styles.open : ""}`}>
         {links.map((linkData, index) => {
           if (index > 0) {
@@ -174,7 +178,9 @@ const Navigation = () => {
             );
           }
         })}
-        <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }}>Wyceń swój tekst</Button>
+        <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }} changeRoute="/#mainForm">
+          Wyceń swój tekst
+        </Button>
       </nav>
     </div>
   );

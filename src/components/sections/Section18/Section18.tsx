@@ -36,7 +36,7 @@ const Section18 = () => {
             nasze ukochane atelierskie grono Klientów oraz partnerów biznesowych ciągle rośnie w nsiłę. Do tego kręgu z największą przyjemnością zapraszamy i
             Ciebie!
           </p>
-          <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>
+          <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute="/offer">
             Poznaj ofertę
           </Button>
         </article>
@@ -50,7 +50,7 @@ const Section18 = () => {
             Od lat dzielimy się pasją do tworzenia, przekraczamy własne granice i stawiamy czoła najbardziej wymagającym wyzwaniom.
           </p>
           <p className={`${styles.caption3}`}>Nasz zespół nie pozwoli Ci odejść bez satysfakcji!</p>
-          <Button theme="green-white" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>
+          <Button theme="green-white" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute="/offer">
             Poznaj ofertę
           </Button>
         </article>

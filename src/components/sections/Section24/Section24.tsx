@@ -7,7 +7,9 @@ const Section24 = () => {
       <h2>
         Zainteresowany/a? <br></br>Chcesz, abyśmy <mark>wycenili Twój tekst?</mark>
       </h2>
-      <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Wyceń swój tekst</Button>
+      <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute="/#mainForm">
+        Wyceń swój tekst
+      </Button>
     </section>
   );
 };

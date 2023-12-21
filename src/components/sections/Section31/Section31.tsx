@@ -31,7 +31,9 @@ const Section31 = ({ sectionData }: props) => {
             );
           })}
 
-          <Button style={{ padding: "20px 30px 20px 30px" }}>Wyceń swój tekst</Button>
+          <Button style={{ padding: "20px 30px 20px 30px" }} changeRoute="/#mainForm">
+            Wyceń swój tekst
+          </Button>
         </div>
       </article>
       <div className={`${styles.image_wrapper}`}>

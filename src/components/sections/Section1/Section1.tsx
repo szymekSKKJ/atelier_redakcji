@@ -27,7 +27,9 @@ const Section1 = () => {
           <p>
             <mark className={`${styles.bold}`}>Masz jakiś tekst do sprawdzenia? Chętnie pomożemy!</mark>
           </p>
-          <Button style={{ padding: "20px 30px 20px 30px" }}>Wyceń swój tekst</Button>
+          <Button style={{ padding: "20px 30px 20px 30px" }} changeRoute="/#mainForm">
+            Wyceń swój tekst
+          </Button>
         </div>
       </article>
     </section>

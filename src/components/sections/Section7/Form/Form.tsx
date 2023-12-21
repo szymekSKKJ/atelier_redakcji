@@ -28,7 +28,7 @@ const toggleRequiredAttributeToCheckboxElements = (event: MouseEvent<HTMLInputEl
 
 const Form = () => {
   return (
-    <form className={`${styles.form}`}>
+    <form className={`${styles.form}`} id="mainForm">
       <section>
         <p className={`${styles.title}`}>1. Dane kontaktowe:</p>
         <div className={`${styles.row}`}>

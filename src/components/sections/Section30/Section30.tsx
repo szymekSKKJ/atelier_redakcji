@@ -20,7 +20,9 @@ const Section30 = () => {
           Podczas tworzenia pracy naukowej nie powinieneś zapomnieć o swoich czytelnikach. To właśnie w trosce o ich komfort konieczne jest przygotowanie
           odpowiedniej struktury wolnej od błędów technicznych, językowych i merytorycznych.
         </p>
-        <Button style={{ padding: "20px 30px 20px 30px" }}>Wyceń swój tekst</Button>
+        <Button style={{ padding: "20px 30px 20px 30px" }} changeRoute="/#mainForm">
+          Wyceń swój tekst
+        </Button>
       </div>
     </section>
   );

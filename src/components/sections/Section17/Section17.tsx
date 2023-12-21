@@ -20,7 +20,9 @@ const Section17 = () => {
             Dlatego zapewniamy, że <mark>tekst będzie spełniał wszelkie wymogi uczelniane, redakcyjne i językowe.</mark> Dostaniesz tekst gotowy w 100% do
             publikacji/wydruku.
           </p>
-          <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }}>Wyceń swój tekst</Button>
+          <Button style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute="/#mainForm">
+            Wyceń swój tekst
+          </Button>
         </article>
       </div>
     </section>

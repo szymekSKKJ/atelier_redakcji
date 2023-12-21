@@ -33,7 +33,9 @@ const Footer = () => {
               </div>
             </nav>
           </div>
-          <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }}>Wyceń swój tekst</Button>
+          <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }} changeRoute="/#mainForm">
+            Wyceń swój tekst
+          </Button>
         </div>
         <span>
           <p>Copyright © 2022-2023 atelier-redakcji.eu</p>
