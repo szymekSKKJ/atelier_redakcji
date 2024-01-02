@@ -29,6 +29,15 @@
   }
 }
 
+.danger {
+  background-color: #e60000;
+  color: white;
+
+  &:hover {
+    background-color: #ff6666;
+  }
+}
+
 .button {
   border-radius: 8px;
   flex-shrink: 0;

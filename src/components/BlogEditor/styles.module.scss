@@ -1,0 +1,44 @@
+.blog_editor {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 50px;
+
+  .login {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin: 100px auto 0px auto;
+
+    .error {
+      color: #ff667d;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border-radius: 8px;
+      padding: 8px 16px 8px 16px;
+      border: none;
+      outline: none;
+      font-size: 18px;
+      outline: solid transparent 2px;
+      transition: 250ms;
+
+      &:focus {
+        outline-color: #18a77c;
+      }
+
+      &:valid {
+        outline-color: #18a77c;
+      }
+    }
+  }
+}

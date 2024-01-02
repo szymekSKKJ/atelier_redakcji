@@ -8,7 +8,6 @@ interface componentProps {
     image: string;
     title: string;
     brief: string;
-    mainImageAlt: string;
   }[];
 }
 
@@ -16,13 +15,13 @@ const BlogArticlesBrief = ({ articles }: componentProps) => {
   return (
     <div className={`${articles.length === 1 ? styles.articles_single : styles.articles_multiple}`} role="group">
       {articles.map((articleData) => {
-        const { id, image, mainImageAlt, title, brief } = articleData;
+        const { id, image, title, brief } = articleData;
 
         if (articles.length === 1) {
           return (
             <article key={id}>
               <div className={`${styles.image_wrapper}`} role="img" aria-label="Zdjęcie">
-                <Image height={512} width={512} src={image} alt={mainImageAlt}></Image>
+                <Image height={512} width={512} src={image} alt="Zdjęcie artykułu bloga"></Image>
               </div>
               <div className={`${styles.content_wrapper}`}>
                 <h2>{title}</h2>
@@ -38,7 +37,7 @@ const BlogArticlesBrief = ({ articles }: componentProps) => {
             <article key={id}>
               <figure>
                 <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
-                  <Image height={512} width={512} src={image} alt={mainImageAlt}></Image>
+                  <Image height={512} width={512} src={image} alt="Zdjęcie artykułu bloga"></Image>
                 </div>
                 <figcaption>{title}</figcaption>
               </figure>

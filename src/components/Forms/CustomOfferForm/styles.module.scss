@@ -6,6 +6,24 @@
   gap: 20px;
   align-items: stretch;
   margin-top: 40px;
+  position: relative;
+  border-radius: 8px;
+  padding: 20px;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.33);
+    backdrop-filter: blur(4px);
+    transition: 250ms;
+    opacity: 0;
+    pointer-events: none;
+  }
 
   .input_wrapper {
     display: flex;
@@ -31,6 +49,7 @@
       outline: none;
       font-size: 18px;
       outline: solid transparent 2px;
+      transition: 250ms;
 
       &:focus {
         outline-color: #18a77c;
@@ -48,39 +67,79 @@
     }
   }
 
-  .input_wrapper.drop_down_section_wrapper {
+  .drop_down_section {
     width: 100%;
+    position: relative;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      z-index: -1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
-    @media screen and (max-width: 768px) {
-      width: 100%;
+      &:valid + label {
+        outline-color: #18a77c;
+      }
     }
 
-    .drop_down_section {
+    label {
       height: 100%;
-      min-height: 140px;
+      min-height: 150px;
       background-color: white;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      border: dashed 1px #dee5e3;
-      margin-top: 15px;
-      border-radius: 8px;
-      flex-direction: column;
       gap: 10px;
-      padding: 30px;
+      padding: 40px 0px 40px 0px;
+      border: dashed 2px #dee5e3;
+      border-radius: 8px;
+      outline: unset;
+      outline: dashed transparent 2px;
+      transition: outline 250ms, border 250ms;
+      cursor: pointer;
 
-      > p {
+      p {
+        font-size: 14px;
         text-align: center;
 
         mark {
-          text-decoration: underline;
           color: #18a77c;
-          cursor: pointer;
+          text-decoration: underline;
         }
+      }
+
+      img {
+        transform: translate(0px, 0px);
+        transition: 100ms;
+
+        @keyframes dragging {
+          0% {
+            transform: translate(-5px, 0px);
+          }
+          50% {
+            transform: translate(5px, 0px);
+          }
+          100% {
+            transform: translate(-5px, 0px);
+          }
+        }
+      }
+    }
+
+    label.dragging {
+      border: dashed 2px #18a77c;
+
+      p {
+        font-weight: 800;
+      }
+
+      img {
+        transform: translate(-5px, 0px);
+        animation: dragging 333ms infinite;
       }
     }
   }
@@ -99,6 +158,18 @@
 
   button {
     align-self: center;
+  }
+
+  button.sending {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.form.sending {
+  &::after {
+    opacity: 1;
+    pointer-events: all;
   }
 }
 
@@ -122,6 +193,46 @@
       em {
         color: #fbfbfb;
       }
+    }
+  }
+}
+
+.sent {
+  div {
+    width: 100%;
+    max-width: 1180px;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+
+    @media screen and (max-width: 425px) {
+      gap: 0px;
+    }
+
+    p {
+      font-size: 44px;
+      font-weight: 800;
+      color: white;
+      text-align: center;
+
+      @media screen and (max-width: 425px) {
+        font-size: 24px;
+      }
+
+      mark {
+        color: #18a77c;
+      }
+    }
+  }
+
+  div.dark {
+    p {
+      color: #0e4d7a;
     }
   }
 }

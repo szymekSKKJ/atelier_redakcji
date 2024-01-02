@@ -1,0 +1,51 @@
+.section {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  border-top: 2px solid #dee5e3;
+  padding-top: 50px;
+
+  .image_wrapper {
+    width: 140px;
+    height: 140px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: auto;
+      translate: 0px 40px;
+      scale: 1.25;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    span {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+
+      p {
+        font-weight: 800;
+        font-size: 24px;
+        color: #0e4d7a;
+      }
+    }
+
+    b {
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}

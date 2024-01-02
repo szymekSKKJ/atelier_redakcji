@@ -7,13 +7,25 @@ import { collection, documentId, getDocs, limit, orderBy, query } from "firebase
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import getBlogArticlesBrief from "@/api/blog/getBlogArticlesBrief";
 
-const Section9 = async () => {
+interface componentProps {
+  type?: "landing page" | "blog";
+}
+
+const Section9 = async ({ type = "landing page" }: componentProps) => {
   const blogArticles = await getBlogArticlesBrief(3);
 
   return (
     <section className={styles.section}>
       <header>
-        <h2>Zapraszamy na naszego bloga</h2>
+        <h2>
+          {type === "blog" ? (
+            <>
+              <mark>Podobne</mark> artykuły
+            </>
+          ) : (
+            <>Zapraszamy na naszego bloga</>
+          )}
+        </h2>
         <CurvedLines></CurvedLines>
         <p className={styles.caption1}>
           Znajdziesz tam praktyczne wskazówki dot. m.in.:<br></br> aspektów związanych z pisaniem prac oraz poprawnością językową.

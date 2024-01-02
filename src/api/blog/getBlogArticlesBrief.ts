@@ -1,29 +1,40 @@
 import { db } from "@/firebaseConfig";
-import { getDocs, query, collection, orderBy, documentId, limit } from "firebase/firestore";
+import { getDocs, query, collection, orderBy, documentId, limit, QueryDocumentSnapshot, DocumentData, startAt, where } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
-const getBlogArticlesBrief = async (limitValue: number) => {
-  const blogArticlesQuerySnapshot = await getDocs(query(collection(db, "blogArticles"), orderBy(documentId()), limit(limitValue)));
+const getQuery = async (limitValue: number, lastDoc?: QueryDocumentSnapshot<DocumentData, DocumentData>, keyWord?: string) => {
+  if (lastDoc) {
+    return await getDocs(query(collection(db, "blogArticles"), orderBy("createdAt", "desc"), limit(limitValue), startAt(lastDoc)));
+  }
+  if (keyWord) {
+    return await getDocs(query(collection(db, "blogArticles"), limit(limitValue), where("word", "<=", keyWord + "\uf8ff")));
+  }
+
+  return await getDocs(query(collection(db, "blogArticles"), orderBy("createdAt", "desc"), limit(limitValue)));
+};
+
+const getBlogArticlesBrief = async (limitValue: number, lastDoc?: QueryDocumentSnapshot<DocumentData, DocumentData>, keyWord?: string) => {
+  const blogArticlesQuerySnapshot = await getQuery(limitValue, lastDoc, keyWord);
 
   const blogArticles = await Promise.all(
     blogArticlesQuerySnapshot.docs.map(async (doc) => {
-      const { title, brief, mainImageAlt } = doc.data();
+      const { brief, chapters } = doc.data();
 
       const storage = getStorage();
-      const image = await getDownloadURL(ref(storage, `blogArticles/${doc.id}/main.jpg`));
+      const image = await getDownloadURL(ref(storage, `blogArticles/${doc.id}/mainImage.jpg`));
 
       return {
         id: doc.id,
         image: image,
-        title: title,
+        title: chapters[0].title,
         brief: brief,
-        mainImageAlt: mainImageAlt,
+        docRef: doc,
       } as {
         id: string;
         image: string;
         title: string;
         brief: string;
-        mainImageAlt: string;
+        docRef: QueryDocumentSnapshot<DocumentData, DocumentData>;
       };
     })
   );

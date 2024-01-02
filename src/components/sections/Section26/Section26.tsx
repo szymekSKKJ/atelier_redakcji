@@ -1,11 +1,7 @@
-"use client";
-
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
-import { useEffect } from "react";
 
 const Section26 = () => {
-  useEffect(() => {}, []);
   return (
     <section className={`${styles.section}`}>
       <article>

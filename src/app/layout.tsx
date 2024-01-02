@@ -14,11 +14,7 @@ const mulishFont = Mulish({ subsets: ["latin"] });
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={mulishFont.className}>
-        <Navigation></Navigation>
-        {children}
-        <Footer></Footer>
-      </body>
+      <body className={mulishFont.className}>{children}</body>
     </html>
   );
 }
