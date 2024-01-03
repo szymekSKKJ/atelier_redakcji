@@ -34,7 +34,8 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     key: uniqueKey,
     style: (() => {
       if (isEditableContentEmpty) {
-        return { fontStyle: "italic", opacity: "0.5", transition: "opacity 250ms" };
+        return {};
+        // return { fontStyle: "italic", opacity: "0.5", transition: "opacity 250ms" };
       } else {
         return {};
       }
