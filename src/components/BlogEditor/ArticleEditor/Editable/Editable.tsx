@@ -2,7 +2,7 @@
 
 import { randomUUID } from "crypto";
 import styles from "./styles.module.scss";
-import { Children, cloneElement, useEffect, useRef, useState } from "react";
+import { Children, cloneElement, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const DeleteIcon = ({ width = 24, height = 24, color = "white" }) => {
   return (
@@ -34,8 +34,7 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     key: uniqueKey,
     style: (() => {
       if (isEditableContentEmpty) {
-        return {};
-        // return { fontStyle: "italic", opacity: "0.5", transition: "opacity 250ms" };
+        return { fontStyle: "italic", opacity: "0.5", transition: "opacity 250ms" };
       } else {
         return {};
       }
@@ -50,7 +49,7 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     onPaste: (event: ClipboardEvent) => {
       event.preventDefault();
       if (event.clipboardData && event.currentTarget) {
-        //setIsEditableContentEmpty(false);
+        setIsEditableContentEmpty(false);
         const clipboardData = event.clipboardData.getData("text/plain");
         const currentElement = event.currentTarget as HTMLElement;
 
@@ -60,13 +59,11 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     onInput: (event: InputEvent) => {
       const currentElement = event.currentTarget as HTMLElement;
 
-      // Buggy
-      // if (!currentElement.innerText.trim().length) {
-      //   setIsEditableContentEmpty(true);
-
-      // } else {
-      //   setIsEditableContentEmpty(false);
-      // }
+      if (!currentElement.innerText.trim().length) {
+        setIsEditableContentEmpty(true);
+      } else {
+        setIsEditableContentEmpty(false);
+      }
     },
     onBlur: (event: FocusEvent) => {
       onSave(event);
@@ -79,6 +76,14 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
   useEffect(() => {
     thisElementRef.current?.focus();
   }, []);
+
+  useLayoutEffect(() => {
+    if (isEditableContentEmpty) {
+      if (thisElementRef.current) {
+        thisElementRef.current.innerText = defaultValue;
+      }
+    }
+  }, [isEditableContentEmpty]);
 
   return (
     <div className={`${styles.editable}`}>
