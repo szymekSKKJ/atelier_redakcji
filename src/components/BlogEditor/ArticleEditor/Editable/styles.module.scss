@@ -1,21 +1,25 @@
 .editable {
-  position: relative;
-  padding-right: 50px;
+  display: flex;
+  align-items: center;
+
+  * {
+    width: 100%;
+  }
 
   .delete {
-    position: absolute;
-    top: 0px;
-    right: 0px;
+    width: auto;
+    height: auto;
     background-color: #ff667d;
     border-radius: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
-
     cursor: pointer;
     transition: 250ms;
     padding: 6px;
+    margin-left: 10px;
+    overflow: hidden;
 
     &:hover {
       background-color: #ff8093;

@@ -219,6 +219,7 @@ const Form = () => {
                     <p>
                       Przeciągnij plik tutaj lub <mark>wybierz z komputera</mark>
                     </p>
+                    {attachedFile && <p className={`${styles.attatched_file}`}>{attachedFile.name}</p>}
                   </label>
                 </div>
               </div>
@@ -241,11 +242,15 @@ const Form = () => {
 
                 if (areAllInputsCorrect) {
                   setFormStatus("sending");
-                  const response = await sendMainForm(formData);
+                  try {
+                    const response = await sendMainForm(formData);
 
-                  if (response.includes("250")) {
-                    setFormStatus("ok");
-                  } else {
+                    if (response.includes("250")) {
+                      setFormStatus("ok");
+                    } else {
+                      setFormStatus("error");
+                    }
+                  } catch (error) {
                     setFormStatus("error");
                   }
                 }

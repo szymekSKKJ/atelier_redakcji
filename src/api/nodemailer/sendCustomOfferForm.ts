@@ -1,13 +1,12 @@
 "use server";
 import nodemailer from "nodemailer";
-import pass from "./pass";
 
 const sendCustomOfferForm = async (formData: FormData): Promise<string> => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "kontakt@atelier-redakcji.eu",
-      pass: pass,
+      user: process.env.nodemailerEmail,
+      pass: process.env.nodemailerPassword,
     },
   });
 
@@ -56,32 +55,32 @@ const sendCustomOfferForm = async (formData: FormData): Promise<string> => {
           margin: 0px;
           padding: 0px;
         }
-  
+
         body {
           padding: 20px;
           display: flex;
           flex-direction: column;
           gap: 10px;
         }
-  
+
         h1.title {
           margin-bottom: 10px;
         }
-  
+
         p, b {
           line-height: 1;
           font-size: 15px;
           padding: 2px;
         }
-  
+
         p.message {
           margin: 0px 0px 50px 0px;
         }
-  
+
         b {
           display: block;
         }
-  
+
         .contact {
           margin-top: 50px;
         }
@@ -96,7 +95,7 @@ const sendCustomOfferForm = async (formData: FormData): Promise<string> => {
       <p>Email: ${email}</p>
     </body>
   </html>
-  
+
     `,
   });
 

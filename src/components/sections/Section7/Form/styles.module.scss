@@ -11,7 +11,6 @@
   gap: 80px;
   scroll-margin-top: 600px;
   position: relative;
-  overflow: hidden;
   border-radius: 8px;
 
   &::after {
@@ -133,6 +132,10 @@
           color: #18a77c;
           text-decoration: underline;
         }
+      }
+
+      p.attatched_file {
+        font-weight: 800;
       }
 
       img {

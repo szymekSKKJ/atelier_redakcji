@@ -53,7 +53,7 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
               Adres e-mail<br></br>
               <em>(pole obowiązkowe)</em>
             </label>
-            <input name="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="Adres e-mail"></input>
+            <input name="email" required pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/" placeholder="Adres e-mail"></input>
           </div>
           <div className={`${styles.input_wrapper} ${styles.textarea}`}>
             <label>
@@ -93,6 +93,7 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
                 <p>
                   Przeciągnij plik tutaj lub <mark>wybierz z komputera</mark>
                 </p>
+                {attachedFile && <p className={`${styles.attatched_file}`}>{attachedFile.name}</p>}
               </label>
             </div>
           </div>
@@ -119,11 +120,15 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
 
                 if (areAllInputsCorrect) {
                   setFormStatus("sending");
-                  const response = await sendCustomOfferForm(formData);
+                  try {
+                    const response = await sendCustomOfferForm(formData);
 
-                  if (response.includes("250")) {
-                    setFormStatus("ok");
-                  } else {
+                    if (response.includes("250")) {
+                      setFormStatus("ok");
+                    } else {
+                      setFormStatus("error");
+                    }
+                  } catch (error) {
                     setFormStatus("error");
                   }
                 }

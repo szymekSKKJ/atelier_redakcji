@@ -42,21 +42,21 @@ const ArticleEditor = ({ currentActiveBlogId, setCurrentActiveBlogId, setDisplay
         chapters: [
           {
             order: 1,
-            title: "Nadaj tytuł",
+            title: "",
             paragraphs: [
               {
                 order: 1,
-                content: "Dodaj akapit",
+                content: "",
               },
             ],
           },
           {
             order: 2,
-            title: "Nadaj tytuł",
+            title: "",
             paragraphs: [
               {
                 order: 1,
-                content: "Dodaj akapit",
+                content: "",
               },
             ],
           },

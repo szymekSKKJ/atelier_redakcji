@@ -1,13 +1,12 @@
 "use server";
 import nodemailer from "nodemailer";
-import pass from "./pass";
 
 const sendMainForm = async (formData: FormData): Promise<string> => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "kontakt@atelier-redakcji.eu",
-      pass: pass,
+      user: process.env.nodemailerEmail,
+      pass: process.env.nodemailerPassword,
     },
   });
 

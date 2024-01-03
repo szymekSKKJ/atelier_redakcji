@@ -20,8 +20,6 @@ const Section33 = () => {
       }[]
   >(null);
 
-  console.log(foundArticles);
-
   return (
     <section className={`${styles.section}`}>
       <p>
