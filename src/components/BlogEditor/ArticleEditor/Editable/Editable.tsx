@@ -31,6 +31,7 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     suppressContentEditableWarning: true,
     ref: thisElementRef,
     key: uniqueKey,
+    placeholder: defaultValue,
     onFocus: (event: FocusEvent) => {
       const range = document.createRange();
       range.selectNodeContents(event.currentTarget as HTMLElement);

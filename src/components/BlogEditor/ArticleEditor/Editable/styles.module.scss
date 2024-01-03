@@ -6,7 +6,7 @@
     width: 100%;
 
     &:empty::before {
-      content: "Edytuj";
+      content: attr(placeholder);
       color: inherit;
       font-style: italic;
       pointer-events: none;
