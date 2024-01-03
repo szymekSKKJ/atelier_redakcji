@@ -22,7 +22,6 @@ interface componentProps {
 const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: componentProps) => {
   const currentChild = Children.only(children);
 
-  const [isEditableContentEmpty, setIsEditableContentEmpty] = useState(true);
   const [uniqueKey] = useState(crypto.randomUUID());
 
   const thisElementRef = useRef<null | HTMLElement>(null);
@@ -32,13 +31,6 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     suppressContentEditableWarning: true,
     ref: thisElementRef,
     key: uniqueKey,
-    style: (() => {
-      if (isEditableContentEmpty) {
-        return { fontStyle: "italic", opacity: "0.5", transition: "opacity 250ms" };
-      } else {
-        return {};
-      }
-    })(),
     onFocus: (event: FocusEvent) => {
       const range = document.createRange();
       range.selectNodeContents(event.currentTarget as HTMLElement);
@@ -49,22 +41,13 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     onPaste: (event: ClipboardEvent) => {
       event.preventDefault();
       if (event.clipboardData && event.currentTarget) {
-        setIsEditableContentEmpty(false);
         const clipboardData = event.clipboardData.getData("text/plain");
         const currentElement = event.currentTarget as HTMLElement;
 
         currentElement.innerText = clipboardData;
       }
     },
-    onInput: (event: InputEvent) => {
-      const currentElement = event.currentTarget as HTMLElement;
 
-      if (!currentElement.innerText.trim().length) {
-        setIsEditableContentEmpty(true);
-      } else {
-        setIsEditableContentEmpty(false);
-      }
-    },
     onBlur: (event: FocusEvent) => {
       onSave(event);
     },
@@ -76,14 +59,6 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
   useEffect(() => {
     thisElementRef.current?.focus();
   }, []);
-
-  useLayoutEffect(() => {
-    if (isEditableContentEmpty) {
-      if (thisElementRef.current) {
-        thisElementRef.current.innerText = defaultValue;
-      }
-    }
-  }, [isEditableContentEmpty]);
 
   return (
     <div className={`${styles.editable}`}>
