@@ -60,7 +60,7 @@ const Form = () => {
                 <label className={`${styles.title}`}>
                   Adres e-mail <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
                 </label>
-                <input type="email" placeholder="Adres e-mail" name="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"></input>
+                <input type="email" placeholder="Adres e-mail" name="email" required></input>
               </div>
               <div className={`${styles.input_wrapper}`}>
                 <label className={`${styles.title}`}>Numer telefonu</label>

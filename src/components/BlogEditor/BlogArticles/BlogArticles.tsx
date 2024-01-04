@@ -46,7 +46,7 @@ const BlogArticles = ({ setCurrentActiveBlogId, setDisplayEditor }: componentsPr
                   <Image src={image} height={512} width={512} alt="Zdjęcie artykułu bloga"></Image>
                 </div>
                 <h2>{title}</h2>
-                <p>{brief}</p>
+                <p dangerouslySetInnerHTML={{ __html: brief }}></p>
               </div>
             );
           })}

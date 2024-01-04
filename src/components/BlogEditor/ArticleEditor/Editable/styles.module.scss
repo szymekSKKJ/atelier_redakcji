@@ -4,6 +4,7 @@
 
   * {
     width: 100%;
+    color: inherit;
 
     &:empty::before {
       content: attr(placeholder);
@@ -12,6 +13,11 @@
       pointer-events: none;
       opacity: 0.5;
     }
+  }
+
+  .createdElement {
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
   }
 
   .delete {
@@ -31,6 +37,34 @@
 
     &:hover {
       background-color: #ff8093;
+    }
+  }
+}
+
+.context_menu {
+  background-color: rgba(0, 0, 0, 0.125);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000000000;
+  backdrop-filter: blur(6px);
+  border-radius: 0px 4px 4px 4px;
+
+  .option {
+    font-size: 18px;
+    text-align: left;
+    padding: 6px 12px 6px 12px;
+    background-color: rgba(0, 0, 0, 0);
+    border: unset;
+    transition: 250ms;
+    color: black;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.125);
     }
   }
 }

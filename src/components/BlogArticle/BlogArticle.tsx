@@ -34,51 +34,48 @@ const BlogArticle = ({ data }: componentProps) => {
 
         if (index === 0) {
           return (
-            <>
-              <main>
-                <article key={order} id={`${order}`}>
-                  <h1>{title}</h1>
-
-                  <p className={`${styles.date}`}>
-                    {new Date(createdAt.seconds * 1000).toLocaleDateString("pl-PL", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </p>
-                  {paragraphs.map((paragraphData) => {
-                    const { content, order } = paragraphData;
-
-                    return <p key={order} dangerouslySetInnerHTML={{ __html: content }}></p>;
+            <main key={index}>
+              <article key={order} id={`${order}`}>
+                <h1 dangerouslySetInnerHTML={{ __html: title }}></h1>
+                <p className={`${styles.date}`}>
+                  {new Date(createdAt.seconds * 1000).toLocaleDateString("pl-PL", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
                   })}
-                </article>
-                <div className={`${styles.banner}`}>
-                  <Image src={mainImage} width={1180} height={1180} alt="Zdjęcia artykuł€ bloga"></Image>
-                </div>
-                <ol>
-                  <p>Spis Treści:</p>
-                  {chapters.map((chapterData) => {
-                    if (chapterData.order !== 1) {
-                      return (
-                        <li
-                          key={chapterData.order}
-                          onClick={() => {
-                            router.push(`/blog/${id}/#${chapterData.order}`);
-                          }}>
-                          {chapterData.title}
-                        </li>
-                      );
-                    }
-                  })}
-                </ol>
-              </main>
-            </>
+                </p>
+                {paragraphs.map((paragraphData) => {
+                  const { content, order } = paragraphData;
+
+                  return <p key={order} dangerouslySetInnerHTML={{ __html: content }}></p>;
+                })}
+              </article>
+              <div className={`${styles.banner}`}>
+                <Image src={mainImage} width={1180} height={1180} alt="Zdjęcia artykuł€ bloga"></Image>
+              </div>
+              <ol>
+                <p>Spis Treści:</p>
+                {chapters.map((chapterData) => {
+                  if (chapterData.order !== 1) {
+                    return (
+                      <li
+                        key={chapterData.order}
+                        onClick={() => {
+                          router.push(`/blog/${id}/#${chapterData.order}`);
+                        }}>
+                        {chapterData.title}
+                      </li>
+                    );
+                  }
+                })}
+              </ol>
+            </main>
           );
         } else {
           return (
             <>
               <article key={order} id={`${order}`}>
-                <h2>{title}</h2>
+                <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
                 {paragraphs.map((paragraphData) => {
                   const { content, order } = paragraphData;
 

@@ -11,6 +11,7 @@ import getBlogArticle from "@/api/blog/getBlogArticle";
 import Editable from "./Editable/Editable";
 import { blogArticlesBriefSignalData } from "../BlogEditor";
 import { settings } from "firebase/analytics";
+import { useRouter } from "next/navigation";
 
 interface componentProps {
   currentActiveBlogId: string | null;
@@ -19,6 +20,8 @@ interface componentProps {
 }
 
 const ArticleEditor = ({ currentActiveBlogId, setCurrentActiveBlogId, setDisplayEditor }: componentProps) => {
+  const router = useRouter();
+
   const [article, setArticle] = useState<{
     id: null | string;
     mainImage: File | null | string;
@@ -166,12 +169,12 @@ const ArticleEditor = ({ currentActiveBlogId, setCurrentActiveBlogId, setDisplay
                             setArticle((currentValue) => {
                               const copiedCurrentValue = structuredClone(currentValue)!;
 
-                              copiedCurrentValue.chapters[chapterIndex].title = currentElement.innerText;
+                              copiedCurrentValue.chapters[chapterIndex].title = `${currentElement.innerHTML}`;
 
                               return copiedCurrentValue;
                             });
                           }}>
-                          <h1>{title}</h1>
+                          <h1 dangerouslySetInnerHTML={{ __html: title }}></h1>
                         </Editable>
 
                         <p className={`${styles.date}`}>
@@ -202,12 +205,12 @@ const ArticleEditor = ({ currentActiveBlogId, setCurrentActiveBlogId, setDisplay
                                 setArticle((currentValue) => {
                                   const copiedCurrentValue = structuredClone(currentValue)!;
 
-                                  copiedCurrentValue.chapters[chapterIndex].paragraphs[paragraphIndex].content = currentElement.innerText;
+                                  copiedCurrentValue.chapters[chapterIndex].paragraphs[paragraphIndex].content = `${currentElement.innerHTML}`;
 
                                   return copiedCurrentValue;
                                 });
                               }}>
-                              <p>{content}</p>
+                              <p dangerouslySetInnerHTML={{ __html: content }}></p>
                             </Editable>
                           );
                         })}
@@ -275,7 +278,7 @@ const ArticleEditor = ({ currentActiveBlogId, setCurrentActiveBlogId, setDisplay
                           if (chapterData.order !== 1) {
                             return (
                               <li key={chapterData.order}>
-                                <a href={`/#${chapterData.order}`}>{chapterData.title}</a>
+                                <a onClick={() => router.push(`/blogEditor/#${chapterData.order}`)}>{chapterData.title}</a>
                               </li>
                             );
                           }
@@ -305,12 +308,12 @@ const ArticleEditor = ({ currentActiveBlogId, setCurrentActiveBlogId, setDisplay
                           setArticle((currentValue) => {
                             const copiedCurrentValue = structuredClone(currentValue)!;
 
-                            copiedCurrentValue.chapters[chapterIndex].title = currentElement.innerText;
+                            copiedCurrentValue.chapters[chapterIndex].title = `${currentElement.innerHTML}`;
 
                             return copiedCurrentValue;
                           });
                         }}>
-                        <h2>{title}</h2>
+                        <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
                       </Editable>
                       {paragraphs.map((paragraphData, paragraphIndex) => {
                         const { content, order } = paragraphData;
@@ -333,12 +336,12 @@ const ArticleEditor = ({ currentActiveBlogId, setCurrentActiveBlogId, setDisplay
                               setArticle((currentValue) => {
                                 const copiedCurrentValue = structuredClone(currentValue)!;
 
-                                copiedCurrentValue.chapters[chapterIndex].paragraphs[paragraphIndex].content = currentElement.innerText;
+                                copiedCurrentValue.chapters[chapterIndex].paragraphs[paragraphIndex].content = `${currentElement.innerHTML}`;
 
                                 return copiedCurrentValue;
                               });
                             }}>
-                            <p>{content}</p>
+                            <p dangerouslySetInnerHTML={{ __html: content }}></p>
                           </Editable>
                         );
                       })}

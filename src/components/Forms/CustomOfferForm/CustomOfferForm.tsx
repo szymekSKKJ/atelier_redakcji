@@ -53,7 +53,7 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
               Adres e-mail<br></br>
               <em>(pole obowiązkowe)</em>
             </label>
-            <input name="email" required pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/" placeholder="Adres e-mail"></input>
+            <input name="email" required placeholder="Adres e-mail"></input>
           </div>
           <div className={`${styles.input_wrapper} ${styles.textarea}`}>
             <label>
