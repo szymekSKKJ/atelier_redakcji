@@ -25,7 +25,7 @@ const BlogArticlesBrief = ({ articles }: componentProps) => {
               </div>
               <div className={`${styles.content_wrapper}`}>
                 <h2>{title}</h2>
-                <p className={`${styles.brief}`}>{brief}</p>
+                <p className={`${styles.brief}`} dangerouslySetInnerHTML={{ __html: brief }}></p>
                 <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute={`/blog/${id}`}>
                   Czytaj więcej
                 </Button>
@@ -41,7 +41,7 @@ const BlogArticlesBrief = ({ articles }: componentProps) => {
                 </div>
                 <figcaption>{title}</figcaption>
               </figure>
-              <p>{brief}</p>
+              <p dangerouslySetInnerHTML={{ __html: brief }}></p>
               <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute={`/blog/${id}`}>
                 Czytaj więcej
               </Button>
