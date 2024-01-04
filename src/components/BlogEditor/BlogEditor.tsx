@@ -24,7 +24,7 @@ export const blogArticlesBriefSignalData = signal<
 const BlogEditor = () => {
   const [currentActiveBlogId, setCurrentActiveBlogId] = useState<null | string>(null);
   const [displayEditor, setDisplayEditor] = useState(false);
-  const [currentUser, setCurrentUser] = useState<null | UserCredential>(null);
+  const [currentUser, setCurrentUser] = useState<null | UserCredential>("null");
   const [error, setError] = useState<null | string>(null);
 
   return (

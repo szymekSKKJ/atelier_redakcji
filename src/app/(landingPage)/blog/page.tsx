@@ -56,7 +56,7 @@ const Blog = async () => {
           </Button>
         </div>
       </div>
-      <Section33></Section33>
+      {/* <Section33></Section33> */}
       <div className={`${styles.blog_articles_brief_wrapper}`}>
         {dividedArticles.map((articleData, index) => {
           if (index < 3) {

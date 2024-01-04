@@ -35,31 +35,32 @@ const textFormattingTypesData: {
 type textFormattingTypes = "italic" | "bold";
 
 const addTextFormatting = (type: textFormattingTypes) => {
-  const selection = window.getSelection()!;
-  const doesAlreadyExistThisTextFormat = selection.anchorNode?.parentElement;
-
-  console.log(doesAlreadyExistThisTextFormat);
-
   const foundTypeData = textFormattingTypesData.find((typeData) => typeData.type === type);
 
-  if (!selection.isCollapsed && foundTypeData) {
-    const { elementTag, styles: stylesData } = foundTypeData;
+  if (foundTypeData) {
+    const selection = window.getSelection()!;
 
-    const range = selection.getRangeAt(0);
+    const doesAlreadyExistThisTextFormat = selection.anchorNode?.parentElement?.closest(foundTypeData.elementTag);
 
-    const createdElement = document.createElement(elementTag) as HTMLElement;
+    if (!selection.isCollapsed) {
+      const { elementTag, styles: stylesData } = foundTypeData;
 
-    createdElement.classList.add(styles.createdElement);
+      const range = selection.getRangeAt(0);
 
-    Object.keys(stylesData).forEach((key) => {
-      //@ts-ignore
-      createdElement.style[key] = stylesData[key];
-    });
+      const createdElement = document.createElement(elementTag) as HTMLElement;
 
-    createdElement.innerHTML = range.toString();
+      createdElement.classList.add(styles.createdElement);
 
-    range.deleteContents();
-    range.insertNode(createdElement);
+      Object.keys(stylesData).forEach((key) => {
+        //@ts-ignore
+        createdElement.style[key] = stylesData[key];
+      });
+
+      createdElement.innerHTML = range.toString();
+
+      range.deleteContents();
+      range.insertNode(createdElement);
+    }
   }
 };
 
@@ -81,14 +82,14 @@ const ContextMenu = ({
         onClick={() => {
           addTextFormatting("bold");
         }}>
-        Bold
+        Pogrub
       </button>
       <button
         className={`${styles.option}`}
         onClick={() => {
           addTextFormatting("italic");
         }}>
-        Italic
+        Pochyl
       </button>
     </div>
   );
