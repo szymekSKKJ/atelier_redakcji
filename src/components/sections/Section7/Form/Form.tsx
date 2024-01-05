@@ -225,6 +225,13 @@ const Form = () => {
               </div>
             </div>
           </section>
+          <div className={` ${styles.agree}`}>
+            <input id="checkbox1" type="checkbox" required></input>
+            <label htmlFor="checkbox1">
+              Wysyłając zgłoszenie wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na wiadomość. Więcej informacji w Polityce
+              prywatności
+            </label>
+          </div>
           <Button
             type="submit"
             className={`${formStatus === "sending" ? styles.sending : ""}`}
