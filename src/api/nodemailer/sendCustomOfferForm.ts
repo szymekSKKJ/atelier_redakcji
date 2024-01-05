@@ -5,8 +5,8 @@ const sendCustomOfferForm = async (formData: FormData): Promise<string> => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.nodemailerEmail,
-      pass: process.env.nodemailerPassword,
+      user: process.env.NEXT_PUBLIC_nodemailerEmail,
+      pass: process.env.NEXT_PUBLIC_nodemailerPassword,
     },
   });
 

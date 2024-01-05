@@ -119,6 +119,7 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
       y: 0,
     },
   });
+  const [hasFocus, setHasFocus] = useState(false);
 
   const thisElementRef = useRef<null | HTMLElement>(null);
 
@@ -144,7 +145,9 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     },
     onClick: (event: MouseEvent) => {
       const currentSelection = window.getSelection()!;
-      if (event.target !== event.currentTarget && currentSelection.isCollapsed) {
+      setHasFocus(true);
+
+      if (hasFocus && event.target !== event.currentTarget && currentSelection.isCollapsed) {
         const anyChildElement = event.target as HTMLElement;
         const anyChildElementContent = anyChildElement.innerHTML;
 
@@ -162,13 +165,13 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
       event.preventDefault();
       if (event.clipboardData && event.currentTarget) {
         const clipboardData = event.clipboardData.getData("text/plain");
-        const currentElement = event.currentTarget as HTMLElement;
 
-        currentElement.innerText = clipboardData;
+        document.execCommand("insertText", false, clipboardData);
       }
     },
 
     onBlur: (event: FocusEvent) => {
+      setHasFocus(false);
       setTimeout(() => {
         onSave(event);
       }, 100);
@@ -198,7 +201,7 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
 
   return (
     <div className={`${styles.editable}`}>
-      <div>{copiedChild}</div>
+      <div className={`${styles.editable_child}`}>{copiedChild}</div>
       {onRemove && (
         <div className={`${styles.delete}`} onClick={(event) => onRemove(event)}>
           <DeleteIcon width={24} height={24}></DeleteIcon>
