@@ -51,12 +51,32 @@
       outline: solid transparent 2px;
       transition: 250ms;
 
+      &::placeholder {
+        color: #7a8790;
+      }
+
       &:focus {
         outline-color: #18a77c;
       }
 
       &:valid {
         outline-color: #18a77c;
+      }
+
+      &:invalid:not(:placeholder-shown) {
+        outline-color: transparent;
+      }
+
+      &:not([required]) {
+        outline-color: transparent;
+
+        &:focus {
+          outline-color: #18a77c;
+        }
+
+        &:not(:placeholder-shown) {
+          outline-color: #18a77c;
+        }
       }
     }
   }
@@ -79,10 +99,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+    }
 
-      &:valid + label {
-        outline-color: #18a77c;
-      }
+    input.filled ~ label {
+      outline-color: #18a77c;
     }
 
     label {

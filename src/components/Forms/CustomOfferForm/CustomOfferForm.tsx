@@ -63,12 +63,15 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
             <textarea placeholder="Treść wiadomości" className={`${mulishFont.className}`} required name="additionalInformation"></textarea>
           </div>
           <div className={`${styles.input_wrapper} ${styles.drop_down_section_wrapper}`} role="group">
+            <label>
+              Załącz plik<br></br>
+            </label>
             <div className={`${styles.drop_down_section}`}>
               <input
                 name="file"
                 type="file"
                 id="fileInput"
-                required={attachedFile === null ? true : false}
+                className={`${attachedFile ? styles.filled : ""}`}
                 onChange={(event) => {
                   const inputFileElement = event.currentTarget as HTMLInputElement;
                   setAttachedFile(inputFileElement.files ? inputFileElement.files[0] : null);
