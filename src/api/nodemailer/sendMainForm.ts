@@ -5,8 +5,8 @@ const sendMainForm = async (formData: FormData): Promise<string> => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.NEXT_PUBLIC_nodemailerEmail,
-      pass: process.env.NEXT_PUBLIC_nodemailerPassword,
+      user: process.env.NEXT_PUBLIC_NODEMAILER_PASSWORD,
+      pass: process.env.NEXT_PUBLIC_NODEMAILER_PASSWORD,
     },
   });
 
