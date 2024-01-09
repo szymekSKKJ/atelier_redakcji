@@ -50,7 +50,7 @@ const Navigation = () => {
         { id: 6, content: "Prace dyplomowe", href: "/offer/prace-dyplomowe" },
         { id: 7, content: "Prace naukowe", href: "/offer/publikacje-naukowe" },
         { id: 8, content: "Teksty specjalistyczne", href: "/offer/teksty-specjalistyczne" },
-        { id: 9, content: "inne teksty", href: "/offer/inne-teksty" },
+        { id: 9, content: "Inne teksty", href: "/offer/inne-teksty" },
       ],
     },
     {

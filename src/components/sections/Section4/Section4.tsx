@@ -15,10 +15,10 @@ import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const ArrowIcon = () => {
   return (
-    <div className={`${styles.arrow_icon}`} role="group">
+    <span className={`${styles.arrow_icon}`} role="group">
       <Image src={arrow} alt="Ikonka strzałki"></Image>
       <Image src={arrow} alt="Ikonka strzałki"></Image>
-    </div>
+    </span>
   );
 };
 
@@ -95,13 +95,15 @@ const Section4 = () => {
           const { id, image, content, href } = articleData;
           return (
             <article key={id}>
-              <figure>
-                <Image src={image} alt="Ikona artykułu"></Image>
-                <figcaption>{content}</figcaption>
-              </figure>
               <Link href={href}>
-                Dowiedz się więcej
-                <ArrowIcon></ArrowIcon>
+                <figure>
+                  <Image src={image} alt="Ikona artykułu"></Image>
+                  <figcaption>{content}</figcaption>
+                </figure>
+                <p>
+                  Dowiedz się więcej
+                  <ArrowIcon></ArrowIcon>
+                </p>
               </Link>
             </article>
           );

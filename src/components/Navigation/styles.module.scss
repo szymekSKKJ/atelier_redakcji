@@ -16,7 +16,7 @@
     gap: 5px;
 
     &:hover {
-      filter: brightness(1.32);
+      color: #18a77c;
     }
 
     @media screen and (max-width: 1024px) {
@@ -104,6 +104,7 @@
           padding: 75px 20px 20px 20px;
           flex-direction: column;
           align-items: flex-start;
+          border-radius: 8px;
 
           @media screen and (max-width: 768px) {
             display: flex;
