@@ -1,10 +1,6 @@
 import styles from "./styles.module.scss";
-
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import BlogArticlesBrief from "@/components/BlogArticlesBrief/BlogArticlesBrief";
-import { db } from "@/firebaseConfig";
-import { collection, documentId, getDocs, limit, orderBy, query } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import getBlogArticlesBrief from "@/api/blog/getBlogArticlesBrief";
 
 interface componentProps {

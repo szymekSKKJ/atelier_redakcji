@@ -78,8 +78,6 @@ const Section8 = () => {
                   const currentElement = event.currentTarget as HTMLElement;
                   const contentElement = currentElement.querySelector(`.${styles.content}`) as HTMLDivElement;
 
-                  console.log(contentElement);
-
                   if (currentElement.dataset.isOpen === "false") {
                     currentElement.style.maxHeight = `${100 + contentElement.getBoundingClientRect().height}px`;
 
