@@ -49,6 +49,11 @@
       background-color: white;
       border-radius: 100px;
       border-radius: 8px;
+      cursor: pointer;
+
+      label {
+        cursor: pointer;
+      }
 
       input:checked + details {
         max-height: 200px;
@@ -89,9 +94,7 @@
             font-weight: 700;
             transition: 250ms;
             padding-right: 20px;
-
             &:hover {
-              cursor: pointer;
               filter: brightness(1.32);
             }
 

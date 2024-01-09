@@ -71,25 +71,31 @@ const Section8 = () => {
           return (
             <div key={id}>
               <input type="checkbox" id={`${id}`} hidden />
-              <details data-is-open={"false"} open>
-                <summary
-                  onClick={(event) => {
-                    const contentElement = event.currentTarget.nextSibling as HTMLElement;
-                    const currentElement = event.currentTarget as HTMLElement;
+              <details
+                data-is-open={"false"}
+                open
+                onClick={(event) => {
+                  const currentElement = event.currentTarget as HTMLElement;
+                  const contentElement = currentElement.querySelector(`.${styles.content}`) as HTMLDivElement;
 
-                    if (currentElement.parentElement!.dataset.isOpen === "false") {
-                      currentElement.parentElement!.style.maxHeight = `${100 + contentElement.getBoundingClientRect().height}px`;
+                  console.log(contentElement);
 
-                      currentElement.parentElement!.dataset.isOpen = "true";
-                    } else {
-                      currentElement.parentElement!.style.maxHeight = `100px`;
-                      currentElement.parentElement!.dataset.isOpen = "false";
-                    }
-                  }}>
+                  if (currentElement.dataset.isOpen === "false") {
+                    currentElement.style.maxHeight = `${100 + contentElement.getBoundingClientRect().height}px`;
+
+                    currentElement.dataset.isOpen = "true";
+                  } else {
+                    currentElement.style.maxHeight = `100px`;
+                    currentElement.dataset.isOpen = "false";
+                  }
+                }}>
+                <summary>
                   <label htmlFor={`${id}`}>{question}</label>
                 </summary>
                 <div className={`${styles.content}`}>
-                  <p>{answer}</p>
+                  <p>
+                    <label htmlFor={`${id}`}>{answer}</label>
+                  </p>
                 </div>
               </details>
             </div>
