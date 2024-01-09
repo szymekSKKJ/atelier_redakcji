@@ -63,6 +63,9 @@
         font-size: 14px;
         font-weight: 700;
         color: #0e4d7a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &::before {
           content: url("../../../../public/check_icon.svg");
