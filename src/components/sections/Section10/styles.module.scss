@@ -189,6 +189,10 @@
       a {
         text-decoration: none;
 
+        @media screen and (max-width: 425px) {
+          width: 100%;
+        }
+
         span {
           background-color: white;
           border-radius: 1000px;
@@ -198,9 +202,14 @@
           font-size: 14px;
           display: flex;
           align-items: center;
+          justify-content: center;
           gap: 10px;
           white-space: nowrap;
           cursor: pointer;
+
+          @media screen and (max-width: 425px) {
+            width: 100%;
+          }
         }
       }
     }
