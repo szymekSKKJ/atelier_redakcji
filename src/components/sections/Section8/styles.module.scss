@@ -45,67 +45,73 @@
     flex-direction: column;
     gap: 20px;
 
-    input:checked + details {
-      max-height: 200px;
-    }
-
-    input:checked + details label::after {
-      transform: rotate(90deg);
-    }
-
-    input {
-      display: none;
-    }
-
-    details {
-      width: 100%;
+    > div {
       background-color: white;
-      transition: max-height 500ms;
-      max-height: 100px;
-      overflow: hidden;
-      padding: 0px 30px 0px 30px;
+      border-radius: 100px;
+      box-shadow: 0px 10px 40px 0px rgba(14, 77, 122, 0.15);
+      border-radius: 8px;
 
-      summary {
-        display: block;
-
-        label {
-          height: 100px; /* This height value must be equal to max-height value of <details> element  */
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          color: #0e4d7a;
-          font-size: 20px;
-          font-weight: 700;
-          transition: 250ms;
-          padding-right: 20px;
-
-          &:hover {
-            cursor: pointer;
-            filter: brightness(1.32);
-          }
-
-          &::after {
-            width: 10px;
-            height: 10px;
-            content: url("../../../../public/arrow.svg");
-            scale: 2;
-            transition: 250ms ease-in-out;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-25%);
-            right: 0px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-        }
+      input:checked + details {
+        max-height: 200px;
       }
 
-      .content {
-        font-size: 18px;
-        color: #0e4d7a;
-        padding-bottom: 30px;
+      input:checked + details label::after {
+        transform: rotate(90deg);
+      }
+
+      input {
+        display: none;
+      }
+
+      details {
+        width: 100%;
+        transition: max-height 500ms;
+        max-height: 100px;
+        overflow: hidden;
+        padding: 0px 30px 0px 30px;
+
+        summary {
+          display: block;
+
+          label {
+            height: 100px; /* This height value must be equal to max-height value of <details> element  */
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #0e4d7a;
+            font-size: 20px;
+            font-weight: 700;
+            transition: 250ms;
+            padding-right: 20px;
+
+            &:hover {
+              cursor: pointer;
+              filter: brightness(1.32);
+            }
+
+            &::after {
+              width: 10px;
+              height: 10px;
+              content: url("../../../../public/arrow.svg");
+              scale: 2;
+              transition: 250ms ease-in-out;
+              position: absolute;
+              top: 50%;
+              transform: translateY(-25%);
+              right: 0px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+          }
+        }
+
+        .content {
+          font-size: 18px;
+          color: #0e4d7a;
+          padding-bottom: 30px;
+        }
       }
     }
   }
