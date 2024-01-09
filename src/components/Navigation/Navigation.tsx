@@ -101,8 +101,12 @@ const Navigation = () => {
             </Link>
           );
         })()}
-        <button className={`${styles.toggle_mobile_navigation}`} onClick={() => setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true))}>
-          <Image src={isMobileMenuOpen ? hamburgerClose : hamburger} alt="Ikonka menu"></Image>
+        <button
+          className={`${styles.toggle_mobile_navigation} ${isMobileMenuOpen ? styles.open : ""}`}
+          onClick={() => setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true))}>
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
         <div className={`${styles.wrapper}`}>
           {links.map((linkData, index) => {
