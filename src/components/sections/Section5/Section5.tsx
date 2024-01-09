@@ -30,7 +30,7 @@ const Section5 = () => {
         </article>
         <article>
           <div className={`${styles.animated_counter}`} role="group">
-            <p>54 000+</p>
+            <p>54000+</p>
           </div>
           <p>ZREDAGOWANYCH</p>
           <p>korekt A4</p>
