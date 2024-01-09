@@ -18,18 +18,18 @@ const Footer = () => {
             <nav>
               <div className={`${styles.column}`}>
                 <Link href="/">Strona główna</Link>
-                <Link href="/">Dlaczego my?</Link>
-                <Link href="/">Oferta</Link>
+                <Link href="/whyUs">Dlaczego my?</Link>
+                <Link href="/offer">Oferta</Link>
               </div>
               <div className={`${styles.column}`}>
-                <Link href="/">FAQ</Link>
-                <Link href="/">Kontakt</Link>
-                <Link href="/">Blog</Link>
+                <Link href="/faq">FAQ</Link>
+                <Link href="/contact">Kontakt</Link>
+                <Link href="/blog">Blog</Link>
               </div>
               <div className={`${styles.column}`}>
-                <Link href="/">Ogólne warunki świadczenia usług</Link>
-                <Link href="/">Polityka prywatności</Link>
-                <Link href="/">Cennik</Link>
+                <Link href="/termsOfService">Ogólne warunki świadczenia usług</Link>
+                <Link href="/privacyPolicy">Polityka prywatności</Link>
+                <Link href="/priceList">Cennik</Link>
               </div>
             </nav>
           </div>
