@@ -71,12 +71,20 @@ const Section8 = () => {
           return (
             <div key={id}>
               <input type="checkbox" id={`${id}`} hidden />
-              <details open>
+              <details data-is-open={"false"} open>
                 <summary
                   onClick={(event) => {
                     const contentElement = event.currentTarget.nextSibling as HTMLElement;
+                    const currentElement = event.currentTarget as HTMLElement;
 
-                    sectionRef.current?.style.setProperty("--question-summary-max-height", `${100 + contentElement.getBoundingClientRect().height}px`);
+                    if (currentElement.parentElement!.dataset.isOpen === "false") {
+                      currentElement.parentElement!.style.maxHeight = `${100 + contentElement.getBoundingClientRect().height}px`;
+
+                      currentElement.parentElement!.dataset.isOpen = "true";
+                    } else {
+                      currentElement.parentElement!.style.maxHeight = `100px`;
+                      currentElement.parentElement!.dataset.isOpen = "false";
+                    }
                   }}>
                   <label htmlFor={`${id}`}>{question}</label>
                 </summary>
