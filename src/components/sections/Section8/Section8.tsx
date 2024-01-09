@@ -98,7 +98,10 @@ const Section8 = () => {
       </div>
       <p className={styles.caption3}>Masz dodatkowe pytania?</p>
       <p className={styles.caption4}>
-        Napisz do nas na adres <mark>kontakt@atelier-redakcji.eu</mark>
+        Napisz do nas na adres{" "}
+        <a href="mailto:kontakt@atelier-redakcji.eu">
+          <mark>kontakt@atelier-redakcji.eu</mark>
+        </a>
       </p>
     </section>
   );

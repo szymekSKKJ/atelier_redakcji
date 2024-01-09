@@ -129,8 +129,13 @@
     color: #0e4d7a;
     margin-top: 10px;
 
-    mark {
-      color: #18a77c;
+    a {
+      text-decoration: none;
+
+      mark {
+        color: #18a77c;
+        font-weight: 700;
+      }
     }
   }
 }
