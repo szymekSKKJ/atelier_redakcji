@@ -35,6 +35,7 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
     <>
       {formStatus === null || formStatus === "sending" ? (
         <form
+          id="contactForm"
           className={`${styles.form} ${foundStyle?.style} ${formStatus === "sending" ? styles.sending : ""}`}
           ref={formElementRef}
           onSubmit={(event) => event.preventDefault()}>

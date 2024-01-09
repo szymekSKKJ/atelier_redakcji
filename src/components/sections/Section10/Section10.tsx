@@ -5,6 +5,7 @@ import Image from "next/image";
 import phoneBlue from "../../../../public/phone_blue.svg";
 import person from "../../../../public/person.jpg";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
+import Link from "next/link";
 
 const Section10 = () => {
   return (
@@ -27,16 +28,23 @@ const Section10 = () => {
           <p className={`${styles.caption2}`}> Na pewno pomożemy :)</p>
         </header>
         <div className={`${styles.wrapper}`} role="group">
-          <span role="group">
-            <Image src={phone} alt="Ikonka poczty elektronicznej"></Image> +48 799 163 609
-          </span>
+          <a href="tel:+48799163609">
+            <span role="group">
+              <Image src={phone} alt="Ikonka poczty elektronicznej"></Image> +48 799 163 609
+            </span>
+          </a>
           lub
-          <span role="group">
-            <Image src={mail} alt="Ikonka telefonu "></Image>kontakt@atelier-redakcji.eu
-          </span>
+          <a href="mailto:kontakt@atelier-redakcji.eu">
+            <span role="group">
+              <Image src={mail} alt="Ikonka telefonu "></Image>kontakt@atelier-redakcji.eu
+            </span>
+          </a>
         </div>
         <p className={`${styles.caption3}`}>
-          Możesz też skorzystać z <mark>naszego formularza.</mark>
+          Możesz też skorzystać z{" "}
+          <Link href={"./contact#contactForm"}>
+            <mark>naszego formularza.</mark>
+          </Link>
         </p>
       </article>
     </section>
