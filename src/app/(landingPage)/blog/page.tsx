@@ -48,8 +48,8 @@ const Blog = async () => {
     <>
       <div className={`${styles.blog_articles_brief_wrapper}`}>
         <div className={`${styles.wrapper}`}>
-          <BlogArticlesBrief articles={[firstArticle]}></BlogArticlesBrief>
-          <BlogArticlesBrief articles={dividedArticles[0]}></BlogArticlesBrief>
+          <BlogArticlesBrief articles={firstArticle ? [firstArticle] : []}></BlogArticlesBrief>
+          <BlogArticlesBrief articles={dividedArticles[0] ? dividedArticles[0] : []}></BlogArticlesBrief>
           <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px" }}>
             Zobacz wszystkie artykuły
             {/* <ArrowIcon></ArrowIcon> */}

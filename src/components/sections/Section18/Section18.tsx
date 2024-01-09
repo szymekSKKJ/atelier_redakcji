@@ -43,7 +43,7 @@ const Section18 = () => {
       </div>
       <div className={`${styles.wrapper3}`}>
         <article>
-          <h2>Kim jesteśmy?</h2>
+          <h2>Kim są nasi klienci?</h2>
           <CurvedLines></CurvedLines>
           <p className={`${styles.caption1}`}>Pracujemy ze studentami, doktorantami, uczniami szkół średnich oraz przedsiębiorcami.</p>
           <p className={`${styles.caption2}`}>

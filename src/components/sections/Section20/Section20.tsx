@@ -8,7 +8,7 @@ import image4 from "../../../../public/sections/section20/image4.jpg";
 const articles = [
   {
     id: 1,
-    image: image1,
+    image: image4,
     header: (
       <>
         <mark>Korekta</mark> tekstów
@@ -62,7 +62,7 @@ const articles = [
   },
   {
     id: 3,
-    image: image3,
+    image: image1,
     header: (
       <>
         <mark>Poprawa</mark> prac naukowych
@@ -88,7 +88,7 @@ const articles = [
   },
   {
     id: 4,
-    image: image4,
+    image: image3,
     header: (
       <>
         <mark>Usługi dla</mark> firm i instytucji

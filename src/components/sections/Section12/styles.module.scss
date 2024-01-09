@@ -14,6 +14,16 @@
   justify-content: center;
   flex-direction: column;
 
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: rgba(0, 89, 255, 0.133);
+  }
+
   @media screen and (max-width: 1440px) {
     width: calc(1024px - 2 * (20px));
     padding: 50px 66px 50px 65px;
@@ -29,6 +39,10 @@
     width: 100dvw;
     padding: 42px 30px 42px 30px;
     background-size: cover;
+  }
+
+  * {
+    position: relative;
   }
 
   > h1 {
