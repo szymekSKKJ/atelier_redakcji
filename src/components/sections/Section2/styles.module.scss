@@ -42,8 +42,14 @@
 
   > article {
     padding: 40px;
-    border: dashed 2px #a3bfd2;
     border-radius: 8px;
+    background-image: repeating-linear-gradient(23deg, #a3bfd2, #a3bfd2 22px, transparent 22px, transparent 43px, #a3bfd2 43px),
+      repeating-linear-gradient(113deg, #a3bfd2, #a3bfd2 22px, transparent 22px, transparent 43px, #a3bfd2 43px),
+      repeating-linear-gradient(203deg, #a3bfd2, #a3bfd2 22px, transparent 22px, transparent 43px, #a3bfd2 43px),
+      repeating-linear-gradient(293deg, #a3bfd2, #a3bfd2 22px, transparent 22px, transparent 43px, #a3bfd2 43px);
+    background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
+    background-position: 0 0, 0 0, 100% 0, 0 100%;
+    background-repeat: no-repeat;
 
     h3 {
       font-size: 20px;
