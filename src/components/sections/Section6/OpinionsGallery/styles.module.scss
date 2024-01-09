@@ -120,7 +120,20 @@
       }
 
       @media screen and (max-width: 768px) {
-        transform: translateX(calc(((var(--gallery-offset) * (-250px + (-40px))) + (16.5%)))); // article width and gap and half of padding
+        transform: translateX(calc(((var(--gallery-offset) * (-250px + (-40px)))))); // article width and gap and half of padding
+        translate: 15% 0px;
+      }
+
+      @media screen and (max-width: 425px) {
+        translate: 20% 0px;
+      }
+
+      @media screen and (max-width: 375px) {
+        translate: 17% 0px;
+      }
+
+      @media screen and (max-width: 320px) {
+        translate: 11% 0px;
       }
 
       article {

@@ -8,6 +8,10 @@
     display: flex;
     gap: 15px;
     margin-bottom: 40px;
+
+    @media screen and (max-width: 425px) {
+      scale: 0.7;
+    }
   }
 
   header {
