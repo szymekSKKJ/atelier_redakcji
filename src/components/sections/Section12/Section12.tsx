@@ -12,7 +12,7 @@ const Section12 = () => {
           Poznaj ofertę
         </Button>
         <Button style={{ padding: "20px 30px 20px 30px", fontSize: "20px" }} changeRoute="/#mainForm">
-          Wyślij swój tekst do wyceny
+          Wyceń swój tekst
         </Button>
       </div>
     </header>

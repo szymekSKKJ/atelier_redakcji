@@ -22,7 +22,7 @@ const Section5 = () => {
         },
         {
           root: null,
-          threshold: 0.6,
+          threshold: 0,
         }
       );
 
