@@ -8,7 +8,7 @@ const Section2 = () => {
     <section className={`${styles.section}`}>
       <header>
         <h2>
-          Doskonale wiemy, że samodzielne pisanie pracy <mark>nie jest zadaniem prostym</mark>
+          Doskonale wiemy, <br></br>że samodzielne pisanie pracy <mark>nie jest zadaniem prostym</mark>
         </h2>
         <CurvedLines></CurvedLines>
       </header>
