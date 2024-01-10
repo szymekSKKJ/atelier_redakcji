@@ -5,14 +5,15 @@ import styles from "./styles.module.scss";
 import document from "../../../../../public/document.svg";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
-import { MouseEvent, useRef, useState } from "react";
+import { FormEvent, MouseEvent, useRef, useState } from "react";
 import sendMainForm from "@/api/nodemailer/sendMainForm";
 import Loader from "@/design/Loader/Loader";
+import Checkbox from "@/components/UI/Button/Checkbox/Checkbox";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 
-const toggleRequiredAttributeToCheckboxElements = (event: MouseEvent<HTMLInputElement>) => {
-  const checboxWrapperElement = event.currentTarget.parentElement!.parentElement as HTMLDivElement;
+const toggleRequiredAttributeToCheckboxElements = (event: FormEvent<HTMLInputElement>) => {
+  const checboxWrapperElement = event.currentTarget.parentElement!.parentElement!.parentElement as HTMLDivElement;
   const checboxElements = [...checboxWrapperElement.querySelectorAll('input[type="checkbox"]')] as HTMLInputElement[];
 
   const isAnyInputChecked = checboxElements.some((inputElement) => inputElement.checked);
@@ -30,7 +31,7 @@ const toggleRequiredAttributeToCheckboxElements = (event: MouseEvent<HTMLInputEl
 
 const Form = () => {
   const [isDragging, setIsDragging] = useState(false);
-  const [attachedFile, setAttachedFile] = useState<null | File>(null);
+  const [attachedFile, setAttachedFile] = useState<null | File | undefined>(null);
   const [formStatus, setFormStatus] = useState<"error" | "ok" | "sending" | null>(null);
 
   const formElementRef = useRef<null | HTMLFormElement>(null);
@@ -54,20 +55,20 @@ const Form = () => {
                 <label className={`${styles.title}`}>
                   Imię <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
                 </label>
-                <input type="text" placeholder="Imię" name="name" required></input>
+                <input type="text" name="name" required placeholder=""></input>
               </div>
               <div className={`${styles.input_wrapper}`}>
                 <label className={`${styles.title}`}>
                   Adres e-mail <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
                 </label>
-                <input type="email" placeholder="Adres e-mail" name="email" required></input>
+                <input type="email" name="email" required placeholder=""></input>
               </div>
               <div className={`${styles.input_wrapper}`}>
                 <label className={`${styles.title}`}>Numer telefonu</label>
                 <input
                   type="text"
-                  placeholder="Numer telefonu"
                   name="phoneNumber"
+                  placeholder=""
                   onChange={(event) => {
                     const inputElement = event.currentTarget as HTMLInputElement;
 
@@ -83,7 +84,7 @@ const Form = () => {
               </div>
               <div className={`${styles.input_wrapper}`}>
                 <label className={`${styles.title}`}>Nazwa firmy</label>
-                <input type="text" placeholder="Nazwa firmy" name="companyName"></input>
+                <input type="text" name="companyName" placeholder=""></input>
               </div>
             </div>
           </section>
@@ -94,13 +95,30 @@ const Form = () => {
                 <label className={`${styles.title}`}>
                   Rodzaj tekstu <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
                 </label>
-                <input type="text" placeholder="Rodzaj tekstu" name="textType" required></input>
+                <div className={`${styles.select_wrapper}`}>
+                  <select defaultValue="" name="textType" required className={`${mulishFont.className}`}>
+                    <option disabled defaultValue=""></option>
+                    <option defaultValue="Praca licencjacka">Praca licencjacka</option>
+                    <option defaultValue="Praca inżynierska">Praca inżynierska</option>
+                    <option defaultValue="Praca magisterska">Praca magisterska</option>
+                    <option defaultValue="Praca doktorska">Praca doktorska</option>
+                    <option defaultValue="Praca habilitacyjna">Praca habilitacyjna</option>
+                    <option defaultValue="Praca zaliczeniowa">Praca zaliczeniowa</option>
+                    <option defaultValue="Praca dyplomowa">Praca dyplomowa</option>
+                    <option defaultValue="Publikacja naukowa">Publikacja naukowa</option>
+                    <option defaultValue="Tekst specjalistyczny">Tekst specjalistyczny</option>
+                    <option defaultValue="Książka">Książka</option>
+                    <option defaultValue="Post blogowy/Artykuł">Post blogowy/Artykuł</option>
+                    <option defaultValue="Inny">Inny</option>
+                  </select>
+                  <span></span>
+                </div>
               </div>
               <div className={`${styles.input_wrapper}`}>
                 <label className={`${styles.title}`}>
                   Termin realizacji <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
                 </label>
-                <input type="date" placeholder="Termin realizacji" required name="deadline"></input>
+                <input type="date" required name="deadline" placeholder="" className={`${mulishFont.className}`}></input>
               </div>
               <div className={`${styles.input_wrapper}`}>
                 <label className={`${styles.title}`}>
@@ -108,7 +126,6 @@ const Form = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Ilość stron"
                   name="pages"
                   required
                   onChange={(event) => {
@@ -123,9 +140,9 @@ const Form = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Ilość znaków ze spacją"
                   name="numberOfCharactersWithSpaces"
                   required
+                  placeholder=""
                   onChange={(event) => {
                     const inputElement = event.currentTarget as HTMLInputElement;
 
@@ -138,7 +155,7 @@ const Form = () => {
                 <label className={`${styles.title}`}>
                   Temat przewodni utworu <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
                 </label>
-                <input type="text" placeholder="Temat przewodni utworu" name="topic" required></input>
+                <input type="text" name="topic" required placeholder=""></input>
               </div>
             </div>
             <div className={`${styles.row}`}>
@@ -148,31 +165,19 @@ const Form = () => {
                 </label>
                 <div className={`${styles.wrapper}`}>
                   <div className={`${styles.input_wrapper}`}>
-                    <label htmlFor="adjustment">Korekta</label>
-                    <input
-                      id="adjustment"
-                      type="checkbox"
-                      name="adjustment"
-                      required
-                      onClick={(event) => toggleRequiredAttributeToCheckboxElements(event)}></input>
+                    <Checkbox color="#18a77c" required placeholder="" onInput={(event) => toggleRequiredAttributeToCheckboxElements(event)}>
+                      Korekta
+                    </Checkbox>
                   </div>
                   <div className={`${styles.input_wrapper}`}>
-                    <label htmlFor="proofreading">Redakcja</label>
-                    <input
-                      id="proofreading"
-                      type="checkbox"
-                      name="proofreading"
-                      required
-                      onClick={(event) => toggleRequiredAttributeToCheckboxElements(event)}></input>
+                    <Checkbox color="#18a77c" required placeholder="" onInput={(event) => toggleRequiredAttributeToCheckboxElements(event)}>
+                      Redakcja
+                    </Checkbox>
                   </div>
                   <div className={`${styles.input_wrapper}`}>
-                    <label htmlFor="formatting">Formatowanie</label>
-                    <input
-                      id="formatting"
-                      type="checkbox"
-                      name="formatting"
-                      required
-                      onClick={(event) => toggleRequiredAttributeToCheckboxElements(event)}></input>
+                    <Checkbox color="#18a77c" required placeholder="" onInput={(event) => toggleRequiredAttributeToCheckboxElements(event)}>
+                      Formatowanie
+                    </Checkbox>
                   </div>
                 </div>
               </div>
@@ -183,7 +188,7 @@ const Form = () => {
                   Dodatkowe informacje
                   <em className={`${styles.mandatory_field}`}>(Możesz w skrócie opisać, z czym się borykasz w swoim tekście i czego od nas potrzebujesz)</em>
                 </label>
-                <textarea className={`${mulishFont.className}`} placeholder="Dodatkowe informacje" name="additionalInformation"></textarea>
+                <textarea placeholder="" className={`${mulishFont.className}`} name="additionalInformation"></textarea>
               </div>
               <div className={`${styles.input_wrapper}`}>
                 <label className={`${styles.title}`}>
@@ -194,7 +199,9 @@ const Form = () => {
                   <input
                     type="file"
                     id="fileInput"
-                    required={attachedFile === null ? true : false}
+                    placeholder=""
+                    accept="text/*, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    required={attachedFile === undefined || attachedFile === null ? true : false}
                     onChange={(event) => {
                       const inputFileElement = event.currentTarget as HTMLInputElement;
                       setAttachedFile(inputFileElement.files ? inputFileElement.files[0] : null);
@@ -219,18 +226,28 @@ const Form = () => {
                     <p>
                       Przeciągnij plik tutaj lub <mark>wybierz z komputera</mark>
                     </p>
-                    {attachedFile && <p className={`${styles.attatched_file}`}>{attachedFile.name}</p>}
+                    <p className={`${styles.caption}`}>(Tylko pliki tekstowe)</p>
+                    {attachedFile && (
+                      <p
+                        onClick={(event) => {
+                          event.preventDefault();
+                          event.stopPropagation();
+                          setAttachedFile(null);
+                        }}
+                        className={`${styles.attatched_file}`}>
+                        {attachedFile.name}
+                      </p>
+                    )}
                   </label>
                 </div>
               </div>
             </div>
           </section>
           <div className={`${styles.agree}`}>
-            <input id="checkbox1" type="checkbox" required></input>
-            <label htmlFor="checkbox1">
+            <Checkbox required placeholder="">
               Wysyłając zgłoszenie wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na wiadomość. Więcej informacji w Polityce
               prywatności
-            </label>
+            </Checkbox>
           </div>
           <Button
             type="submit"
@@ -297,6 +314,7 @@ const Form = () => {
           )}
         </div>
       )}
+      <hr style={{ border: "solid 0px transparent", borderBottom: "solid 1px #dce3e9", width: "100%", marginTop: "140px", marginBottom: "40px" }}></hr>
     </>
   );
 };

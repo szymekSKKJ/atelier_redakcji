@@ -8,6 +8,7 @@ import document from "../../../../public/document.svg";
 import { useRef, useState } from "react";
 import Loader from "@/design/Loader/Loader";
 import sendCustomOfferForm from "@/api/nodemailer/sendCustomOfferForm";
+import Checkbox from "@/components/UI/Button/Checkbox/Checkbox";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 
@@ -102,11 +103,10 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
             </div>
           </div>
           <div className={`${styles.input_wrapper} ${styles.agree}`}>
-            <input id="checkbox1" type="checkbox" required></input>
-            <label htmlFor="checkbox1">
+            <Checkbox required>
               Wysyłając zgłoszenie wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na wiadomość. Więcej informacji w Polityce
               prywatności
-            </label>
+            </Checkbox>
           </div>
           <Button
             style={{ padding: "20px 30px 20px 30px" }}

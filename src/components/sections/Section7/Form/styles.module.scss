@@ -8,10 +8,11 @@
   justify-content: flex-start;
   flex-direction: column;
   background-color: white;
+  border-radius: 8px;
+
   gap: 80px;
   scroll-margin-top: 600px;
   position: relative;
-  border-radius: 8px;
 
   &::after {
     content: "";
@@ -28,7 +29,8 @@
   }
 
   input,
-  textarea {
+  textarea,
+  select {
     width: 100%;
     border-radius: 8px;
     border: solid 1px #dee5e3;
@@ -38,6 +40,8 @@
     outline: solid transparent 2px;
     transition: outline 250ms;
     font-size: 14px;
+    position: relative;
+    font-weight: 400;
 
     &::placeholder {
       color: #7a8790;
@@ -68,9 +72,63 @@
     }
   }
 
+  label {
+    cursor: pointer;
+  }
+
+  input[type="date"] {
+    font-weight: 500;
+    appearance: none;
+  }
+
   textarea {
     height: 100%;
     min-height: 150px;
+  }
+
+  select {
+    appearance: none;
+    position: relative;
+    font-weight: 500;
+  }
+
+  .select_wrapper {
+    position: relative;
+
+    select {
+      &:focus {
+        + span {
+          &::after {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
+    span {
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translate(0px, -50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &::after {
+        width: 20px;
+        height: 20px;
+        content: url("../../../../../public/Arrow Down (black small).svg");
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        transition: 250ms;
+        padding-bottom: 5px;
+        scale: 1.2;
+      }
+    }
   }
 
   // Label for single input or title for group of inputs
@@ -122,7 +180,6 @@
       outline: unset;
       outline: dashed transparent 2px;
       transition: outline 250ms, border 250ms;
-      cursor: pointer;
 
       p {
         font-size: 14px;
@@ -136,6 +193,34 @@
 
       p.attatched_file {
         font-weight: 800;
+        position: relative;
+
+        &:hover {
+          color: #e26969;
+        }
+
+        &::after {
+          width: 16px;
+          height: 14px;
+          content: "x";
+          position: absolute;
+          background-color: #e26969;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          top: 0px;
+          right: -20px;
+          border-radius: 100%;
+          font-size: 10px;
+          padding-bottom: 2px;
+        }
+      }
+
+      p.caption {
+        color: #7a8790;
+        margin-top: -10px;
+        font-size: 12px;
       }
 
       img {
@@ -236,13 +321,10 @@
             justify-content: center;
             font-size: 16px;
             gap: 10px;
+            cursor: pointer;
 
             label {
-              order: 2;
-            }
-
-            input {
-              order: 1;
+              transition: 250ms;
             }
           }
         }
@@ -293,6 +375,7 @@
   align-items: center;
   background-color: white;
   gap: 50px;
+  border-radius: 8px;
 
   @media screen and (max-width: 425px) {
     gap: 0px;
