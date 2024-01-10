@@ -42,14 +42,8 @@
 
   > article {
     padding: 40px;
-    //border-radius: 8px;
-    background-image: repeating-linear-gradient(-41deg, #a3bfd2, #a3bfd2 16px, transparent 16px, transparent 38px, #a3bfd2 38px),
-      repeating-linear-gradient(49deg, #a3bfd2, #a3bfd2 16px, transparent 16px, transparent 38px, #a3bfd2 38px),
-      repeating-linear-gradient(139deg, #a3bfd2, #a3bfd2 16px, transparent 16px, transparent 38px, #a3bfd2 38px),
-      repeating-linear-gradient(229deg, #a3bfd2, #a3bfd2 16px, transparent 16px, transparent 38px, #a3bfd2 38px);
-    background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
-    background-position: 0 0, 0 0, 100% 0, 0 100%;
-    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23A3BFD2FF' stroke-width='3' stroke-dasharray='24%2c 10%25' stroke-dashoffset='20' stroke-linecap='square'/%3e%3c/svg%3e");
+    border-radius: 8px;
 
     h3 {
       font-size: 20px;
