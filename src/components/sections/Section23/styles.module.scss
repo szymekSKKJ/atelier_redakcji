@@ -53,8 +53,8 @@
           td {
             text-align: center;
             font-size: 20px;
-            padding: 22px 16px 22px 16px;
             white-space: nowrap;
+            padding: 20px 10px 20px 10px;
 
             @media screen and (max-width: 768px) {
               padding: 16px 8px 16px 8px;
@@ -84,7 +84,6 @@
             font-size: 16px;
             font-weight: 800;
             color: #0e4d7a;
-            text-align: center;
 
             &:first-child {
               font-size: 20px;
@@ -95,11 +94,23 @@
 
               &:first-child {
                 padding-top: 16px;
-                padding-bottom: 8px;
                 text-align: center;
                 color: #18a77c;
                 font-weight: 700;
                 font-size: 24px;
+
+                > span {
+                  font-size: 16px;
+                  color: inherit;
+                  font-weight: inherit;
+                  display: block;
+                  margin-top: -5px;
+                }
+              }
+
+              &:last-child {
+                font-size: 14px;
+                text-align: center;
               }
             }
           }
@@ -157,7 +168,7 @@
         font-size: 20px;
         font-weight: 700;
         border-bottom: solid 1px #a3bfd2;
-        padding: 22px 16px 22px 16px;
+        padding: 22px 0px 22px 0px;
         color: #0e4d7a;
 
         @media screen and (max-width: 768px) {
@@ -179,8 +190,12 @@
         }
 
         .title {
-          font-size: 16px;
+          font-size: 20px;
           font-weight: 400;
+
+          span {
+            font-size: 16px;
+          }
         }
 
         .price {

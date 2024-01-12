@@ -1,7 +1,7 @@
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
-import person1 from "../../../../public/sections/section18/person1.jpg";
-import person2 from "../../../../public/sections/section18/person2.jpg";
+import person1 from "../../../../public/person.webp";
+import person2 from "../../../../public/sections/section18/person2.webp";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
 

@@ -4,6 +4,7 @@ import styles from "./styles.module.scss";
 const Section19 = () => {
   return (
     <section className={`${styles.section}`}>
+      <div className={`${styles.background}`}></div>
       <h2>Poznaj naszą ofertę</h2>
       <CurvedLines></CurvedLines>
       <p className={`${styles.caption1}`}>

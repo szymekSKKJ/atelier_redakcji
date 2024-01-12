@@ -32,29 +32,16 @@
       > .wrapper {
         max-width: 480px;
         aspect-ratio: 480 / 560;
-        transform: rotateY(190deg);
+
         justify-content: center;
         align-items: center;
         overflow: hidden;
         border-radius: 16px;
         position: relative;
 
-        &::after {
-          content: "";
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          background: rgba(0, 89, 255, 0.1);
-        }
-
         img {
           width: 100%;
           height: auto;
-          scale: 2;
-          transform-origin: top right;
-          translate: 0px -50px;
         }
       }
     }

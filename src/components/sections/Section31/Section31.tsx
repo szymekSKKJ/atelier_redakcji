@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import image from "../../../../public/sections/section31/image1.jpg";
+import image from "../../../../public/sections/section31/image1.webp";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";

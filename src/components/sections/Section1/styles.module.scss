@@ -28,6 +28,7 @@
     justify-content: center;
     overflow: hidden;
     border-radius: 16px;
+    background-color: darkblue;
 
     @media screen and (max-width: 768px) {
       align-self: center;
@@ -45,10 +46,10 @@
     img {
       width: auto;
       height: 100%;
-      translate: 100px 0px;
 
       @media screen and (max-width: 425px) {
-        translate: 75px 0px;
+        width: 100%;
+        height: auto;
       }
     }
   }

@@ -2,8 +2,43 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
-  padding: 0px 30px 0px 30px;
+  padding: 80px 30px 0px 30px;
+  position: relative;
+
+  @media screen and (max-width: 425px) {
+    padding: 140px 30px 0px 30px;
+  }
+
+  .background {
+    width: 100%;
+    height: 700px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    background-image: url("../../../../public/sections/section22/Cennik\ BG.webp");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+
+    @media screen and (max-width: 768px) {
+      background-size: 200%;
+      background-position-x: 80%;
+      background-position-y: -0px;
+    }
+
+    @media screen and (max-width: 768px) {
+      background-size: 200%;
+      background-position-x: 80%;
+      background-position-y: -0px;
+    }
+
+    @media screen and (max-width: 425px) {
+      background-size: 200%;
+      background-position-x: 90%;
+      background-position-y: -0px;
+    }
+  }
 
   h1 {
     font-weight: 800;
@@ -33,9 +68,14 @@
 
   .caption2 {
     margin-top: 40px;
+
     mark {
-      color: #18a77c;
-      text-decoration: underline;
+      a {
+        color: #18a77c;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: 700;
+      }
     }
   }
 }

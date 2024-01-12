@@ -2,10 +2,10 @@
   width: 1440px;
   height: auto;
   background-color: #0c282c;
-  background-image: linear-gradient(to right, #0c282c, #5fa2ab00), url("../../../../public/sections/section12/hero_background.png");
-  background-position: 100% 55%;
+  background-image: linear-gradient(to right, #0c282c, #5fa2ab00), url("../../../../public/sections/section12/hero_background.webp");
+  background-position: 100% 50%;
   background-repeat: no-repeat;
-  background-size: 66%;
+  background-size: 70%;
   margin: 40px auto 120px auto;
   border-radius: 16px;
   padding: 110px 130px 110px 130px;
@@ -13,16 +13,6 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-
-  &::before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background: rgba(0, 89, 255, 0.133);
-  }
 
   @media screen and (max-width: 1440px) {
     width: calc(1024px - 2 * (20px));

@@ -3,48 +3,45 @@
   max-width: 1440px;
   padding: 125px 130px 125px 130px;
   border-radius: 16px;
-  background-color: rgb(12, 44, 34);
-  background-image: linear-gradient(to right, rgb(12, 44, 34), rgba(12, 44, 34, 0)), url("../../../../public/sections/section13/background.jpg");
-  background-position: 400% 0%;
+  background-color: #0c282c;
+  background-image: linear-gradient(to right, #0c282c, #5fa2ab00), url("../../../../public/sections/section13/background.webp");
+  background-position: 101% 0%;
   background-repeat: no-repeat;
-  background-size: 90%;
+  background-size: 55%;
   margin: 40px auto 120px auto;
   display: flex;
   flex-direction: column;
   gap: 40px;
   position: relative;
 
-  &::before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background: rgba(0, 89, 255, 0.133);
-  }
-
   @media screen and (max-width: 1440px) {
     width: calc(1024px - 2 * (20px));
     padding: 50px 66px 50px 65px;
+    background-size: 62%;
   }
 
   @media screen and (max-width: 1024px) {
     width: calc(768px - 2 * (20px));
     padding: 32px 60px 32px 60px;
+    background-size: 70%;
   }
 
   @media screen and (max-width: 768px) {
     border-radius: 0px;
     width: 100dvw;
     padding: 42px 30px 42px 30px;
+    background-size: 130%;
+    background-position: -60% 0%;
+  }
+
+  @media screen and (max-width: 425px) {
     background-size: 170%;
     background-position: -20% 0%;
   }
 
-  @media screen and (max-width: 425px) {
-    background-size: 300%;
-    background-position: 5% 0%;
+  @media screen and (max-width: 375px) {
+    background-size: 240%;
+    background-position: 20% 0%;
   }
 
   * {

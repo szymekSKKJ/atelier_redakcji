@@ -119,19 +119,20 @@ const Section23 = () => {
                   <Image src={check} alt="Ikona potwierdzenia"></Image>
                 </td>
               </tr>
+              <tr className={`${styles.separator}`}></tr>
               <tr className={`${styles.summary}`}>
                 <td>Cena:</td>
                 <td>
                   Korekta tekstu już od:
                   <p>
-                    9 zł <br></br> brutto/str.
+                    9 zł <br></br> <span>brutto/str.</span>
                   </p>
                   <p>(1800 znaków ze spacją)</p>
                 </td>
                 <td>
                   Korekta tekstu już od:
                   <p>
-                    12 zł <br></br> brutto/str.
+                    12 zł <br></br> <span>brutto/str.</span>
                   </p>
                   <p>(1800 znaków ze spacją)</p>
                 </td>
@@ -207,11 +208,12 @@ const Section23 = () => {
                     <Image src={incorrect} alt="Ikona potwierdzenia"></Image>
                   </td>
                 </tr>
+                <tr className={`${styles.separator}`}></tr>
                 <tr className={`${styles.summary}`}>
                   <td colSpan={2}>
                     Korekta tekstu już od:
                     <p>
-                      9 zł <br></br> brutto/str.
+                      9 zł <br></br> <span>brutto/str.</span>
                     </p>
                     <p>(1800 znaków ze spacją)</p>
                   </td>
@@ -288,11 +290,13 @@ const Section23 = () => {
                     <Image src={check} alt="Ikona potwierdzenia"></Image>
                   </td>
                 </tr>
+                <tr className={`${styles.separator}`}></tr>
                 <tr className={`${styles.summary}`}>
                   <td colSpan={2}>
                     Korekta tekstu już od:
                     <p>
-                      12 zł <br></br> brutto/str.
+                      12 zł <br></br>
+                      <span>brutto/str.</span>
                     </p>
                     <p>(1800 znaków ze spacją)</p>
                   </td>
@@ -305,7 +309,8 @@ const Section23 = () => {
           <h2>Dodatkowe usługi</h2>
           <article>
             <p className={`${styles.title}`}>
-              Formatowanie pracy <br></br>(font, marginesy, interlinie itd.)
+              Formatowanie pracy <br></br>
+              <span>(font, marginesy, interlinie itd.)</span>
             </p>
             <p className={`${styles.price}`}>
               od{" "}

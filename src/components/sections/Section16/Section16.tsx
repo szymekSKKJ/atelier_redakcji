@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import image from "../../../../public/sections/section16/image.jpg";
+import image from "../../../../public/sections/section16/image.webp";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 
 const Section16 = () => {

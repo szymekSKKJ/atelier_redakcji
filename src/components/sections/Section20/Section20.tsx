@@ -1,9 +1,9 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import image1 from "../../../../public/sections/section20/image1.jpg";
-import image2 from "../../../../public/sections/section20/image2.jpg";
-import image3 from "../../../../public/sections/section20/image3.jpg";
-import image4 from "../../../../public/sections/section20/image4.jpg";
+import image1 from "../../../../public/sections/section20/image1.webp";
+import image2 from "../../../../public/sections/section20/image2.webp";
+import image3 from "../../../../public/sections/section20/image3.webp";
+import image4 from "../../../../public/sections/section20/image4.webp";
 
 const articles = [
   {

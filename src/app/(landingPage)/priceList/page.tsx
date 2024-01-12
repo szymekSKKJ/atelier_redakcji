@@ -7,13 +7,13 @@ import Section24 from "@/components/sections/Section24/Section24";
 const priceList = () => {
   return (
     <>
+      <Section22></Section22>
       <main>
-        <Section22></Section22>
         <Section23></Section23>
-        <Section24></Section24>
-        <Section10></Section10>
-        <Section11></Section11>
       </main>
+      <Section24></Section24>
+      <Section10></Section10>
+      <Section11></Section11>
     </>
   );
 };

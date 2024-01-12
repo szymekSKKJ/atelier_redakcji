@@ -1,8 +1,6 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
-import image1 from "../../../../public/sections/section1/image.jpg";
-
-import { Mulish } from "next/font/google";
+import image1 from "../../../../public/sections/section1/image.webp";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import Button from "@/components/UI/Button/Button";
 

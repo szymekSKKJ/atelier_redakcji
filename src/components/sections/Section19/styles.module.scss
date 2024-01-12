@@ -2,7 +2,42 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
+  padding: 80px 30px 0px 30px;
+  position: relative;
+
+  @media screen and (max-width: 425px) {
+    padding: 140px 30px 0px 30px;
+  }
+
+  .background {
+    width: 100%;
+    height: 700px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    background-image: url("../../../../public/sections/section19/Oferta BG.webp");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    @media screen and (max-width: 768px) {
+      background-size: 200%;
+      background-position-x: 80%;
+      background-position-y: -0px;
+    }
+
+    @media screen and (max-width: 768px) {
+      background-size: 200%;
+      background-position-x: 80%;
+      background-position-y: -0px;
+    }
+
+    @media screen and (max-width: 425px) {
+      background-size: 200%;
+      background-position-x: 110%;
+      background-position-y: -0px;
+    }
+  }
 
   h2 {
     color: #0e4d7a;
@@ -10,6 +45,10 @@
     font-size: 44px;
     text-align: center;
     margin-bottom: 20px;
+
+    @media screen and (max-width: 425px) {
+      font-size: 30px;
+    }
   }
 
   .caption1 {
@@ -17,6 +56,10 @@
     margin-top: 40px;
     font-size: 20px;
     text-align: center;
+
+    @media screen and (max-width: 425px) {
+      font-size: 16px;
+    }
 
     mark {
       font-weight: 700;

@@ -73,16 +73,6 @@
     overflow: hidden;
     position: relative;
 
-    &::after {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      background: rgba(66, 131, 253, 0.1);
-    }
-
     @media screen and (max-width: 768px) {
       order: 1;
     }
@@ -90,7 +80,6 @@
     img {
       width: auto;
       height: 100%;
-      filter: brightness(1.125);
     }
   }
 }

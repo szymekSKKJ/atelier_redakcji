@@ -1,4 +1,3 @@
-import { Mulish } from "next/font/google";
 import styles from "./styles.module.scss";
 import Button from "@/components/UI/Button/Button";
 
