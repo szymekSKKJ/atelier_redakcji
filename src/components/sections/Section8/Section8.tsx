@@ -59,7 +59,7 @@ const Section8 = ({ isFaqPage = false }: componentProps) => {
   ];
 
   return (
-    <section className={`${styles.section}`} ref={sectionRef}>
+    <section className={`${styles.section}  ${isFaqPage ? styles.faq_page : ""}`} ref={sectionRef}>
       {isFaqPage && <div className={`${styles.background}`}></div>}
       <header>
         <h2>FAQ</h2>
@@ -105,13 +105,17 @@ const Section8 = ({ isFaqPage = false }: componentProps) => {
           );
         })}
       </div>
-      <p className={styles.caption3}>Masz dodatkowe pytania?</p>
-      <p className={styles.caption4}>
-        Napisz do nas na adres{" "}
-        <a href="mailto:kontakt@atelier-redakcji.eu">
-          <mark>kontakt@atelier-redakcji.eu</mark>
-        </a>
-      </p>
+      {isFaqPage === false && (
+        <>
+          <p className={styles.caption3}>Masz dodatkowe pytania?</p>
+          <p className={styles.caption4}>
+            Napisz do nas na adres{" "}
+            <a href="mailto:kontakt@atelier-redakcji.eu">
+              <mark>kontakt@atelier-redakcji.eu</mark>
+            </a>
+          </p>
+        </>
+      )}
     </section>
   );
 };
