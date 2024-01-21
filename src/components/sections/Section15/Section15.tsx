@@ -18,16 +18,24 @@ const Section15 = () => {
         <p className={`${styles.caption1}`}>Współpracując z nami, zapewniamy:</p>
         <ul>
           <li>
-            <mark>Terminowość -</mark> otrzymasz swoją poprawioną pracę na czas - nigdy nie zostaniesz na lodzie!
+            <p>
+              <mark>Terminowość -</mark> otrzymasz swoją poprawioną pracę na czas - nigdy nie zostaniesz na lodzie!
+            </p>
           </li>
           <li>
-            <mark>Pełną ochronę danych -</mark> zachowanie całkowitej poufności to dla nas rzecz święta!
+            <p>
+              <mark>Pełną ochronę danych -</mark> zachowanie całkowitej poufności to dla nas rzecz święta!
+            </p>
           </li>
           <li>
-            <mark>Jakość wykonania -</mark> tworzymy z pasji i doświadczenia; dostarczamy kompleksowe treści pewne swojej wartości.
+            <p>
+              <mark>Jakość wykonania -</mark> tworzymy z pasji i doświadczenia; dostarczamy kompleksowe treści pewne swojej wartości.
+            </p>
           </li>
           <li>
-            <mark>Korzystną cenę -</mark> realizujemy teksty z naciskiem na uczciwe warunki współpracy.
+            <p>
+              <mark>Korzystną cenę -</mark> realizujemy teksty z naciskiem na uczciwe warunki współpracy.
+            </p>
           </li>
         </ul>
       </article>
