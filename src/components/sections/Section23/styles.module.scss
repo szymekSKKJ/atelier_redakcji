@@ -70,17 +70,31 @@
               width: 100%;
               text-align: left;
             }
+
+            &:nth-child(2) {
+              border-right: solid 1px #eaeef3;
+            }
           }
         }
 
         tr.separator {
           height: 40px;
-          background-color: darkcyan;
+          position: relative;
+
+          &::after {
+            content: "";
+            width: 100%;
+            height: 1px;
+            background-color: #eaeef3;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0px;
+          }
         }
 
         tr.summary {
           border-top: solid 1px #a3bfd2;
-
           td {
             font-size: 16px;
             font-weight: 800;
@@ -151,6 +165,14 @@
 
           @media screen and (max-width: 520px) {
             display: table;
+          }
+
+          tr {
+            td {
+              &:nth-child(2) {
+                border-right: unset;
+              }
+            }
           }
         }
       }

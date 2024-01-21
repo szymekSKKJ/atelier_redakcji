@@ -65,7 +65,11 @@ const Section23 = () => {
                   <Image src={check} alt="Ikona potwierdzenia"></Image>
                 </td>
               </tr>
-              <tr className={`${styles.separator}`}></tr>
+              <tr className={`${styles.separator}`}>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
               <tr>
                 <td>Błędy frazeologiczne</td>
                 <td>
@@ -120,7 +124,11 @@ const Section23 = () => {
                   <Image src={check} alt="Ikona potwierdzenia"></Image>
                 </td>
               </tr>
-              <tr className={`${styles.separator}`}></tr>
+              <tr className={`${styles.separator}`}>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
               <tr className={`${styles.summary}`}>
                 <td>Cena:</td>
                 <td>
@@ -172,7 +180,11 @@ const Section23 = () => {
                     <Image src={check} alt="Ikona potwierdzenia"></Image>
                   </td>
                 </tr>
-                <tr className={`${styles.separator}`}></tr>
+                <tr className={`${styles.separator}`}>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
                 <tr>
                   <td>Błędy frazeologiczne</td>
                   <td>
@@ -209,7 +221,11 @@ const Section23 = () => {
                     <Image src={incorrect} alt="Ikona potwierdzenia"></Image>
                   </td>
                 </tr>
-                <tr className={`${styles.separator}`}></tr>
+                <tr className={`${styles.separator}`}>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
                 <tr className={`${styles.summary}`}>
                   <td colSpan={2}>
                     Korekta tekstu już od:
@@ -254,7 +270,11 @@ const Section23 = () => {
                     <Image src={check} alt="Ikona potwierdzenia"></Image>
                   </td>
                 </tr>
-                <tr className={`${styles.separator}`}></tr>
+                <tr className={`${styles.separator}`}>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
                 <tr>
                   <td>Błędy frazeologiczne</td>
                   <td>
@@ -291,7 +311,11 @@ const Section23 = () => {
                     <Image src={check} alt="Ikona potwierdzenia"></Image>
                   </td>
                 </tr>
-                <tr className={`${styles.separator}`}></tr>
+                <tr className={`${styles.separator}`}>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
                 <tr className={`${styles.summary}`}>
                   <td colSpan={2}>
                     Korekta tekstu już od:
