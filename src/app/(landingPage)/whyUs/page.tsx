@@ -24,7 +24,7 @@ const WhyUs = () => {
       <Section6></Section6>
       <Section18></Section18>
       <Section5></Section5>
-      <Section9></Section9>
+      <Section9 style={{ marginTop: "0px" }}></Section9>
       <Section10></Section10>
       <Section11></Section11>
     </>

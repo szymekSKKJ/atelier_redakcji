@@ -5,13 +5,14 @@ import getBlogArticlesBrief from "@/api/blog/getBlogArticlesBrief";
 
 interface componentProps {
   type?: "landing page" | "blog";
+  style?: {};
 }
 
-const Section9 = async ({ type = "landing page" }: componentProps) => {
+const Section9 = async ({ type = "landing page", style }: componentProps) => {
   const blogArticles = await getBlogArticlesBrief(3);
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} style={style}>
       <header>
         <h2>
           {type === "blog" ? (
