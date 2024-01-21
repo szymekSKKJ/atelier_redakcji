@@ -4,6 +4,7 @@ import incorrect from "../../../../public/incorrect.svg";
 import Image from "next/image";
 import arrow from "../../../../public/arrow.svg";
 import info from "../../../../public/info.svg";
+import Link from "next/link";
 
 const ArrowIcon = () => {
   return (
@@ -353,9 +354,9 @@ const Section23 = () => {
           </p>
           <div className={`${styles.wrapper}`}>
             <p>Wycena indywidualna</p>
-            <button>
+            <Link href="/contact">
               Zapytaj mailowo <ArrowIcon></ArrowIcon>
-            </button>
+            </Link>
           </div>
         </article>
         <article className={`${styles.additional_information}`}>
