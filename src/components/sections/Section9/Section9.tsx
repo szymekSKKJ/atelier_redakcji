@@ -2,6 +2,7 @@ import styles from "./styles.module.scss";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import BlogArticlesBrief from "@/components/BlogArticlesBrief/BlogArticlesBrief";
 import getBlogArticlesBrief from "@/api/blog/getBlogArticlesBrief";
+import Link from "next/link";
 
 interface componentProps {
   type?: "landing page" | "blog";
