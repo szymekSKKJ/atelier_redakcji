@@ -38,11 +38,7 @@
     gap: 30px;
 
     @media screen and (max-width: 1440px) {
-      gap: 20px;
-    }
-
-    @media screen and (max-width: 1024px) {
-      gap: 15px;
+      gap: 30px;
     }
 
     @media screen and (max-width: 830px) {
@@ -67,6 +63,7 @@
       right: 20px;
       display: flex;
       flex-direction: column;
+      background-color: darkblue;
       justify-content: center;
       align-items: center;
       background-color: white;
@@ -112,11 +109,11 @@
       gap: 30px;
 
       @media screen and (max-width: 1440px) {
-        gap: 20px;
+        gap: 30px;
       }
 
       @media screen and (max-width: 1024px) {
-        gap: 15px;
+        gap: 20px;
       }
 
       @media screen and (max-width: 830px) {

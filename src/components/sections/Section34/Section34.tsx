@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import person from "../../../../public/person.jpg";
+import person from "../../../../public/person.webp";
 import linkedIn from "../../../../public/linkedIn.svg";
 
 const Section34 = () => {
