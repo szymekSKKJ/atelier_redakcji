@@ -8,7 +8,9 @@ const Section26 = () => {
         <h2>Dane firmy</h2>
         <CurvedLines></CurvedLines>
         <p className={`${styles.caption1}`}>Korektapress Małgorzata Frąckowiak</p>
-        <p>ul. Gen. Wł. Bortnowskiego 5/12, 85-793 Bydgoszcz</p>
+        <p>
+          ul. Gen. Wł. Bortnowskiego 5/12, <br></br>85-793 Bydgoszcz
+        </p>
         <p className={`${styles.caption2}`}>
           <b>NIP:</b> 9532496443
         </p>

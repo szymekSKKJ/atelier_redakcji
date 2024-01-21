@@ -6,7 +6,6 @@ import Image from "next/image";
 import x from "../../../../../public/x green.svg";
 
 interface componentsProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  children: string;
   color?: string;
 }
 

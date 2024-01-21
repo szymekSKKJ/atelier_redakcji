@@ -9,6 +9,7 @@ import { FormEvent, MouseEvent, useRef, useState } from "react";
 import sendMainForm from "@/api/nodemailer/sendMainForm";
 import Loader from "@/design/Loader/Loader";
 import Checkbox from "@/components/UI/Button/Checkbox/Checkbox";
+import Link from "next/link";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 
@@ -272,8 +273,8 @@ const Form = () => {
           </section>
           <div className={`${styles.agree}`}>
             <Checkbox required placeholder="">
-              Wysyłając zgłoszenie wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na wiadomość. Więcej informacji w Polityce
-              prywatności
+              Wysyłając zgłoszenie wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na wiadomość. Więcej informacji w{" "}
+              <Link href="/privacyPolicy">Polityce prywatności</Link>
             </Checkbox>
           </div>
           <Button

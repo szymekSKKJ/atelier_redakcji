@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 import Loader from "@/design/Loader/Loader";
 import sendCustomOfferForm from "@/api/nodemailer/sendCustomOfferForm";
 import Checkbox from "@/components/UI/Button/Checkbox/Checkbox";
+import Link from "next/link";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 
@@ -48,21 +49,21 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
               Imię<br></br>
               <em>(pole obowiązkowe)</em>
             </label>
-            <input pattern="[A-Za-z0-9]{1,20}" required placeholder="Imię" name="name"></input>
+            <input pattern="[A-Za-z0-9]{1,20}" required placeholder="" name="name"></input>
           </div>
           <div className={`${styles.input_wrapper}`}>
             <label>
               Adres e-mail<br></br>
               <em>(pole obowiązkowe)</em>
             </label>
-            <input name="email" required placeholder="Adres e-mail"></input>
+            <input name="email" required placeholder=""></input>
           </div>
           <div className={`${styles.input_wrapper} ${styles.textarea}`}>
             <label>
               Treść wiadomości<br></br>
               <em>(pole obowiązkowe)</em>
             </label>
-            <textarea placeholder="Treść wiadomości" className={`${mulishFont.className}`} required name="additionalInformation"></textarea>
+            <textarea placeholder="" className={`${mulishFont.className}`} required name="additionalInformation"></textarea>
           </div>
           <div className={`${styles.input_wrapper} ${styles.drop_down_section_wrapper}`} role="group">
             <label>
@@ -104,8 +105,8 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
           </div>
           <div className={`${styles.input_wrapper} ${styles.agree}`}>
             <Checkbox required>
-              Wysyłając zgłoszenie wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na wiadomość. Więcej informacji w Polityce
-              prywatności
+              Wysyłając zgłoszenie wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na wiadomość. Więcej informacji w{" "}
+              <Link href="/privacyPolicy">Polityce prywatności.</Link>
             </Checkbox>
           </div>
           <Button

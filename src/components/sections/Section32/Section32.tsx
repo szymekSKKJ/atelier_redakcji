@@ -14,8 +14,11 @@ const defaultOfferType = {
       id: 2,
       content: (
         <>
-          Skontaktuj się z nami, <mark>pisząc do nas maila</mark> lub wypełniając poniższy formularz. <mark>Zachęcamy do dodania pliku</mark> ze swoim tekstem -
-          będzie nam łatwiej zrozumieć Twój problem :)
+          Skontaktuj się z nami,{" "}
+          <mark>
+            <a href="mailto:kontakt@atelier-redakcji.eu">pisząc do nas maila</a>
+          </mark>{" "}
+          lub wypełniając poniższy formularz. <mark>Zachęcamy do dodania pliku</mark> ze swoim tekstem - będzie nam łatwiej zrozumieć Twój problem :)
         </>
       ),
     },
