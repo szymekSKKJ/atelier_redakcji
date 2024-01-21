@@ -26,18 +26,26 @@
     position: absolute;
     top: 0%;
     left: 0%;
-    background: url("../../../../public/sections/section5/hero_background.jfif");
-    background-position: -20% 0%;
+    background: url("../../../../public/sections/section5/hero_background.webp");
     background-repeat: no-repeat;
-    background-size: 52% 120%;
+    background-size: contain;
     z-index: -1;
 
+    @media screen and (max-width: 1156px) {
+      background-size: 120%;
+    }
+
     @media screen and (max-width: 1024px) {
-      background-size: 80% 120%;
+      background-size: 160%;
     }
 
     @media screen and (max-width: 768px) {
-      background-size: 100% 35%;
+      background-size: contain;
+    }
+
+    @media screen and (max-width: 425px) {
+      background-size: 200%;
+      background-position: 80% 0%;
     }
   }
 

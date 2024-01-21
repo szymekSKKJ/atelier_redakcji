@@ -4,7 +4,11 @@ import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import styles from "./styles.module.scss";
 import { useRef } from "react";
 
-const Section8 = () => {
+interface componentProps {
+  isFaqPage?: boolean;
+}
+
+const Section8 = ({ isFaqPage = false }: componentProps) => {
   const sectionRef = useRef<null | HTMLElement>(null);
 
   const defaultData = [
@@ -56,6 +60,7 @@ const Section8 = () => {
 
   return (
     <section className={`${styles.section}`} ref={sectionRef}>
+      {isFaqPage && <div className={`${styles.background}`}></div>}
       <header>
         <h2>FAQ</h2>
         <CurvedLines></CurvedLines>
@@ -64,7 +69,7 @@ const Section8 = () => {
           Prawdopodobnie znajdziesz odpowiedź na swoje pytanie poniżej, a jeśli to coś nowego, napisz do nas - na pewno pomożemy!
         </p>
       </header>
-      <div className={`${styles.questions}`} role="group">
+      <div className={`${styles.questions} ${isFaqPage ? styles.faq_page : ""}`} role="group">
         {defaultData.map((data) => {
           const { id, question, answer } = data;
 

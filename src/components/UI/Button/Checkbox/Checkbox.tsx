@@ -2,6 +2,8 @@
 
 import { useId, useLayoutEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
+import Image from "next/image";
+import x from "../../../../../public/x green.svg";
 
 interface componentsProps extends React.InputHTMLAttributes<HTMLInputElement> {
   children: string;
@@ -33,7 +35,9 @@ const Checkbox = ({ children, color, onInput, ...rest }: componentsProps) => {
             setIsChecked(event.currentTarget.checked);
           }}
           {...rest}></input>
-        <label htmlFor={id} className={`${styles.checkbox}`}></label>
+        <label htmlFor={id} className={`${styles.checkbox}`}>
+          <Image src={x} alt="Ikona checkbox"></Image>
+        </label>
       </div>
       <label className={`${styles.checkbox_label}`} style={isCheck && color ? { color: color } : {}} htmlFor={id}>
         {children}

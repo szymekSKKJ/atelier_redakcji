@@ -97,19 +97,45 @@ const Form = () => {
                 </label>
                 <div className={`${styles.select_wrapper}`}>
                   <select defaultValue="" name="textType" required className={`${mulishFont.className}`}>
-                    <option disabled defaultValue=""></option>
-                    <option defaultValue="Praca licencjacka">Praca licencjacka</option>
-                    <option defaultValue="Praca inżynierska">Praca inżynierska</option>
-                    <option defaultValue="Praca magisterska">Praca magisterska</option>
-                    <option defaultValue="Praca doktorska">Praca doktorska</option>
-                    <option defaultValue="Praca habilitacyjna">Praca habilitacyjna</option>
-                    <option defaultValue="Praca zaliczeniowa">Praca zaliczeniowa</option>
-                    <option defaultValue="Praca dyplomowa">Praca dyplomowa</option>
-                    <option defaultValue="Publikacja naukowa">Publikacja naukowa</option>
-                    <option defaultValue="Tekst specjalistyczny">Tekst specjalistyczny</option>
-                    <option defaultValue="Książka">Książka</option>
-                    <option defaultValue="Post blogowy/Artykuł">Post blogowy/Artykuł</option>
-                    <option defaultValue="Inny">Inny</option>
+                    <option disabled hidden value="">
+                      Wybierz rodzaj tekstu
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Praca licencjacka">
+                      Praca licencjacka
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Praca inżynierska">
+                      Praca inżynierska
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Praca magisterska">
+                      Praca magisterska
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Praca doktorska">
+                      Praca doktorska
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Praca habilitacyjna">
+                      Praca habilitacyjna
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Praca zaliczeniowa">
+                      Praca zaliczeniowa
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Praca dyplomowa">
+                      Praca dyplomowa
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Publikacja naukowa">
+                      Publikacja naukowa
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Tekst specjalistyczny">
+                      Tekst specjalistyczny
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Książka">
+                      Książka
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Post blogowy/Artykuł">
+                      Post blogowy/Artykuł
+                    </option>
+                    <option className={`${mulishFont.className}`} value="Inny">
+                      Inny
+                    </option>
                   </select>
                   <span></span>
                 </div>
@@ -127,6 +153,7 @@ const Form = () => {
                 <input
                   type="text"
                   name="pages"
+                  placeholder=""
                   required
                   onChange={(event) => {
                     const inputElement = event.currentTarget as HTMLInputElement;

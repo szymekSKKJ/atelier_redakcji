@@ -48,7 +48,7 @@
     }
 
     &:focus {
-      outline-color: #18a77c;
+      outline-color: #18a77c !important;
     }
 
     &:valid {
@@ -94,11 +94,13 @@
 
   .select_wrapper {
     position: relative;
+    z-index: 2;
 
     select {
       &:focus {
         + span {
           &::after {
+            transform-origin: center center;
             transform: rotate(180deg);
           }
         }
@@ -106,23 +108,24 @@
     }
 
     span {
-      width: auto;
+      width: 30px;
       height: auto;
+      aspect-ratio: 1/1;
       position: absolute;
       top: 50%;
-      right: 20px;
+      right: 10px;
       transform: translate(0px, -50%);
       display: flex;
       justify-content: center;
       align-items: center;
+      pointer-events: none;
 
       &::after {
-        width: 20px;
-        height: 20px;
+        width: auto;
+        height: auto;
+        aspect-ratio: 1/1;
+        flex-shrink: 0;
         content: url("../../../../../public/Arrow Down (black small).svg");
-        display: flex;
-        justify-content: center;
-        align-items: center;
         background-color: transparent;
         transition: 250ms;
         padding-bottom: 5px;
