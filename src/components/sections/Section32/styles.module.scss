@@ -4,6 +4,10 @@
   flex-direction: column;
   align-items: center;
   gap: 80px;
+  background: linear-gradient(360deg, rgba(14, 77, 122, 0.1) 0.05%, rgba(24, 167, 124, 0) 100.05%);
+  // Due to default margin-top: 200px; of footer element
+  margin-bottom: -200px;
+  padding-bottom: 200px;
 
   main {
     width: 100%;
