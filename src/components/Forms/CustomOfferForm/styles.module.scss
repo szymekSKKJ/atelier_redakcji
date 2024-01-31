@@ -51,8 +51,8 @@
       font-size: 16px;
       outline: solid transparent 2px;
       transition: 250ms;
-
-      &::placeholder {
+      background-color: white;
+      a &::placeholder {
         color: #7a8790;
       }
 
@@ -91,9 +91,10 @@
   .drop_down_section {
     width: 100%;
     position: relative;
+    background-color: white;
+    border-radius: 8px;
 
     input {
-      width: 100%;
       position: absolute;
       opacity: 0;
       pointer-events: none;
@@ -101,23 +102,22 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-    }
 
-    input.filled ~ label {
-      outline-color: #18a77c;
+      &:valid + label {
+        outline-color: #18a77c;
+      }
     }
 
     label {
       height: 100%;
       min-height: 150px;
-      background-color: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 10px;
       padding: 40px 0px 40px 0px;
-      border: dashed 2px transparent;
+      border: dashed 2px #dee5e3;
       border-radius: 8px;
       outline: unset;
       outline: dashed transparent 2px;
@@ -136,6 +136,34 @@
 
       p.attatched_file {
         font-weight: 800;
+        position: relative;
+
+        &:hover {
+          color: #e26969;
+        }
+
+        &::after {
+          width: 16px;
+          height: 14px;
+          content: "x";
+          position: absolute;
+          background-color: #e26969;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          top: 0px;
+          right: -20px;
+          border-radius: 100%;
+          font-size: 10px;
+          padding-bottom: 2px;
+        }
+      }
+
+      p.caption {
+        color: #7a8790;
+        margin-top: -10px;
+        font-size: 12px;
       }
 
       img {

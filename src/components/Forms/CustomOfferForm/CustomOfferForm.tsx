@@ -71,10 +71,11 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
             </label>
             <div className={`${styles.drop_down_section}`}>
               <input
-                name="file"
                 type="file"
                 id="fileInput"
-                className={`${attachedFile ? styles.filled : ""}`}
+                placeholder=""
+                accept="text/*, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                required={attachedFile === undefined || attachedFile === null ? true : false}
                 onChange={(event) => {
                   const inputFileElement = event.currentTarget as HTMLInputElement;
                   setAttachedFile(inputFileElement.files ? inputFileElement.files[0] : null);
@@ -99,7 +100,18 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
                 <p>
                   Przeciągnij plik tutaj lub <mark>wybierz z komputera</mark>
                 </p>
-                {attachedFile && <p className={`${styles.attatched_file}`}>{attachedFile.name}</p>}
+                <p className={`${styles.caption}`}>(Tylko pliki tekstowe)</p>
+                {attachedFile && (
+                  <p
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      setAttachedFile(null);
+                    }}
+                    className={`${styles.attatched_file}`}>
+                    {attachedFile.name}
+                  </p>
+                )}
               </label>
             </div>
           </div>
