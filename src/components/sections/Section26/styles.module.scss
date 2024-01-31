@@ -2,8 +2,9 @@
   padding: 120px 30px 0px 30px;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   background-color: white;
+  gap: 200px;
 
   @media screen and (max-width: 1024px) {
     flex-direction: column;
@@ -11,7 +12,7 @@
   }
 
   article {
-    margin-right: -200px;
+    //margin-right: -200px;
     @media screen and (max-width: 1024px) {
       margin-right: 0px;
     }
@@ -45,14 +46,16 @@
   }
 
   iframe {
-    transform-origin: right center;
+    transform-origin: left center;
     scale: 0.75;
     flex-shrink: 0;
+    margin-right: calc(-0.25 * 800px);
 
     @media screen and (max-width: 1024px) {
-      scale: 1;
-      width: calc(100dvw - 2 * 30px); // Minus padding
+      width: 100%;
       height: auto;
+      scale: 1;
+      margin-right: unset;
       aspect-ratio: 1/1;
     }
   }
