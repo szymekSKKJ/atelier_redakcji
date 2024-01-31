@@ -5,8 +5,6 @@ import Image from "next/image";
 import styles from "./styles.module.scss";
 import logo from "../../../public/logo.svg";
 import { usePathname } from "next/navigation";
-import hamburger from "../../../public/hamburger.svg";
-import hamburgerClose from "../../../public/hamburger_close.svg";
 import { useEffect, useState } from "react";
 import Button from "../UI/Button/Button";
 import arrowDown from "../../../public/arrow.svg";
@@ -14,6 +12,7 @@ import arrowDownBlue from "../../../public/arrow down blue.svg";
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
   const pathname = usePathname();
 
@@ -163,11 +162,21 @@ const Navigation = () => {
 
             return (
               <div key={id}>
-                <Link href={href} className={`${formattedStyles} ${isActive ? styles.active : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
-                  {content}
-                </Link>
+                {subLinks ? (
+                  <a
+                    onClick={() => {
+                      setIsSubMenuOpen((currentValue) => (currentValue === true ? false : true));
+                    }}>
+                    {content}
+                  </a>
+                ) : (
+                  <Link href={href} className={`${formattedStyles} ${isActive ? styles.active : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
+                    {content}
+                  </Link>
+                )}
+
                 {subLinks && (
-                  <div className={`${styles.sub_menu}`}>
+                  <div className={`${styles.sub_menu} ${isSubMenuOpen ? styles.open : ""}`}>
                     {subLinks.map((linkData) => {
                       const { id, content, href } = linkData;
                       return (
