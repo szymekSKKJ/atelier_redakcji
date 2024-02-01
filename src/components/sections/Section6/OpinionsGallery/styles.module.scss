@@ -105,73 +105,49 @@
   > .wrapper_inside {
     width: 100%;
     overflow: hidden;
+    display: flex;
+    gap: 40px;
 
-    .opinions {
-      width: 100%;
+    article {
+      width: 300px;
+      height: 320px;
+      padding: 30px 20px 30px 20px;
+      background-color: white;
+      border-radius: 16px;
       display: flex;
-      align-items: center;
-      gap: 40px;
-      justify-content: flex-start;
+      flex-direction: column;
+      flex-shrink: 0;
+      transform: translateX(-0%);
+      left: calc(0% + (var(--gallery-offset) * (-300px - 40px)));
+      position: relative;
       transition: 500ms;
-      transform: translateX(calc(var(--gallery-offset) * (-300px + (-40px)))); // article width and gap and half of padding
 
       @media screen and (max-width: 1024px) {
-        transform: translateX(calc((var(--gallery-offset) * (-250px + (-40px))))); // article width and gap and half of padding
+        transform: translateX(-50%);
+        left: calc(50% + (var(--gallery-offset) * (-300px - 40px)));
       }
 
-      @media screen and (max-width: 768px) {
-        transform: translateX(calc(((var(--gallery-offset) * (-250px + (-40px)))))); // article width and gap and half of padding
-        translate: 15% 0px;
-      }
-
-      @media screen and (max-width: 425px) {
-        translate: 20% 0px;
-      }
-
-      @media screen and (max-width: 375px) {
-        translate: 17% 0px;
-      }
-
-      @media screen and (max-width: 320px) {
-        translate: 11% 0px;
-      }
-
-      article {
-        width: 300px;
-        height: 320px;
-        padding: 30px 20px 30px 20px;
-        background-color: white;
-        border-radius: 16px;
-        display: flex;
-        flex-direction: column;
-        flex-shrink: 0;
+      .username {
+        margin-top: 10px;
+        margin-bottom: 50px;
+        color: #1d4676;
+        font-size: 24px;
+        font-weight: 800;
 
         @media screen and (max-width: 1024px) {
           width: 250px;
+          margin-bottom: 20px;
         }
+      }
 
-        .username {
-          margin-top: 10px;
-          margin-bottom: 50px;
-          color: #1d4676;
-          font-size: 24px;
-          font-weight: 800;
-
-          @media screen and (max-width: 1024px) {
-            width: 250px;
-            margin-bottom: 20px;
-          }
-        }
-
-        .description {
-          font-size: 16px;
-          font-weight: 400;
-          display: -webkit-box;
-          -webkit-line-clamp: 8;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
+      .description {
+        font-size: 16px;
+        font-weight: 400;
+        display: -webkit-box;
+        -webkit-line-clamp: 8;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

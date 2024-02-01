@@ -10,7 +10,7 @@ const OpinionsGallery = () => {
   const wrapperElementRef = useRef<null | HTMLDivElement>(null);
 
   const [galleryOffest, setGalleryOffest] = useState(0);
-  const [currentVisibleOpinionsCount, setCurrentVisibleOpinionsCounts] = useState(3); // It depends of main wrapper element width
+  const [currentVisibleOpinionsOffest, setCurrentVisibleOpinionsOffest] = useState(3); // It depends of main wrapper element width
 
   const opinions = [
     {
@@ -60,15 +60,15 @@ const OpinionsGallery = () => {
   useEffect(() => {
     const changeCurrentVisibleOpinionsCount = () => {
       if (window.innerWidth > 1440) {
-        setCurrentVisibleOpinionsCounts(3);
+        setCurrentVisibleOpinionsOffest(3);
       } else if (window.innerWidth <= 1440 && window.innerWidth > 1024) {
-        setCurrentVisibleOpinionsCounts(2);
+        setCurrentVisibleOpinionsOffest(2);
       } else if (window.innerWidth <= 1024 && window.innerWidth > 768) {
-        setCurrentVisibleOpinionsCounts(2);
+        setCurrentVisibleOpinionsOffest(1);
       } else if (window.innerWidth <= 768 && window.innerWidth > 425) {
-        setCurrentVisibleOpinionsCounts(2);
+        setCurrentVisibleOpinionsOffest(1); // Due to the static offset on styles in max-width: 768px at .opinions
       } else if (window.innerWidth <= 425) {
-        setCurrentVisibleOpinionsCounts(1);
+        setCurrentVisibleOpinionsOffest(1);
       }
     };
 
@@ -98,26 +98,24 @@ const OpinionsGallery = () => {
           <Image src={arrowWhite} alt="Strzłka w lewo"></Image>
         </button>
         <button
-          className={`${galleryOffest === opinions.length - currentVisibleOpinionsCount ? styles.light : ""}`}
+          className={`${galleryOffest === opinions.length - currentVisibleOpinionsOffest ? styles.light : ""}`}
           onClick={() => {
-            setGalleryOffest((currentValue) => (currentValue < opinions.length - currentVisibleOpinionsCount ? currentValue + 1 : currentValue));
+            setGalleryOffest((currentValue) => (currentValue < opinions.length - currentVisibleOpinionsOffest ? currentValue + 1 : currentValue));
           }}>
           <Image src={arrowWhite} alt="Strzłka w prawo"></Image>
         </button>
       </div>
       <div className={`${styles.wrapper_inside}`} role="group">
-        <div className={`${styles.opinions}`} role="group">
-          {opinions.map((opinionData) => {
-            const { id, username, description } = opinionData;
-            return (
-              <article key={id}>
-                <Image src={quote} alt="Ikonka czudzysłowia"></Image>
-                <p className={styles.username}>{username}</p>
-                <p className={styles.description}>{description}</p>
-              </article>
-            );
-          })}
-        </div>
+        {opinions.map((opinionData) => {
+          const { id, username, description } = opinionData;
+          return (
+            <article key={id}>
+              <Image src={quote} alt="Ikonka czudzysłowia"></Image>
+              <p className={styles.username}>{username}</p>
+              <p className={styles.description}>{description}</p>
+            </article>
+          );
+        })}
       </div>
     </div>
   );
