@@ -5,11 +5,12 @@ import styles from "./styles.module.scss";
 import document from "../../../../../public/document.svg";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
-import { FormEvent, MouseEvent, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import sendMainForm from "@/api/nodemailer/sendMainForm";
 import Loader from "@/design/Loader/Loader";
 import Checkbox from "@/components/UI/Button/Checkbox/Checkbox";
 import Link from "next/link";
+import calendarIcon from "../../../../../public/calendar.svg";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 
@@ -141,10 +142,11 @@ const Form = () => {
                   <span></span>
                 </div>
               </div>
-              <div className={`${styles.input_wrapper}`}>
+              <div className={`${styles.input_wrapper} ${styles.calendar}`}>
                 <label className={`${styles.title}`}>
                   Termin realizacji <em className={`${styles.mandatory_field}`}>(pole obowiązkowe)</em>
                 </label>
+                <Image src={calendarIcon} alt="Ikona kalendarza"></Image>
                 <input type="date" required name="deadline" placeholder="" className={`${mulishFont.className}`}></input>
               </div>
               <div className={`${styles.input_wrapper}`}>

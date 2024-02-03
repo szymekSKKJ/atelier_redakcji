@@ -95,7 +95,13 @@ const Navigation = () => {
           const formattedStyles = stylesLocal.join(" ");
 
           return (
-            <Link key={id} href={href} className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
+            <Link
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+              }}
+              key={id}
+              href={href}
+              className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
               {content}
             </Link>
           );
@@ -148,7 +154,12 @@ const Navigation = () => {
           </Button>
         </div>
       </nav>
-      <Button style={{ padding: "15px 20px 15px 20px" }} changeRoute="/#mainForm">
+      <Button
+        style={{ padding: "15px 20px 15px 20px" }}
+        changeRoute="/#mainForm"
+        onClick={() => {
+          setIsMobileMenuOpen(false);
+        }}>
         Wyceń swój tekst
       </Button>
       <nav className={`${styles.mobile}  ${isMobileMenuOpen ? styles.open : ""}`}>
@@ -168,6 +179,7 @@ const Navigation = () => {
                       setIsSubMenuOpen((currentValue) => (currentValue === true ? false : true));
                     }}>
                     {content}
+                    <Image src={arrowDownBlue} alt="Ikonka strzałki w dół"></Image>
                   </a>
                 ) : (
                   <Link href={href} className={`${formattedStyles} ${isActive ? styles.active : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
@@ -191,7 +203,12 @@ const Navigation = () => {
             );
           }
         })}
-        <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }} changeRoute="/#mainForm">
+        <Button
+          style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }}
+          changeRoute="/#mainForm"
+          onClick={() => {
+            setIsMobileMenuOpen(false);
+          }}>
           Wyceń swój tekst
         </Button>
       </nav>
