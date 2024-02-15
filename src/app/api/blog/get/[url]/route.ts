@@ -55,6 +55,8 @@ const GET = async (request: Request, { params }: { params: { url: string } }) =>
 
 export { GET };
 
+export const dynamic = "force-dynamic";
+
 const blogGetByUrl = async (url: string): Promise<response<blogArticle>> => {
   return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/${url}`, {
     method: "GET",

@@ -40,6 +40,8 @@ const GET = async (request: Request) => {
 
 export { GET };
 
+export const dynamic = "force-dynamic";
+
 const blogGetSome = async (skip: number = 0, take: number = 3, isServerSide = false): Promise<response<blogArticle[]>> => {
   if (isServerSide) {
     const headers = await import("next/headers");

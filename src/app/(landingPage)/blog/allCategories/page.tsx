@@ -6,15 +6,15 @@ import Section11 from "@/components/sections/Section11/Section11";
 import Button from "@/components/UI/Button/Button";
 
 const allCategoriesPage = async () => {
-  const { data } = await blogGetSome(0, 3, true);
+  const response = await blogGetSome(0, 3, true);
 
   return (
     <div className={`${styles.allCategoriesPage}`}>
       <h1>Wszystkie artykuły</h1>
       <div className={`${styles.wrapper}`}>
         <div className={`${styles.articles}`}>
-          {data &&
-            data.map((data, index, array) => {
+          {response.data &&
+            response.data.map((data, index, array) => {
               const { id } = data;
 
               if (index === (array.length - 1) / 2) {
