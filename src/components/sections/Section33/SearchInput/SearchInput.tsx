@@ -9,7 +9,7 @@ const SearchInput = () => {
     <div className={`${styles.wrapper}`}>
       <input
         type="text"
-        placeholder="Podaj słowa kluczowe"
+        placeholder="Czego szukasz?"
         onKeyDown={(event) => {
           if (event.key === "Enter") {
             const searchButtonElement = event.currentTarget.parentElement?.parentElement?.querySelector("button") as HTMLButtonElement;

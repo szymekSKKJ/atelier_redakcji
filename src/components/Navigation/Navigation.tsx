@@ -5,16 +5,39 @@ import Image from "next/image";
 import styles from "./styles.module.scss";
 import logo from "../../../public/logo.svg";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../UI/Button/Button";
 import arrowDown from "../../../public/arrow.svg";
 import arrowDownBlue from "../../../public/arrow down blue.svg";
+import doubleArrowIcon from "../../../public/Double arrows.svg";
+import blogImage from "../../../public/BLOG.svg";
+import searchIcon from "../../../public/search.svg";
+import { blogArticle } from "@/app/api/blog/get/[url]/route";
+import { blogFind } from "@/app/api/blog/find/route";
+import BlogArticlesBrief from "../BlogArticlesBrief/BlogArticlesBrief";
+import { blogGetSome } from "@/app/api/blog/get/some/route";
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const [foundArticles, setFoundArticles] = useState<blogArticle[]>([]);
+  const [paginationSkipValue, setPaginationSkipVaue] = useState(0);
+  const [areAllArticlesDisplayed, setAreAllArticlesDisplayed] = useState(false);
+
+  const formattedArticles: blogArticle[][] = [];
+
+  foundArticles.forEach((data, index) => {
+    if (index % 3 === 0) {
+      const newArray = [];
+      newArray.push(data);
+      formattedArticles.push(newArray);
+    } else {
+      formattedArticles.at(-1)!.push(data);
+    }
+  });
 
   const pathname = usePathname();
+  const formattedPathnameArray = pathname.split("/").splice(1, pathname.split("/").length);
 
   const links = [
     {
@@ -78,6 +101,31 @@ const Navigation = () => {
     },
   ];
 
+  const blogLinks = [
+    {
+      id: 1,
+      href: "/blog",
+      content: "Start",
+      activeCondition: "blog",
+    },
+    {
+      id: 2,
+      href: "/blog/allCategories",
+      content: "Artykuły",
+      activeCondition: "allCategories",
+    },
+    {
+      id: 3,
+      href: "/blog",
+      content: "Kategorie artykułów",
+      activeCondition: "allCategoriesw",
+    },
+  ];
+
+  const linksContentForNotBlog = links.map((data) => data.href != "/blog" && data.href);
+
+  const onChangeInputSearchTimeoutDebounce = useRef<null | ReturnType<typeof setTimeout>>(null);
+
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -86,133 +134,314 @@ const Navigation = () => {
     }
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    if (foundArticles.length !== 0) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [foundArticles]);
+
   return (
-    <div className={`${styles.wrapper1}`}>
-      <nav className={`${styles.desktop}`}>
-        {(() => {
-          const { id, content, styles: stylesLocal, href } = links[0];
+    <>
+      <div className={`${styles.wrapper}`}>
+        {linksContentForNotBlog.includes(`/${formattedPathnameArray.at(-1)!}`) === false ? (
+          <nav className={`${styles.blogMenu}`}>
+            <div className={`${styles.wrapper}`}>
+              <div className={`${styles.wrapper1}`}>
+                <Link href={`/`}>
+                  <Image src={doubleArrowIcon} alt="Ikonka podwójnej strzałki"></Image> Wróć do Atelier redakcji tekstu
+                </Link>
+                <Button style={{ padding: "15px 20px 15px 20px" }} changeRoute="/#mainForm">
+                  Skorzystaj z pomocy redaktora
+                </Button>
+                <div className={`${styles.inputWrapper}`}>
+                  <Image src={searchIcon} alt="Ikonka lupty"></Image>
+                  <input
+                    placeholder="Szukaj..."
+                    onChange={async (event) => {
+                      const inputElement = event.currentTarget as HTMLInputElement;
 
-          const formattedStyles = stylesLocal.join(" ");
+                      onChangeInputSearchTimeoutDebounce.current && clearTimeout(onChangeInputSearchTimeoutDebounce.current);
+                      onChangeInputSearchTimeoutDebounce.current = setTimeout(async () => {
+                        const response = await blogFind(inputElement.value);
 
-          return (
-            <Link
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-              }}
-              key={id}
-              href={href}
-              className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
-              {content}
-            </Link>
-          );
-        })()}
-        <button
-          className={`${styles.toggle_mobile_navigation} ${isMobileMenuOpen ? styles.open : ""}`}
-          onClick={() => setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true))}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <div className={`${styles.wrapper}`}>
-          {links.map((linkData, index) => {
-            if (index > 0) {
-              const { id, content, styles: stylesLocal, href, subLinks } = linkData;
+                        if (response.data && response.data.length !== 0) {
+                          setPaginationSkipVaue(10);
+                          setFoundArticles(() => response.data!);
+                          setAreAllArticlesDisplayed(false);
+                        } else {
+                          const response = await blogGetSome(0, 3);
 
-              const formattedStyles = stylesLocal.join(" ");
-
-              const isActive = href === "/" ? pathname === href : pathname.includes(href.split("/").splice(-1, 1).join(""));
-
-              return (
-                <div className={`${styles.link_wrapper}`} key={id}>
-                  <Link href={href} className={`${formattedStyles} ${isActive ? styles.active : ""}`}>
-                    {content}{" "}
-                    {subLinks && (
-                      <Image
-                        style={isActive ? { transform: "rotate(90deg)" } : {}}
-                        src={isActive ? arrowDown : arrowDownBlue}
-                        alt="Ikonka strzałki w dół"></Image>
-                    )}
-                  </Link>
-                  {subLinks && (
-                    <div className={`${styles.sub_menu}`}>
-                      {subLinks.map((linkData) => {
-                        const { id, content, href } = linkData;
-                        return (
-                          <Link href={href} key={id}>
-                            {content}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
+                          if (response.data) {
+                            setFoundArticles(() => response.data!);
+                          }
+                        }
+                      }, 1000);
+                    }}></input>
                 </div>
-              );
-            }
-          })}
-          <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }} changeRoute="/#mainForm">
-            Wyceń swój tekst
-          </Button>
-        </div>
-      </nav>
-      <Button
-        style={{ padding: "15px 20px 15px 20px" }}
-        changeRoute="/#mainForm"
-        onClick={() => {
-          setIsMobileMenuOpen(false);
-        }}>
-        Wyceń swój tekst
-      </Button>
-      <nav className={`${styles.mobile}  ${isMobileMenuOpen ? styles.open : ""}`}>
-        {links.map((linkData, index) => {
-          if (index > 0) {
-            const { id, content, styles: stylesLocal, href, subLinks } = linkData;
+              </div>
+              <div className={`${styles.wrapper2}`}>
+                <div className={`${styles.imageLogoWrapper}`}>
+                  <Image src={logo} alt="Main logo"></Image>
+                </div>
+                <div className={`${styles.imageBlogWrapper}`}>
+                  <Image src={blogImage} alt="Zdjęcie napisu blog"></Image>
+                </div>
+                <div className={`${styles.links}`}>
+                  {blogLinks.map((data) => {
+                    const { id, content, activeCondition, href } = data;
+                    return (
+                      <Link key={id} className={`${formattedPathnameArray.at(-1) === activeCondition ? styles.active : ""}`} href={href}>
+                        {content}
+                      </Link>
+                    );
+                  })}
+                  <div className={`${styles.inputWrapper}`}>
+                    <Image src={searchIcon} alt="Ikonka lupty"></Image>
+                    <input
+                      placeholder="Szukaj..."
+                      onChange={async (event) => {
+                        const inputElement = event.currentTarget as HTMLInputElement;
 
-            const formattedStyles = stylesLocal.join(" ");
+                        onChangeInputSearchTimeoutDebounce.current && clearTimeout(onChangeInputSearchTimeoutDebounce.current);
+                        onChangeInputSearchTimeoutDebounce.current = setTimeout(async () => {
+                          const response = await blogFind(inputElement.value);
 
-            const isActive = href === "/" ? pathname === href : pathname.includes(href.split("/").splice(-1, 1).join(""));
+                          if (response.data && response.data.length !== 0) {
+                            setPaginationSkipVaue(10);
+                            setFoundArticles(() => response.data!);
+                            setAreAllArticlesDisplayed(false);
+                          } else {
+                            const response = await blogGetSome(0, 3);
 
-            return (
-              <div key={id}>
-                {subLinks ? (
-                  <a
+                            if (response.data) {
+                              setFoundArticles(() => response.data!);
+                            }
+                          }
+                        }, 1000);
+                      }}></input>
+                  </div>
+                </div>
+                <button
+                  className={`${styles.toggle_mobile_navigation} ${isMobileMenuOpen ? styles.open : ""}`}
+                  onClick={() => {
+                    setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true));
+                    setTimeout(() => {
+                      setFoundArticles([]);
+                    }, 500);
+                  }}>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </button>
+              </div>
+            </div>
+            <div className={`${styles.hamburgerMenu} ${isMobileMenuOpen ? styles.open : ""}`}>
+              {blogLinks.map((data) => {
+                const { id, content, activeCondition, href } = data;
+                return (
+                  <Link
+                    key={id}
+                    className={`${formattedPathnameArray.at(-1) === activeCondition ? styles.active : ""}`}
+                    href={href}
                     onClick={() => {
-                      setIsSubMenuOpen((currentValue) => (currentValue === true ? false : true));
+                      setIsMobileMenuOpen(false);
+                      setTimeout(() => {
+                        setFoundArticles([]);
+                      }, 500);
                     }}>
                     {content}
-                    <Image src={arrowDownBlue} alt="Ikonka strzałki w dół"></Image>
-                  </a>
-                ) : (
-                  <Link href={href} className={`${formattedStyles} ${isActive ? styles.active : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
-                    {content}
                   </Link>
-                )}
+                );
+              })}
+              <Button
+                style={{ padding: "15px 20px 15px 20px", alignSelf: "flex-start" }}
+                changeRoute="/#mainForm"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setTimeout(() => {
+                    setFoundArticles([]);
+                  }, 500);
+                }}>
+                Skorzystaj z pomocy redaktora
+              </Button>
+            </div>
+          </nav>
+        ) : (
+          <div className={`${styles.default}`}>
+            <nav className={`${styles.desktop}`}>
+              <div className={`${styles.wrapper}`}>
+                {(() => {
+                  const { id, content, styles: stylesLocal, href } = links[0];
 
-                {subLinks && (
-                  <div className={`${styles.sub_menu} ${isSubMenuOpen ? styles.open : ""}`}>
-                    {subLinks.map((linkData) => {
-                      const { id, content, href } = linkData;
+                  const formattedStyles = stylesLocal.join(" ");
+
+                  return (
+                    <Link
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                      }}
+                      key={id}
+                      href={href}
+                      className={`${formattedStyles} ${pathname === href ? styles.active : ""}`}>
+                      {content}
+                    </Link>
+                  );
+                })()}
+
+                <button
+                  className={`${styles.toggle_mobile_navigation} ${isMobileMenuOpen ? styles.open : ""}`}
+                  onClick={() => setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true))}>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </button>
+                <div className={`${styles.wrapper}`}>
+                  {links.map((linkData, index) => {
+                    if (index > 0) {
+                      const { id, content, styles: stylesLocal, href, subLinks } = linkData;
+
+                      const formattedStyles = stylesLocal.join(" ");
+
+                      const isActive = href === "/" ? pathname === href : pathname.includes(href.split("/").splice(-1, 1).join(""));
+
                       return (
-                        <Link href={href} key={id} onClick={() => setIsMobileMenuOpen(false)}>
+                        <div className={`${styles.link_wrapper}`} key={id}>
+                          <Link href={href} className={`${formattedStyles} ${isActive ? styles.active : ""}`}>
+                            {content}{" "}
+                            {subLinks && (
+                              <Image
+                                style={isActive ? { transform: "rotate(90deg)" } : {}}
+                                src={isActive ? arrowDown : arrowDownBlue}
+                                alt="Ikonka strzałki w dół"></Image>
+                            )}
+                          </Link>
+                          {subLinks && (
+                            <div className={`${styles.sub_menu}`}>
+                              {subLinks.map((linkData) => {
+                                const { id, content, href } = linkData;
+                                return (
+                                  <Link href={href} key={id}>
+                                    {content}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    }
+                  })}
+                  <Button style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }} changeRoute="/#mainForm">
+                    Wyceń swój tekst
+                  </Button>
+                </div>
+              </div>
+            </nav>
+            <Button
+              style={{ padding: "15px 20px 15px 20px" }}
+              changeRoute="/#mainForm"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+              }}>
+              Wyceń swój tekst
+            </Button>
+            <nav className={`${styles.mobile}  ${isMobileMenuOpen ? styles.open : ""}`}>
+              {links.map((linkData, index) => {
+                if (index > 0) {
+                  const { id, content, styles: stylesLocal, href, subLinks } = linkData;
+
+                  const formattedStyles = stylesLocal.join(" ");
+
+                  const isActive = href === "/" ? pathname === href : pathname.includes(href.split("/").splice(-1, 1).join(""));
+
+                  return (
+                    <div key={id}>
+                      {subLinks ? (
+                        <a
+                          onClick={() => {
+                            setIsSubMenuOpen((currentValue) => (currentValue === true ? false : true));
+                          }}>
+                          {content}
+                          <Image src={arrowDownBlue} alt="Ikonka strzałki w dół"></Image>
+                        </a>
+                      ) : (
+                        <Link href={href} className={`${formattedStyles} ${isActive ? styles.active : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
                           {content}
                         </Link>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
+                      )}
+
+                      {subLinks && (
+                        <div className={`${styles.sub_menu} ${isSubMenuOpen ? styles.open : ""}`}>
+                          {subLinks.map((linkData) => {
+                            const { id, content, href } = linkData;
+                            return (
+                              <Link href={href} key={id} onClick={() => setIsMobileMenuOpen(false)}>
+                                {content}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+              })}
+              <Button
+                style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }}
+                changeRoute="/#mainForm"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                }}>
+                Wyceń swój tekst
+              </Button>
+            </nav>
+          </div>
+        )}
+      </div>
+      <div
+        className={`${styles.foundArticles} ${formattedArticles.length !== 0 ? styles.open : ""}`}
+        tabIndex={1}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            setFoundArticles([]);
           }
-        })}
-        <Button
-          style={{ padding: "15px 20px 15px 20px", fontSize: "16px" }}
-          changeRoute="/#mainForm"
-          onClick={() => {
-            setIsMobileMenuOpen(false);
+        }}
+        onClick={() => {
+          setFoundArticles([]);
+        }}>
+        <div
+          className={`${styles.content}`}
+          tabIndex={2}
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              setFoundArticles([]);
+            }
           }}>
-          Wyceń swój tekst
-        </Button>
-      </nav>
-    </div>
+          <button
+            onClick={() => {
+              setFoundArticles([]);
+            }}>
+            <i aria-hidden className="fa-solid fa-xmark"></i>
+          </button>
+          {formattedArticles.length !== 0 &&
+            formattedArticles.map((dataArray) => {
+              return (
+                <BlogArticlesBrief
+                  key={crypto.randomUUID()}
+                  callback={() => {
+                    setFoundArticles([]);
+                  }}
+                  articles={dataArray}></BlogArticlesBrief>
+              );
+            })}
+        </div>
+      </div>
+    </>
   );
 };
 

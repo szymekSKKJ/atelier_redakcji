@@ -3,16 +3,16 @@
   align-items: center;
 
   .editable_child {
-    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
 
     > * {
       width: 100%;
-      color: inherit;
-      padding: 8px;
       border-radius: 4px;
       outline: 2px solid transparent;
       transition: outline 150ms;
       position: relative;
+      cursor: pointer;
 
       &:empty::before {
         content: attr(placeholder);
@@ -23,12 +23,7 @@
       }
 
       &:focus {
-        border-right: solid 2px transparent;
         outline: 2px solid #18a77c;
-
-        &::after {
-          border-right: solid 2px transparent;
-        }
 
         .createdElement {
           &:hover {
@@ -37,62 +32,74 @@
         }
       }
 
-      .createdElement {
-        background-color: rgba(0, 0, 0, 0);
-        cursor: pointer;
-        border-radius: 3px;
-        transition: 150ms;
-        outline: 2px transparent solid;
-      }
+      // .createdElement {
+      //   background-color: rgba(0, 0, 0, 0);
+      //   cursor: pointer;
+      //   border-radius: 3px;
+      //   transition: 150ms;
+      //   outline: 2px transparent solid;
+      // }
     }
-  }
 
-  .delete {
-    width: auto;
-    height: auto;
-    background-color: #ff667d;
-    border-radius: 4px;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    cursor: pointer;
-    transition: 250ms;
-    padding: 6px;
-    margin-left: 10px;
-    overflow: hidden;
+    .delete {
+      width: auto;
+      height: auto;
+      background-color: #ff667d;
+      border-radius: 4px;
+      display: flex;
+      flex-shrink: 0;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      cursor: pointer;
+      transition: 250ms;
+      padding: 6px;
+      margin-left: 10px;
+      overflow: hidden;
 
-    &:hover {
-      background-color: #ff8093;
+      &:hover {
+        background-color: #ff8093;
+      }
     }
   }
 }
 
 .context_menu {
-  background-color: rgba(0, 0, 0, 0.125);
+  width: auto;
+  height: 36px;
+  background-color: white;
   position: fixed;
   top: 0px;
   left: 0px;
-  width: 100px;
-  height: auto;
   display: flex;
-  flex-direction: column;
   z-index: 1000000000;
-  backdrop-filter: blur(6px);
-  border-radius: 0px 4px 4px 4px;
+  border-radius: 4px;
+  transform: translate(-50%, -100%);
+  box-shadow: 0px 0px 6px black;
+  overflow: hidden;
 
   .option {
+    width: auto;
+    height: 100%;
     font-size: 18px;
     text-align: left;
-    padding: 6px 12px 6px 12px;
-    background-color: rgba(0, 0, 0, 0);
+    padding: 12px;
+    background-color: white;
     border: unset;
     transition: 250ms;
     color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+
+    i {
+      color: #0082e6;
+    }
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.125);
+      background-color: rgba(0, 130, 230, 0.1);
     }
   }
 }

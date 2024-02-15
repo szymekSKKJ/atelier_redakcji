@@ -5,6 +5,10 @@
   border-top: 2px solid #dee5e3;
   padding-top: 50px;
 
+  @media screen and (max-width: 425px) {
+    flex-direction: column;
+  }
+
   .image_wrapper {
     width: 140px;
     height: 140px;
@@ -18,8 +22,6 @@
     img {
       width: 100%;
       height: auto;
-      translate: 0px 40px;
-      scale: 1.25;
     }
   }
 

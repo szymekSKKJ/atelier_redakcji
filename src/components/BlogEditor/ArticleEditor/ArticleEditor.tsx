@@ -1,400 +1,575 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
-import { Timestamp, addDoc, collection, deleteDoc, doc, or, updateDoc } from "firebase/firestore";
-import Image from "next/image";
-import Button from "@/components/UI/Button/Button";
-import { db } from "@/firebaseConfig";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-import getBlogArticle from "@/api/blog/getBlogArticle";
+import NextImage from "next/image";
+import arrowRightGrayIcon from "../../../../public/arrow_right_grey.svg";
 import Editable from "./Editable/Editable";
-import { blogArticlesBriefSignalData } from "../BlogEditor";
-import { settings } from "firebase/analytics";
-import { useRouter } from "next/navigation";
+import Button from "@/components/UI/Button/Button";
+import { blogCreate } from "@/app/api/blog/create/route";
+import AvatarEditor from "react-avatar-editor";
+import { blogGetSome } from "@/app/api/blog/get/some/route";
+import { blogArticle, blogGetByUrl } from "@/app/api/blog/get/[url]/route";
+import { createNotification } from "../BlogEditor";
+import { blogUpdate } from "@/app/api/blog/update/[id]/route";
 
-interface componentProps {
-  currentActiveBlogId: string | null;
-  setCurrentActiveBlogId: Dispatch<SetStateAction<string | null>>;
-  setDisplayEditor: Dispatch<SetStateAction<boolean>>;
+const isEmpty = (str: string) => !str.trim().length;
+
+function isValidPathname(pathname: string) {
+  try {
+    const url = new URL("http://dummy/" + pathname);
+
+    return url.pathname.substring(1);
+  } catch (error) {
+    return false;
+  }
 }
 
-const ArticleEditor = ({ currentActiveBlogId, setCurrentActiveBlogId, setDisplayEditor }: componentProps) => {
-  const router = useRouter();
+interface componentProps {
+  setCurrentActiveArticle: Dispatch<SetStateAction<null | blogArticle>>;
+  currentActiveArticle: blogArticle | null;
+}
 
-  const [article, setArticle] = useState<{
-    id: null | string;
-    mainImage: File | null | string;
-    createdAt: Timestamp | null;
-    chapters: {
-      order: number;
+const ArticleEditor = ({ setCurrentActiveArticle, currentActiveArticle }: componentProps) => {
+  const [articleData, setArticleData] = useState<{
+    id: string | null;
+    title: string | null;
+    category: string | null;
+    url: string | null;
+    createdAt: Date;
+    entry: {
+      id: string;
+      content: string;
+    }[];
+    image: File | null | string;
+    content: {
+      id: string;
       title: string;
-      paragraphs: {
-        order: number;
+      content: {
+        id: string;
         content: string;
       }[];
     }[];
-  } | null>(() => {
-    if (currentActiveBlogId) {
-      return null;
-    } else {
-      return {
-        id: null,
-        mainImage: null,
-        createdAt: null,
-        chapters: [
-          {
-            order: 1,
-            title: "",
-            paragraphs: [
-              {
-                order: 1,
-                content: "",
-              },
-            ],
-          },
-          {
-            order: 2,
-            title: "",
-            paragraphs: [
-              {
-                order: 1,
-                content: "",
-              },
-            ],
-          },
-        ],
-      };
-    }
-  });
+  }>(
+    currentActiveArticle
+      ? currentActiveArticle
+      : {
+          id: null,
+          title: null,
+          category: null,
+          url: null,
+          createdAt: new Date(),
+          entry: [
+            {
+              id: crypto.randomUUID(),
+              content: ``,
+            },
+            {
+              id: crypto.randomUUID(),
+              content: ``,
+            },
+          ],
+          image: null,
+          content: [
+            {
+              id: crypto.randomUUID(),
+              title: "",
+              content: [
+                {
+                  id: crypto.randomUUID(),
+                  content: ``,
+                },
+              ],
+            },
+          ],
+        }
+  );
+  const [appendChanges, setAppendCahnges] = useState(false);
+
+  const avatarEditorRef = useRef<null | AvatarEditor>(null);
 
   useEffect(() => {
-    if (currentActiveBlogId) {
+    if (appendChanges) {
+      setAppendCahnges(false);
       (async () => {
-        const currentActiveBlogData = await getBlogArticle(currentActiveBlogId);
+        // @ts-ignore
+        const isAnyValueNull = Object.keys(articleData).find((key) => articleData[key] === null);
 
-        setArticle((currentValue) => {
-          let copiedCurrentValue = structuredClone(currentValue);
+        const isAnyEntryEmpty = articleData.entry.find((data) => isEmpty(data.content));
 
-          return { ...copiedCurrentValue, ...currentActiveBlogData };
-        });
+        const isAnyContentEmpty = articleData.content.find((data) => isEmpty(data.title) || data.content.some((data) => isEmpty(data.content)));
+
+        if (isAnyValueNull === undefined && isAnyEntryEmpty === undefined && isAnyContentEmpty === undefined) {
+          if (articleData.id && typeof articleData.image === "string") {
+            const response = await blogUpdate(
+              articleData.id,
+              articleData.url!,
+              articleData.category!,
+              articleData.title!,
+              JSON.stringify(articleData.content),
+              JSON.stringify(articleData.entry)
+            );
+
+            if (response.status === 200) {
+              createNotification("Artykuł został zaaktualizowany");
+            } else {
+              createNotification(response.error!, "error");
+            }
+          } else {
+            avatarEditorRef.current!.getImageScaledToCanvas().toBlob(async (imageBlob) => {
+              const imageFile = new File([imageBlob!], "backgroundImage.webp", { type: imageBlob!.type });
+
+              if (articleData.id) {
+                const response = await blogUpdate(
+                  articleData.id,
+                  articleData.url!,
+                  articleData.category!,
+                  articleData.title!,
+                  JSON.stringify(articleData.content),
+                  JSON.stringify(articleData.entry)
+                );
+
+                if (response.status === 200) {
+                  createNotification("Artykuł został zaaktualizowany");
+                } else {
+                  createNotification(response.error!, "error");
+                }
+              } else {
+                const response = await blogCreate(
+                  articleData.url!,
+                  articleData.category!,
+                  articleData.title!,
+                  JSON.stringify(articleData.content),
+                  JSON.stringify(articleData.entry),
+                  imageFile
+                );
+
+                if (response.status === 200) {
+                  createNotification("Artykuł został dodany");
+                } else {
+                  createNotification(response.error!, "error");
+                }
+              }
+            }, "image/webp");
+          }
+        }
       })();
     }
-  }, []);
+  }, [articleData, appendChanges]);
 
-  if (article) {
-    const { chapters, mainImage } = article;
+  return (
+    <div className={`${styles.articleEditor}`}>
+      <div className={`${styles.header}`}>
+        <Button
+          style={{ padding: "10px 15px 10px 15px" }}
+          onClick={() => {
+            setCurrentActiveArticle(null);
+          }}>
+          Powrót
+        </Button>
+        <Button
+          style={{ padding: "10px 15px 10px 15px", marginLeft: "auto" }}
+          onClick={async (event) => {
+            setAppendCahnges(true);
+          }}>
+          Zapisz
+        </Button>
+      </div>
+      <div className={`${styles.linksPath}`}>
+        <p>Blog</p>
+        <NextImage src={arrowRightGrayIcon} alt="Ikonka strzałki"></NextImage>
+        <p>Artykuły</p>
+        <NextImage src={arrowRightGrayIcon} alt="Ikonka strzałki"></NextImage>
+        <p className={`${styles.current}`}>{articleData.category}</p>
+      </div>
+      <Editable
+        defaultValue="Edytuj Tytuł artykułu"
+        onSave={(event, value) => {
+          setArticleData((currentValue) => {
+            const copiedCurrentValue = structuredClone(currentValue);
 
-    return (
-      <>
-        <div className={`${styles.article_editor}`}>
-          <div className={`${styles.options}`}>
-            <Button
-              style={{ padding: "10px 15px 10px 15px", fontSize: "14px" }}
-              onClick={() => {
-                setCurrentActiveBlogId(null);
-                setDisplayEditor(false);
-              }}>
-              Powrót
-            </Button>
-            {currentActiveBlogId && (
-              <Button
-                theme="danger"
-                style={{ padding: "10px 15px 10px 15px", fontSize: "14px" }}
-                onClick={async () => {
-                  await deleteDoc(doc(db, "blogArticles", currentActiveBlogId));
+            if (isEmpty(value)) {
+              copiedCurrentValue.title = "";
+            } else {
+              copiedCurrentValue.title = value;
+            }
 
-                  setDisplayEditor(false);
-                  setCurrentActiveBlogId(null);
-                  blogArticlesBriefSignalData.value = null;
-                }}>
-                Usuń artykuł
-              </Button>
-            )}
-            <Button
-              theme="transparent-blue"
-              style={{ padding: "10px 15px 10px 15px", fontSize: "14px", marginLeft: "auto" }}
-              onClick={async () => {
-                if (mainImage) {
-                  const { chapters, mainImage } = article;
+            return copiedCurrentValue;
+          });
+        }}>
+        <h1 dangerouslySetInnerHTML={{ __html: articleData.title === null ? "" : articleData.title }}></h1>
+      </Editable>
+      <Editable
+        defaultValue="Edytuj URL"
+        onSave={(event, value) => {
+          setArticleData((currentValue) => {
+            const copiedCurrentValue = structuredClone(currentValue);
 
-                  const storage = getStorage();
+            if (isEmpty(value)) {
+              copiedCurrentValue.url = "";
+            } else {
+              const isValid = isValidPathname(value.replace(/&nbsp;/g, ""));
 
-                  const brief = chapters[0].paragraphs[0].content
-                    .split("")
-                    .filter((char, index) => index <= 200 && char)
-                    .join("");
+              if (isValid) {
+                copiedCurrentValue.url = isValid;
+              }
+            }
 
-                  if (currentActiveBlogId) {
-                    await updateDoc(doc(db, "blogArticles", currentActiveBlogId!), {
-                      brief: brief,
-                      createdAt: new Date(),
-                      chapters: chapters,
-                    });
+            return copiedCurrentValue;
+          });
+        }}>
+        <p className={`${styles.url}`} dangerouslySetInnerHTML={{ __html: articleData.url === null ? "" : articleData.url }}></p>
+      </Editable>
+      <div className={`${styles.articleMetaDataWrapper}`}>
+        <div className={`${styles.selectWrapper}`}>
+          <p>{articleData.category === null ? "Wybierz kategorię" : articleData.category}</p>
+          <select
+            name="category"
+            defaultValue="default"
+            onChange={(event) => {
+              const thisElement = event.currentTarget as HTMLSelectElement;
 
-                    if (typeof mainImage !== "string") {
-                      await uploadBytes(ref(storage, `blogArticles/${currentActiveBlogId}/mainImage.jpg`), mainImage as File);
-                      console.log("done with image");
+              setArticleData((currentValue) => {
+                const copiedCurrentValue = structuredClone(currentValue);
+
+                copiedCurrentValue.category = thisElement.value;
+
+                return copiedCurrentValue;
+              });
+            }}>
+            <option value="default" disabled>
+              Wybierz kategorię
+            </option>
+            <option value="prace licencjackie">Prace licencjackie</option>
+            <option value="prace inżynierskie">Prace inżynierskie</option>
+            <option value="prace magisterskie">Prace magisterskie</option>
+            <option value="prace inżynierskie">Prace inżynierskie</option>
+            <option value="prace doktorskie i habilitacyjne">Prace doktorskie i habilitacyjne</option>
+            <option value="prace zaliczeniowe">Prace zaliczeniowe</option>
+            <option value="prace dyplomowe">Prace dyplomowe</option>
+            <option value="prace naukowe">Prace naukowe</option>
+            <option value="prace specjalistyczne">Prace specjalistyczne</option>
+            <option value="inne teksty">Inne teksty</option>
+          </select>
+        </div>
+        <p className={`${styles.date}`}>
+          {new Date(articleData.createdAt).toLocaleDateString("pl-PL", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+      </div>
+      <div className={`${styles.entry}`}>
+        {articleData.entry.map((entryData, index) => {
+          if (index > 0) {
+            return (
+              <Editable
+                defaultValue="Edytuj treść wstępną"
+                key={entryData.id}
+                onRemove={() => {
+                  setArticleData((currentValue) => {
+                    const copiedCurrentValue = structuredClone(currentValue);
+
+                    const foundEntryIndex = copiedCurrentValue.entry.findIndex((data) => data.id === entryData.id)!;
+
+                    copiedCurrentValue.entry.splice(foundEntryIndex, 1);
+
+                    return copiedCurrentValue;
+                  });
+                }}
+                onSave={(event, value) => {
+                  setArticleData((currentValue) => {
+                    const copiedCurrentValue = structuredClone(currentValue);
+
+                    const foundEntryElement = copiedCurrentValue.entry.find((data) => data.id === entryData.id)!;
+
+                    if (isEmpty(value)) {
+                      foundEntryElement.content = "";
+                    } else {
+                      foundEntryElement.content = value;
                     }
-                    console.log("done update");
-                  } else {
-                    const articleBlogDocRef = await addDoc(collection(db, "blogArticles"), {
-                      brief: brief,
-                      createdAt: new Date(),
-                      chapters: chapters,
+
+                    return copiedCurrentValue;
+                  });
+                }}>
+                <p className={`${index === 0 ? styles.first : ""}`} dangerouslySetInnerHTML={{ __html: entryData.content }}></p>
+              </Editable>
+            );
+          } else {
+            return (
+              <Editable
+                defaultValue="Edytuj treść wstępną"
+                key={entryData.id}
+                onSave={(event, value) => {
+                  setArticleData((currentValue) => {
+                    const copiedCurrentValue = structuredClone(currentValue);
+
+                    const foundEntryElement = copiedCurrentValue.entry.find((data) => data.id === entryData.id)!;
+
+                    if (isEmpty(value)) {
+                      foundEntryElement.content = "";
+                    } else {
+                      foundEntryElement.content = value;
+                    }
+
+                    return copiedCurrentValue;
+                  });
+                }}>
+                <p className={`${index === 0 ? styles.first : ""}`} dangerouslySetInnerHTML={{ __html: entryData.content }}></p>
+              </Editable>
+            );
+          }
+        })}
+        <Button
+          style={{ padding: "20px 30px 20px 30px" }}
+          onClick={(event) => {
+            setArticleData((currentValue) => {
+              const copiedCurrentValue = structuredClone(currentValue);
+
+              copiedCurrentValue.entry.push({
+                id: crypto.randomUUID(),
+                content: "",
+              });
+
+              return copiedCurrentValue;
+            });
+          }}>
+          Dodaj treść
+        </Button>
+      </div>
+      <div className={`${styles.imageWrapper}`}>
+        <input
+          type="file"
+          hidden
+          onChange={(event) => {
+            const thisInputElement = event.currentTarget as HTMLInputElement;
+
+            const files = thisInputElement.files;
+
+            if (files && files[0]) {
+              const file = files[0];
+
+              setArticleData((currentValue) => {
+                const copiedCurrentValue = structuredClone(currentValue);
+
+                copiedCurrentValue.image = file;
+
+                return copiedCurrentValue;
+              });
+            } else {
+              setArticleData((currentValue) => {
+                const copiedCurrentValue = structuredClone(currentValue);
+
+                copiedCurrentValue.image = null;
+
+                return copiedCurrentValue;
+              });
+            }
+          }}></input>
+        <div className={`${styles.imageWrapper}`}>
+          {articleData.image && (
+            <AvatarEditor
+              ref={avatarEditorRef}
+              image={articleData.image instanceof File ? URL.createObjectURL(articleData.image) : articleData.image}
+              width={1180}
+              height={500}
+              rotate={0}
+            />
+          )}
+        </div>
+        <Button
+          style={{ padding: "20px 30px 20px 30px" }}
+          onClick={(event) => {
+            const parentElement = event.currentTarget.parentElement as HTMLDivElement;
+            const inputElement = parentElement.querySelector("input");
+
+            inputElement?.click();
+          }}>
+          Dodaj zdjęcie
+        </Button>
+      </div>
+      <div className={`${styles.TableOfContents}`}>
+        <p>Spis treści</p>
+        <ol>
+          {articleData.content.map((contentData) => {
+            return <li key={contentData.id}>{contentData.title}</li>;
+          })}
+        </ol>
+      </div>
+      <div className={`${styles.articleContentDataWrapper}`}>
+        {articleData.content.map((contentData, index) => {
+          const { id, title, content } = contentData;
+
+          return (
+            <div className={`${styles.singleData}`} key={id}>
+              {index !== 0 ? (
+                <Editable
+                  defaultValue="Edytuj nagłówek"
+                  onRemove={() => {
+                    setArticleData((currentValue) => {
+                      const copiedCurrentValue = structuredClone(currentValue);
+
+                      const foundEntryElementIndex = copiedCurrentValue.content.findIndex((data) => data.id === id)!;
+
+                      copiedCurrentValue.content.splice(foundEntryElementIndex, 1);
+
+                      return copiedCurrentValue;
                     });
+                  }}
+                  onSave={(event, value) => {
+                    setArticleData((currentValue) => {
+                      const copiedCurrentValue = structuredClone(currentValue);
 
-                    await uploadBytes(ref(storage, `blogArticles/${articleBlogDocRef.id}/mainImage.jpg`), mainImage as File);
-                    console.log("done adding");
-                    blogArticlesBriefSignalData.value = null;
-                  }
-                }
-              }}>
-              Dodaj Artykuł
-            </Button>
-          </div>
-          <section className={`${styles.section}`}>
-            {chapters.map((chapterData, chapterIndex) => {
-              const { title, paragraphs, order } = chapterData;
+                      const foundEntryElement = copiedCurrentValue.content.find((data) => data.id === id)!;
 
-              if (chapterIndex === 0) {
-                return (
-                  <div key={order}>
-                    <main>
-                      <article id={`${order}`}>
-                        <Editable
-                          onSave={(event) => {
-                            const currentElement = event.target as HTMLHeadElement;
+                      if (isEmpty(value)) {
+                        foundEntryElement.title = "";
+                      } else {
+                        foundEntryElement.title = value;
+                      }
 
-                            setArticle((currentValue) => {
-                              const copiedCurrentValue = structuredClone(currentValue)!;
+                      return copiedCurrentValue;
+                    });
+                  }}>
+                  <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
+                </Editable>
+              ) : (
+                <Editable
+                  defaultValue="Edytuj nagłówek"
+                  onSave={(event, value) => {
+                    setArticleData((currentValue) => {
+                      const copiedCurrentValue = structuredClone(currentValue);
 
-                              copiedCurrentValue.chapters[chapterIndex].title = `${currentElement.innerHTML}`;
+                      const foundEntryElement = copiedCurrentValue.content.find((data) => data.id === id)!;
 
-                              return copiedCurrentValue;
-                            });
-                          }}>
-                          <h1 dangerouslySetInnerHTML={{ __html: title }}></h1>
-                        </Editable>
+                      if (isEmpty(value)) {
+                        foundEntryElement.title = "";
+                      } else {
+                        foundEntryElement.title = value;
+                      }
 
-                        <p className={`${styles.date}`}>
-                          {new Date().toLocaleDateString("pl-PL", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
-                        </p>
-                        {paragraphs.map((paragraphData, paragraphIndex) => {
-                          const { content, order } = paragraphData;
-
-                          return (
-                            <Editable
-                              key={order}
-                              onRemove={() => {
-                                setArticle((currentValue) => {
-                                  const copiedCurrentValue = structuredClone(currentValue)!;
-
-                                  copiedCurrentValue.chapters[chapterIndex].paragraphs.splice(paragraphIndex, 1);
-
-                                  return copiedCurrentValue;
-                                });
-                              }}
-                              onSave={(event) => {
-                                const currentElement = event.target as HTMLParagraphElement;
-
-                                setArticle((currentValue) => {
-                                  const copiedCurrentValue = structuredClone(currentValue)!;
-
-                                  copiedCurrentValue.chapters[chapterIndex].paragraphs[paragraphIndex].content = `${currentElement.innerHTML}`;
-
-                                  return copiedCurrentValue;
-                                });
-                              }}>
-                              <p dangerouslySetInnerHTML={{ __html: content }}></p>
-                            </Editable>
-                          );
-                        })}
-                        <Button
-                          style={{ padding: "10px 15px 10px 15px", fontSize: "14px" }}
-                          onClick={() => {
-                            setArticle((currentValue) => {
-                              const copiedCurrentValue = structuredClone(currentValue)!;
-
-                              const lastChapterParagraph = copiedCurrentValue.chapters[chapterIndex].paragraphs.at(-1);
-
-                              copiedCurrentValue.chapters[chapterIndex].paragraphs.push({
-                                order: lastChapterParagraph ? lastChapterParagraph.order + 1 : 1,
-                                content: "Edytuj akapit",
-                              });
-
-                              return copiedCurrentValue;
-                            });
-                          }}>
-                          Dodaj akapit
-                        </Button>
-                      </article>
-                      <div className={`${styles.banner} ${mainImage === null ? styles.empty : ""}`}>
-                        <input
-                          type="file"
-                          accept=".jpg, .jpeg, .png"
-                          hidden
-                          onChange={(event) => {
-                            setArticle((currentValue) => {
-                              const copiedCurrentValue = structuredClone(currentValue)!;
-                              const file = event.target.files && event.target.files[0];
-
-                              if (file) {
-                                copiedCurrentValue.mainImage = file;
-                              }
-
-                              return copiedCurrentValue;
-                            });
-                          }}></input>
-                        {mainImage && (
-                          <Image
-                            src={(() => {
-                              if (typeof mainImage !== "string") {
-                                return URL.createObjectURL(mainImage);
-                              } else {
-                                return mainImage;
-                              }
-                            })()}
-                            width={1180}
-                            height={1180}
-                            alt="Zdjęcia artykułu bloga"></Image>
-                        )}
-                        <Button
-                          style={{ padding: "10px 15px 10px 15px", fontSize: "14px", zIndex: "123", position: "absolute" }}
-                          onClick={(event) => {
-                            const inputElement = event.currentTarget.parentElement!.querySelector("input") as HTMLInputElement;
-                            inputElement.click();
-                          }}>
-                          {article.mainImage ? "Zmień zdjęcie główne" : "Dodaj zdjęcie główne"}
-                        </Button>
-                      </div>
-                      <ol>
-                        <p>Spis Treści:</p>
-                        {chapters.map((chapterData) => {
-                          if (chapterData.order !== 1) {
-                            return (
-                              <li key={chapterData.order}>
-                                <a onClick={() => router.push(`/blogEditor/#${chapterData.order}`)}>{chapterData.title}</a>
-                              </li>
-                            );
-                          }
-                        })}
-                      </ol>
-                    </main>
-                  </div>
-                );
-              } else {
-                return (
-                  <div key={order}>
-                    <article id={`${order}`}>
+                      return copiedCurrentValue;
+                    });
+                  }}>
+                  <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
+                </Editable>
+              )}
+              <div className={`${styles.content}`}>
+                {content.map((contentData, index) => {
+                  if (index !== 0) {
+                    return (
                       <Editable
-                        key={order}
+                        defaultValue="Edytuj treść nagłówka"
+                        key={contentData.id}
                         onRemove={() => {
-                          setArticle((currentValue) => {
-                            const copiedCurrentValue = structuredClone(currentValue)!;
+                          setArticleData((currentValue) => {
+                            const copiedCurrentValue = structuredClone(currentValue);
 
-                            copiedCurrentValue.chapters.splice(chapterIndex, 1);
+                            const foundEntryElementIndex = copiedCurrentValue.content
+                              .find((data) => data.id === id)!
+                              .content.findIndex((data) => data.id === contentData.id)!;
+
+                            copiedCurrentValue.content.find((data) => data.id === id)!.content.splice(foundEntryElementIndex, 1);
 
                             return copiedCurrentValue;
                           });
                         }}
-                        onSave={(event) => {
-                          const currentElement = event.target as HTMLHeadElement;
+                        onSave={(event, value) => {
+                          setArticleData((currentValue) => {
+                            const copiedCurrentValue = structuredClone(currentValue);
 
-                          setArticle((currentValue) => {
-                            const copiedCurrentValue = structuredClone(currentValue)!;
+                            const foundEntryElement = copiedCurrentValue.content
+                              .find((data) => data.id === id)!
+                              .content.find((data) => data.id === contentData.id)!;
 
-                            copiedCurrentValue.chapters[chapterIndex].title = `${currentElement.innerHTML}`;
+                            if (isEmpty(value)) {
+                              foundEntryElement.content = "";
+                            } else {
+                              foundEntryElement.content = value;
+                            }
 
                             return copiedCurrentValue;
                           });
                         }}>
-                        <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
+                        <p dangerouslySetInnerHTML={{ __html: contentData.content }}></p>
                       </Editable>
-                      {paragraphs.map((paragraphData, paragraphIndex) => {
-                        const { content, order } = paragraphData;
+                    );
+                  } else {
+                    return (
+                      <Editable
+                        defaultValue="Edytuj treść nagłówka"
+                        key={contentData.id}
+                        onSave={(event, value) => {
+                          setArticleData((currentValue) => {
+                            const copiedCurrentValue = structuredClone(currentValue);
 
-                        return (
-                          <Editable
-                            key={order}
-                            onRemove={() => {
-                              setArticle((currentValue) => {
-                                const copiedCurrentValue = structuredClone(currentValue)!;
+                            const foundEntryElement = copiedCurrentValue.content
+                              .find((data) => data.id === id)!
+                              .content.find((data) => data.id === contentData.id)!;
 
-                                copiedCurrentValue.chapters[chapterIndex].paragraphs.splice(paragraphIndex, 1);
-
-                                return copiedCurrentValue;
-                              });
-                            }}
-                            onSave={(event) => {
-                              const currentElement = event.target as HTMLParagraphElement;
-
-                              setArticle((currentValue) => {
-                                const copiedCurrentValue = structuredClone(currentValue)!;
-
-                                copiedCurrentValue.chapters[chapterIndex].paragraphs[paragraphIndex].content = `${currentElement.innerHTML}`;
-
-                                return copiedCurrentValue;
-                              });
-                            }}>
-                            <p dangerouslySetInnerHTML={{ __html: content }}></p>
-                          </Editable>
-                        );
-                      })}
-                      <Button
-                        style={{ padding: "10px 15px 10px 15px", fontSize: "14px" }}
-                        onClick={() => {
-                          setArticle((currentValue) => {
-                            const copiedCurrentValue = structuredClone(currentValue)!;
-
-                            const lastChapterParagraph = copiedCurrentValue.chapters[chapterIndex].paragraphs.at(-1);
-
-                            copiedCurrentValue.chapters[chapterIndex].paragraphs.push({
-                              order: lastChapterParagraph ? lastChapterParagraph.order + 1 : 1,
-                              content: "Edytuj akapit",
-                            });
+                            if (isEmpty(value)) {
+                              foundEntryElement.content = "";
+                            } else {
+                              foundEntryElement.content = value;
+                            }
 
                             return copiedCurrentValue;
                           });
                         }}>
-                        Dodaj akapit
-                      </Button>
-                    </article>
-                  </div>
-                );
-              }
-            })}
-            <Button
-              style={{ padding: "10px 15px 10px 15px", fontSize: "14px", alignSelf: "start" }}
-              onClick={() => {
-                setArticle((currentValue) => {
-                  const copiedCurrentValue = structuredClone(currentValue)!;
+                        <p dangerouslySetInnerHTML={{ __html: contentData.content }}></p>
+                      </Editable>
+                    );
+                  }
+                })}
+                <Button
+                  style={{ padding: "20px 30px 20px 30px" }}
+                  onClick={() => {
+                    setArticleData((currentValue) => {
+                      const copiedCurrentValue = structuredClone(currentValue);
 
-                  copiedCurrentValue.chapters.push({
-                    order: copiedCurrentValue.chapters.at(-1)!.order + 1,
-                    title: "Edytuj tytuł",
-                    paragraphs: [
-                      {
-                        order: 1,
-                        content: "Edytuj akapit",
-                      },
-                    ],
-                  });
+                      const fountContent = copiedCurrentValue.content.find((data) => data.id === id)!;
 
-                  return copiedCurrentValue;
-                });
-              }}>
-              Dodaj rozdział
-            </Button>
-          </section>
-        </div>
-      </>
-    );
-  }
+                      fountContent.content.push({
+                        id: crypto.randomUUID(),
+                        content: "",
+                      });
+
+                      return copiedCurrentValue;
+                    });
+                  }}>
+                  Dodaj treść
+                </Button>
+              </div>
+            </div>
+          );
+        })}
+        <Button
+          style={{ padding: "20px 30px 20px 30px" }}
+          onClick={() => {
+            setArticleData((currentValue) => {
+              const copiedCurrentValue = structuredClone(currentValue);
+
+              copiedCurrentValue.content.push({
+                id: crypto.randomUUID(),
+                title: "",
+                content: [
+                  {
+                    id: crypto.randomUUID(),
+                    content: ``,
+                  },
+                ],
+              });
+
+              return copiedCurrentValue;
+            });
+          }}>
+          Dodaj nagłówek
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default ArticleEditor;

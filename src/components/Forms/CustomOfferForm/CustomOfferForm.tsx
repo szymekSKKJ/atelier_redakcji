@@ -7,9 +7,10 @@ import Button from "@/components/UI/Button/Button";
 import document from "../../../../public/document.svg";
 import { useRef, useState } from "react";
 import Loader from "@/design/Loader/Loader";
-import sendCustomOfferForm from "@/api/nodemailer/sendCustomOfferForm";
+
 import Checkbox from "@/components/UI/Button/Checkbox/Checkbox";
 import Link from "next/link";
+import sendCustomOfferForm from "@/app/api/nodemailer/sendCustomOfferForm";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 

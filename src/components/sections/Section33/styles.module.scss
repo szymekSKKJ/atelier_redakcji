@@ -2,13 +2,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px 0px 100px 0px;
+  padding: 100px 30px 100px 30px;
 
   p {
     font-size: 44px;
     color: #0e4d7a;
     margin-bottom: 40px;
     font-weight: 800;
+    text-align: center;
+    line-height: 1.2;
+
+    @media screen and (max-width: 425px) {
+      font-size: 30px;
+    }
 
     mark {
       color: #18a77c;
@@ -17,5 +23,14 @@
 
   button {
     margin-top: 40px;
+  }
+
+  .foundArticles {
+    margin-top: 120px;
+  }
+
+  .allArticlesDisplayed {
+    margin-top: 40px;
+    margin-bottom: 120px;
   }
 }

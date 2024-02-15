@@ -5,9 +5,9 @@
   border-radius: 16px;
   background-color: #0c282c;
   background-image: linear-gradient(to right, #0c282c, #5fa2ab00), url("../../../../public/sections/section13/background.webp");
-  background-position: 101% 0%;
+  background-position: 125% 0%;
   background-repeat: no-repeat;
-  background-size: 55%;
+  background-size: 70%;
   margin: 40px auto 120px auto;
   display: flex;
   flex-direction: column;
@@ -64,7 +64,7 @@
 
     @media screen and (max-width: 768px) {
       max-width: unset;
-      font-size: 30px;
+      font-size: 22px;
     }
   }
 
@@ -75,9 +75,99 @@
     @media screen and (max-width: 1024px) {
       font-size: 22px;
     }
+
+    @media screen and (max-width: 768px) {
+      font-size: 18px;
+    }
   }
 
   button {
     align-self: flex-start;
+  }
+}
+
+.header.fullscreen {
+  max-width: unset;
+  border-radius: 0px;
+  padding: 125px 370px 125px 370px;
+
+  @media screen and (max-width: 1440px) {
+    width: 100%;
+    padding: 125px 200px 125px 200px;
+    background-size: 62%;
+  }
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    padding: 125px 100px 125px 100px;
+    background-size: 70%;
+  }
+
+  @media screen and (max-width: 768px) {
+    border-radius: 0px;
+    width: 100dvw;
+    padding: 42px 30px 42px 30px;
+    background-size: 130%;
+    background-position: -60% 0%;
+  }
+
+  @media screen and (max-width: 425px) {
+    background-size: 170%;
+    background-position: -20% 0%;
+  }
+
+  @media screen and (max-width: 375px) {
+    background-size: 240%;
+    background-position: 20% 0%;
+  }
+
+  h1 {
+    max-width: 800px;
+  }
+
+  .caption1 {
+    max-width: 625px;
+  }
+}
+
+.header.blog {
+  border-radius: 16px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 42px 30px 42px 30px;
+    background-size: 130%;
+    background-position: -60% 0%;
+  }
+
+  @media screen and (max-width: 425px) {
+    background-size: 170%;
+    background-position: -20% 0%;
+  }
+
+  @media screen and (max-width: 375px) {
+    background-size: 240%;
+    background-position: 20% 0%;
+  }
+}
+
+.header.allCategoriesPage {
+  width: 100%;
+  padding: 170px 30px 60px 30px;
+  background-size: 150%;
+  background-position: -20% 0%;
+  margin: 0px auto 0px auto;
+  border-radius: 16px;
+
+  @media screen and (max-width: 1024px) {
+    padding: 60px 30px 60px 30px;
+  }
+
+  h1 {
+    max-width: unset;
+    font-size: 22px;
+  }
+
+  .caption1 {
+    font-size: 18px;
   }
 }

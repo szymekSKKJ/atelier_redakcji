@@ -10,22 +10,27 @@
   },
   "dependencies": {
     "@preact/signals-react": "^2.0.0",
+    "@prisma/client": "^5.9.1",
     "@types/nodemailer": "^6.4.14",
     "dotenv": "^16.3.1",
-    "firebase": "^10.7.1",
+    "firebase": "^10.8.0",
     "next": "14.0.3",
     "nodemailer": "^6.9.7",
     "react": "^18",
     "react-animated-counter": "^1.7.0",
+    "react-avatar-editor": "^13.0.2",
     "react-dom": "^18",
     "sass": "^1.69.5"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.11.16",
     "@types/react": "^18",
+    "@types/react-avatar-editor": "^13.0.2",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
-    "typescript": "^5"
+    "prisma": "^5.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }

@@ -1,8 +1,7 @@
 import styles from "./styles.module.scss";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import BlogArticlesBrief from "@/components/BlogArticlesBrief/BlogArticlesBrief";
-import getBlogArticlesBrief from "@/api/blog/getBlogArticlesBrief";
-import Link from "next/link";
+import { blogGetSome } from "@/app/api/blog/get/some/route";
 
 interface componentProps {
   type?: "landing page" | "blog";
@@ -10,7 +9,7 @@ interface componentProps {
 }
 
 const Section9 = async ({ type = "landing page", style }: componentProps) => {
-  const blogArticles = await getBlogArticlesBrief(3);
+  const blogAriclesResponse = await blogGetSome(0, 3);
 
   return (
     <section className={styles.section} style={style}>
@@ -29,7 +28,7 @@ const Section9 = async ({ type = "landing page", style }: componentProps) => {
           Znajdziesz tam praktyczne wskazówki dot. m.in.:<br></br> aspektów związanych z pisaniem prac oraz poprawnością językową.
         </p>
       </header>
-      <BlogArticlesBrief articles={blogArticles}></BlogArticlesBrief>
+      {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
     </section>
   );
 };

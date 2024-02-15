@@ -1,23 +1,23 @@
-import getBlogArticle from "@/api/blog/getBlogArticle";
+import { blogGetByUrl } from "@/app/api/blog/get/[url]/route";
 import BlogArticle from "@/components/BlogArticle/BlogArticle";
 import Section11 from "@/components/sections/Section11/Section11";
 import Section9 from "@/components/sections/Section9/Section9";
 
 interface componentProps {
-  params: { id: string };
+  params: { blogUrl: string };
 }
 
 const BlogArticlePage = async ({ params }: componentProps) => {
-  const blogArticleData = await getBlogArticle(params.id);
+  const blogArticleResponse = await blogGetByUrl(params.blogUrl);
 
-  return blogArticleData ? (
+  return blogArticleResponse.data ? (
     <>
-      <BlogArticle data={blogArticleData}></BlogArticle>
+      <BlogArticle data={blogArticleResponse.data}></BlogArticle>
       <Section11 type="blog"></Section11>
       <Section9 type="blog"></Section9>
     </>
   ) : (
-    <p>:(</p>
+    <p>Nie ma takiego artykułu</p>
   );
 };
 

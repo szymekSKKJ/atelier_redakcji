@@ -1,0 +1,80 @@
+.allCategoriesPage {
+  $padding-left-and-right: 30px;
+
+  width: 100%;
+  max-width: calc(1180px + (2 * $padding-left-and-right)); // Plus padding
+  padding: 80px $padding-left-and-right 80px $padding-left-and-right;
+  display: flex;
+  flex-direction: column;
+  margin: 0px auto 0px auto;
+
+  > h1 {
+    font-weight: 800;
+    font-size: 44px;
+    margin-bottom: 40px;
+    color: #0e4d7a;
+  }
+
+  .wrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 30px;
+
+    .articles {
+      width: 66%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      flex-shrink: 1;
+
+      @media screen and (max-width: 1024px) {
+        width: 100%;
+        align-items: center;
+      }
+    }
+
+    .wrapper {
+      width: 33%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      flex-shrink: 0;
+
+      @media screen and (max-width: 1024px) {
+        display: none;
+      }
+
+      aside {
+        width: 100%;
+        height: auto;
+        background-color: white;
+        border-radius: 16px;
+        padding: 40px;
+
+        h3 {
+          font-size: 24px;
+          color: #0e4d7a;
+          font-weight: 800px;
+          margin-bottom: 40px;
+        }
+
+        p {
+          font-size: 20px;
+          cursor: pointer;
+          transition: 250ms;
+
+          &:hover {
+            color: #18a77c;
+          }
+        }
+
+        p.choosen {
+          color: #18a77c;
+        }
+      }
+    }
+  }
+}

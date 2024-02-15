@@ -11,57 +11,99 @@ const DeleteIcon = ({ width = 24, height = 24, color = "white" }) => {
   );
 };
 
-const textFormattingTypesData: {
-  elementTag: string;
-  type: string;
-  styles: object;
-}[] = [
-  {
-    elementTag: "b",
-    type: "bold",
-    styles: {
-      fontWeight: "700",
-    },
-  },
-  {
-    elementTag: "i",
-    type: "italic",
-    styles: {
-      fontStyle: "italic",
-    },
-  },
-];
-
 type textFormattingTypes = "italic" | "bold";
 
-const addTextFormatting = (type: textFormattingTypes) => {
-  const foundTypeData = textFormattingTypesData.find((typeData) => typeData.type === type);
-
-  if (foundTypeData) {
-    const selection = window.getSelection()!;
-
-    const doesAlreadyExistThisTextFormat = selection.anchorNode?.parentElement?.closest(foundTypeData.elementTag);
-
-    if (!selection.isCollapsed) {
-      const { elementTag, styles: stylesData } = foundTypeData;
-
-      const range = selection.getRangeAt(0);
-
-      const createdElement = document.createElement(elementTag) as HTMLElement;
-
-      createdElement.classList.add(styles.createdElement);
-
-      Object.keys(stylesData).forEach((key) => {
-        //@ts-ignore
-        createdElement.style[key] = stylesData[key];
-      });
-
-      createdElement.innerHTML = range.toString();
-
-      range.deleteContents();
-      range.insertNode(createdElement);
-    }
+const createElementBaesOnType = (type: textFormattingTypes) => {
+  if (type === "bold") {
+    const element = document.createElement("b");
+    return element;
+  } else if (type === "italic") {
+    const element = document.createElement("i");
+    return element;
   }
+};
+
+const getTagNameBasedOnType = (type: textFormattingTypes) => {
+  if (type === "bold") {
+    return "B";
+  } else if (type === "italic") {
+    return "I";
+  }
+};
+
+const removeAllEmptyChildren = (element: ChildNode) => {
+  element.childNodes.forEach((child) => {
+    if (child.textContent === "") {
+      child.remove();
+    } else if (child.childNodes.length > 0) {
+      removeAllEmptyChildren(child);
+    }
+  });
+};
+
+const addTextFormatting = (type: textFormattingTypes, editableChild: HTMLElement) => {
+  document.execCommand(type);
+  // const selection = window.getSelection()!;
+  // const range = selection.getRangeAt(0);
+  // const commonAncestorContainer = range.commonAncestorContainer;
+  // const stringValue = range.toString().trim();
+
+  // const createdElement = createElementBaesOnType(type)!;
+
+  // createdElement.innerHTML = stringValue;
+
+  // selection.deleteFromDocument();
+  // range.deleteContents();
+
+  // const tagName = getTagNameBasedOnType(type);
+
+  // if (commonAncestorContainer.parentElement!.tagName === tagName) {
+  //   const elementForFirstPart = document.createElement(tagName);
+  //   const elementForSecondPart = document.createElement(tagName);
+
+  //   range.insertNode(createdElement);
+
+  //   const firstPart = commonAncestorContainer.parentElement!.childNodes[0];
+  //   const secondPart = commonAncestorContainer.parentElement!.childNodes[2];
+
+  //   const middlePart = document.createElement("span");
+
+  //   middlePart.innerHTML = stringValue;
+
+  //   elementForFirstPart.innerHTML = firstPart.textContent!;
+  //   elementForSecondPart.innerHTML = secondPart.textContent!;
+
+  //   editableChild.insertBefore(elementForFirstPart, commonAncestorContainer.parentElement!);
+  //   editableChild.insertBefore(elementForSecondPart, commonAncestorContainer.parentElement!.nextSibling);
+  //   editableChild.insertBefore(middlePart.firstChild!, elementForSecondPart);
+
+  //   commonAncestorContainer.parentElement!.remove();
+  // } else {
+  //   range.insertNode(createdElement);
+  // }
+
+  // removeAllEmptyChildren(editableChild);
+
+  // editableChild.childNodes.forEach((child) => {
+  //   if (child.nodeName === child.nextSibling?.nodeName) {
+  //     const mergedParent = document.createElement(child.nodeName);
+  //     mergedParent.innerHTML = `${child.textContent}${child.nextSibling.textContent}`;
+  //     editableChild.insertBefore(mergedParent, child);
+  //     child.nextSibling.remove();
+  //     child.remove();
+  //   }
+  // });
+
+  // editableChild.childNodes.forEach((child) => {
+  //   if (child.nodeName === child.previousSibling?.nodeName) {
+  //     const mergedParent = document.createElement(child.nodeName);
+  //     mergedParent.innerHTML = `${child.textContent}${child.previousSibling.textContent}`;
+
+  //     editableChild.insertBefore(mergedParent, child.previousSibling);
+  //     child.previousSibling.remove();
+  //     child.remove();
+  //   }
+  // });
 };
 
 const ContextMenu = ({
@@ -69,6 +111,7 @@ const ContextMenu = ({
 }: {
   contextMenuOptions: {
     isOpen: boolean;
+    editableChild: HTMLElement | null;
     position: {
       x: number;
       y: number;
@@ -80,16 +123,16 @@ const ContextMenu = ({
       <button
         className={`${styles.option}`}
         onClick={() => {
-          addTextFormatting("bold");
+          addTextFormatting("bold", contextMenuOptions.editableChild!);
         }}>
-        Pogrub
+        <i className="fa-solid fa-bold"></i>
       </button>
       <button
         className={`${styles.option}`}
         onClick={() => {
-          addTextFormatting("italic");
+          addTextFormatting("italic", contextMenuOptions.editableChild!);
         }}>
-        Pochyl
+        <i className="fa-solid fa-italic"></i>
       </button>
     </div>
   );
@@ -97,7 +140,7 @@ const ContextMenu = ({
 
 interface componentProps {
   children: JSX.Element;
-  onSave: (event: any) => any;
+  onSave: (event: any, value: string) => any;
   onRemove?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => any;
   defaultValue?: string;
 }
@@ -105,23 +148,24 @@ interface componentProps {
 const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: componentProps) => {
   const currentChild = Children.only(children);
 
+  const thisElementRef = useRef<null | HTMLElement>(null);
+
   const [uniqueKey] = useState(crypto.randomUUID());
   const [contextMenuOptions, setContextMenuOptions] = useState<{
     isOpen: boolean;
+    editableChild: HTMLElement | null;
     position: {
       x: number;
       y: number;
     };
   }>({
+    editableChild: thisElementRef.current,
     isOpen: false,
     position: {
       x: 0,
       y: 0,
     },
   });
-  const [hasFocus, setHasFocus] = useState(false);
-
-  const thisElementRef = useRef<null | HTMLElement>(null);
 
   const copiedChild = cloneElement(currentChild, {
     contentEditable: true,
@@ -132,9 +176,10 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     onContextMenu: (event: MouseEvent) => {
       event.preventDefault();
       setContextMenuOptions((currentValue) => {
-        const copiedCurrentValue = structuredClone(currentValue);
+        const copiedCurrentValue = Object.assign({}, currentValue);
 
         copiedCurrentValue.isOpen = true;
+        copiedCurrentValue.editableChild = thisElementRef.current;
         copiedCurrentValue.position = {
           x: event.clientX,
           y: event.clientY,
@@ -145,22 +190,15 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     },
     onClick: (event: MouseEvent) => {
       const currentSelection = window.getSelection()!;
-      setHasFocus(true);
 
-      if (hasFocus && event.target !== event.currentTarget && currentSelection.isCollapsed) {
-        const anyChildElement = event.target as HTMLElement;
-        const anyChildElementContent = anyChildElement.innerHTML;
+      // if (event.target !== event.currentTarget && currentSelection.isCollapsed) {
+      //   const anyChildElement = event.target as HTMLElement;
+      //   const anyChildElementContent = anyChildElement.innerHTML;
 
-        anyChildElement.outerHTML = anyChildElementContent;
-      }
+      //   anyChildElement.outerHTML = anyChildElementContent;
+      // }
     },
-    onFocus: (event: FocusEvent) => {
-      // const range = document.createRange();
-      // const selection = window.getSelection();
-      // range.selectNode(event.currentTarget as HTMLElement);
-      // selection.removeAllRanges();
-      // selection.addRange(range);
-    },
+
     onPaste: (event: ClipboardEvent) => {
       event.preventDefault();
       if (event.clipboardData && event.currentTarget) {
@@ -171,20 +209,16 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
     },
 
     onBlur: (event: FocusEvent) => {
-      setHasFocus(false);
       setTimeout(() => {
-        onSave(event);
+        onSave(event, thisElementRef.current!.innerHTML);
       }, 100);
-    },
-    onKeyDown: (event: KeyboardEvent) => {
-      // Dodaj historię
     },
   });
 
   useEffect(() => {
     const closeContextMenu = () => {
       setContextMenuOptions((currentValue) => {
-        const copiedCurrentValue = structuredClone(currentValue);
+        const copiedCurrentValue = Object.assign({}, currentValue);
 
         copiedCurrentValue.isOpen = false;
 
@@ -201,12 +235,21 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
 
   return (
     <div className={`${styles.editable}`}>
-      <div className={`${styles.editable_child}`}>{copiedChild}</div>
-      {onRemove && (
-        <div className={`${styles.delete}`} onClick={(event) => onRemove(event)}>
-          <DeleteIcon width={24} height={24}></DeleteIcon>
-        </div>
-      )}
+      <div
+        className={`${styles.editable_child}`}
+        onMouseDown={(event) => {
+          // For 100% sure
+          const copiedChildElement = event.currentTarget.firstChild as HTMLElement;
+          copiedChildElement.focus();
+        }}>
+        {copiedChild}
+        {onRemove && (
+          <div className={`${styles.delete}`} onClick={(event) => onRemove(event)}>
+            <DeleteIcon width={24} height={24}></DeleteIcon>
+          </div>
+        )}
+      </div>
+
       {contextMenuOptions.isOpen && <ContextMenu contextMenuOptions={contextMenuOptions}></ContextMenu>}
     </div>
   );

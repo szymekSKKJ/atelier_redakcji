@@ -1,94 +1,100 @@
 "use client";
 
-import { Timestamp } from "firebase/firestore";
-import Section13 from "../sections/Section13/Section13";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import arrowRightGrayIcon from "../../../public/arrow_right_grey.svg";
+import { blogArticle } from "@/app/api/blog/get/[url]/route";
+import Section13 from "../sections/Section13/Section13";
 import Section34 from "../sections/Section34/Section34";
 
 interface componentProps {
-  data: {
-    id: string;
-    mainImage: string;
-    createdAt: Timestamp;
-    chapters: {
-      order: number;
-      title: string;
-      paragraphs: {
-        order: number;
-        content: string;
-      }[];
-    }[];
-  };
+  data: blogArticle;
 }
 
 const BlogArticle = ({ data }: componentProps) => {
-  const { chapters, mainImage, createdAt, id } = data;
-  const router = useRouter();
-
   return (
-    <section className={`${styles.section}`}>
-      {chapters.map((chapterData, index) => {
-        const { title, paragraphs, order } = chapterData;
+    <div className={`${styles.blogArticle}`}>
+      <div className={`${styles.blogArticleWrapper}`}>
+        <div className={`${styles.linksPath}`}>
+          <p>Blog</p>
+          <Image src={arrowRightGrayIcon} alt="Ikonka strzałki"></Image>
+          <p>Artykuły</p>
+          <Image src={arrowRightGrayIcon} alt="Ikonka strzałki"></Image>
+          <p className={`${styles.current}`}>{data.category}</p>
+        </div>
+        <h1>{data.title}</h1>
+        <div className={`${styles.articleMetaDataWrapper}`}>
+          <p className={`${styles.category}`}>{data.category}</p>
+          <p className={`${styles.date}`}>
+            {new Date(data.createdAt).toLocaleTimeString("pl-PL", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            })}
+          </p>
+        </div>
+        <div className={`${styles.entry}`}>
+          {data.entry.map((entryData) => {
+            return <p key={entryData.id} dangerouslySetInnerHTML={{ __html: entryData.content }}></p>;
+          })}
+        </div>
+        <div className={`${styles.imageWrapper}`}>
+          <Image src={data.image} width={1180} height={500} alt="Zdjęcie artykułu"></Image>
+        </div>
+        <div className={`${styles.TableOfContents}`}>
+          <p>Spis treści</p>
+          <ol>
+            {data.content.map((contentData) => {
+              return (
+                <li key={contentData.id}>
+                  <a href={`${data.url}#${contentData.id}`}>{contentData.title}</a>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+        <div className={`${styles.articleContentDataWrapper}`}>
+          {data.content.map((contentData, index, array) => {
+            const { id, title, content } = contentData;
 
-        if (index === 0) {
-          return (
-            <main key={index}>
-              <article key={order} id={`${order}`}>
-                <h1 dangerouslySetInnerHTML={{ __html: title }}></h1>
-                <p className={`${styles.date}`}>
-                  {new Date(createdAt.seconds * 1000).toLocaleDateString("pl-PL", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-                {paragraphs.map((paragraphData) => {
-                  const { content, order } = paragraphData;
-
-                  return <p key={order} dangerouslySetInnerHTML={{ __html: content }}></p>;
-                })}
-              </article>
-              <div className={`${styles.banner}`}>
-                <Image src={mainImage} width={1180} height={1180} alt="Zdjęcia artykuł€ bloga"></Image>
-              </div>
-              <ol>
-                <p>Spis Treści:</p>
-                {chapters.map((chapterData) => {
-                  if (chapterData.order !== 1) {
-                    return (
-                      <li
-                        key={chapterData.order}
-                        onClick={() => {
-                          router.push(`/blog/${id}/#${chapterData.order}`);
-                        }}>
-                        {chapterData.title}
-                      </li>
-                    );
-                  }
-                })}
-              </ol>
-            </main>
-          );
-        } else {
-          return (
-            <>
-              <article key={order} id={`${order}`}>
-                <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
-                {paragraphs.map((paragraphData) => {
-                  const { content, order } = paragraphData;
-
-                  return <p key={order} dangerouslySetInnerHTML={{ __html: content }}></p>;
-                })}
-              </article>
-              {Math.floor(chapters.length / 2) === index && <Section13></Section13>}
-            </>
-          );
-        }
-      })}
-      <Section34></Section34>
-    </section>
+            if (index === (array.length - 1) / 2) {
+              return (
+                <div key={id}>
+                  <Section13 blog={true}></Section13>
+                  <div className={`${styles.singleData}`} id={`${id}`}>
+                    <h2>
+                      {index + 1}. {title}
+                    </h2>
+                    <div className={`${styles.content}`}>
+                      {content.map((contentData) => {
+                        return <p key={contentData.id} dangerouslySetInnerHTML={{ __html: contentData.content }}></p>;
+                      })}
+                    </div>
+                  </div>
+                </div>
+              );
+            } else {
+              return (
+                <div className={`${styles.singleData}`} key={id} id={`${id}`}>
+                  <h2>
+                    {index + 1}. {title}
+                  </h2>
+                  <div className={`${styles.content}`}>
+                    {content.map((contentData) => {
+                      return <p key={contentData.id} dangerouslySetInnerHTML={{ __html: contentData.content }}></p>;
+                    })}
+                  </div>
+                </div>
+              );
+            }
+          })}
+        </div>
+        <Section34></Section34>
+      </div>
+    </div>
   );
 };
 

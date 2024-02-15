@@ -1,5 +1,6 @@
 .wrapper {
-  width: 580px;
+  width: 100%;
+  max-width: 580px;
   height: 60px;
   position: relative;
 
@@ -7,7 +8,7 @@
     width: 100%;
     height: auto;
     font-size: 16px;
-    padding: 18px 32px 18px 50px;
+    padding: 18px 32px 18px 75px;
     background-color: #ffffff;
     border-radius: 10000px;
     border: none;
@@ -15,8 +16,14 @@
     outline: solid transparent 2px;
     transition: outline 250ms;
 
+    @media screen and (max-width: 1024px) {
+      text-align: center;
+      padding: 18px 32px 18px 32px;
+    }
+
     &::placeholder {
       color: #7a8790;
+      font-weight: 400;
     }
 
     &:focus {
@@ -24,10 +31,20 @@
     }
   }
 
+  input:not(:placeholder-shown) + img {
+    display: none;
+  }
+
   img {
     position: absolute;
     top: 50%;
-    left: 0px;
-    transform: translate(18px, -60%);
+    left: 0;
+    transform: translate(40px, -60%);
+
+    @media screen and (max-width: 1024px) {
+      left: 50%;
+      transform: translate(-50%, -60%);
+      translate: -75px 0px;
+    }
   }
 }

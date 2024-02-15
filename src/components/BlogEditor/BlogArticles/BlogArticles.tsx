@@ -1,80 +1,49 @@
 "use client";
 
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import getBlogArticlesBrief from "@/api/blog/getBlogArticlesBrief";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { blogArticle } from "@/app/api/blog/get/[url]/route";
+import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
-import { blogArticlesBriefSignalData } from "../BlogEditor";
-import { useSignals } from "@preact/signals-react/runtime";
+import { getMoreArticles } from "../BlogEditor";
 
 interface componentsProps {
-  setCurrentActiveBlogId: Dispatch<SetStateAction<string | null>>;
-  setDisplayEditor: Dispatch<SetStateAction<boolean>>;
+  setCurrentActiveArticle: Dispatch<SetStateAction<null | blogArticle>>;
+  blogArticles: blogArticle[];
 }
 
-const BlogArticles = ({ setCurrentActiveBlogId, setDisplayEditor }: componentsProps) => {
-  useSignals();
-
-  const [areAllArticlesLoaded, setAreAllArticlesLoaded] = useState(false);
-
-  useEffect(() => {
-    if (blogArticlesBriefSignalData.value === null) {
-      (async () => {
-        const blogArticles = await getBlogArticlesBrief(10);
-        blogArticlesBriefSignalData.value = blogArticles;
-      })();
-    }
-  }, []);
-
+const BlogArticles = ({ setCurrentActiveArticle, blogArticles }: componentsProps) => {
   return (
     <>
-      <div className={`${styles.blog_articles}`}>
-        {blogArticlesBriefSignalData.value &&
-          blogArticlesBriefSignalData.value.map((blogArticleData) => {
-            const { id, image, title, brief } = blogArticleData;
+      <div className={`${styles.blogArticles}`}>
+        {blogArticles.map((blogArticleData) => {
+          const { id, title, entry, image } = blogArticleData;
 
-            return (
-              <div
-                className={`${styles.blog_article}`}
-                key={id}
-                onClick={() => {
-                  setCurrentActiveBlogId(id);
-                  setDisplayEditor(true);
-                }}>
-                <div className={`${styles.image_wrapper}`}>
-                  <Image src={image} height={512} width={512} alt="Zdjęcie artykułu bloga"></Image>
-                </div>
-                <h2>{title}</h2>
-                <p dangerouslySetInnerHTML={{ __html: brief }}></p>
+          return (
+            <div
+              className={`${styles.blogArticle}`}
+              key={id}
+              onClick={() => {
+                setCurrentActiveArticle(blogArticleData);
+              }}>
+              <div className={`${styles.background}`}>
+                <Image src={image} width={300} height={300} alt="Tło"></Image>
               </div>
-            );
-          })}
-        <div
-          className={`${styles.blog_article} ${styles.add_new}`}
-          onClick={() => {
-            setDisplayEditor(true);
-          }}>
-          <p>+</p>
-        </div>
+              <h2>{title}</h2>
+              <div className={`${styles.entry}`}>
+                <p>{entry[0].content}</p>
+              </div>
+            </div>
+          );
+        })}
       </div>
-      {areAllArticlesLoaded === false && (
-        <Button
-          style={{ padding: "10px 15px 10px 15px", fontSize: "14px", marginTop: "50px" }}
-          onClick={async () => {
-            if (blogArticlesBriefSignalData.value && blogArticlesBriefSignalData.value.at(-1)) {
-              const latestArticles = await getBlogArticlesBrief(10, blogArticlesBriefSignalData.value.at(-1)!.docRef);
-
-              if (latestArticles.length === blogArticlesBriefSignalData.value.length) {
-                setAreAllArticlesLoaded(true);
-              }
-
-              blogArticlesBriefSignalData.value = latestArticles;
-            }
-          }}>
-          Pokaż więcej artykułów
-        </Button>
-      )}
+      <Button
+        style={{ padding: "20px 30px 20px 30px", marginLeft: "auto", marginRight: "auto" }}
+        onClick={() => {
+          getMoreArticles(blogArticles.length);
+        }}>
+        Zobacz wiecej
+      </Button>
     </>
   );
 };
