@@ -8,7 +8,9 @@ interface componentProps {
 }
 
 const BlogArticlePage = async ({ params }: componentProps) => {
-  const blogArticleResponse = await blogGetByUrl(params.blogUrl);
+  //const blogArticleResponse = await blogGetByUrl(params.blogUrl);
+
+  const blogArticleResponse = { data: null };
 
   return blogArticleResponse.data ? (
     <>

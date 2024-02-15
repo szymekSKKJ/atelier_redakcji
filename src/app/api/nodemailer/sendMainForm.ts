@@ -1,4 +1,5 @@
 "use server";
+
 import nodemailer from "nodemailer";
 
 const sendMainForm = async (formData: FormData): Promise<string> => {
@@ -91,63 +92,63 @@ const sendMainForm = async (formData: FormData): Promise<string> => {
       },
     ],
     html: `
-    <html>
-    <head>
-      <style>
-        * {
-          box-sizing: border-box;
-          margin: 0px;
-          padding: 0px;
-        }
-  
-        body {
-          padding: 20px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-  
-        h1.title {
-          margin-bottom: 10px;
-        }
-  
-        p, b {
-          line-height: 1;
-          font-size: 15px;
-          padding: 2px;
-        }
-  
-        p.message {
-          margin: 0px 0px 50px 0px;
-        }
-  
-        b {
-          display: block;
-        }
-  
-        .contact {
-          margin-top: 50px;
-        }
-      </style>
-    </head>
-    <body>
-      <h1 class="title">${`Wycena ${servicesType}`}:</h1>
-      <p>Wiadomość:</p>
-      <p class="message">${additionalInformation}</p>
-      <p>Typ: ${textType}</p>
-      <p>Temat przewodni utworu: ${topic}</p>
-      <p>Ilość znaków ze spacją: ${numberOfCharactersWithSpaces}</p>
-      <p>Ilość stron: ${pages}</p>
-      <p>Czas realizacji: ${new Date(deadline).toLocaleDateString("pl-PL", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
-      <b class="contact">Dane kontaktowe:</b>
-      <p>Imię: ${name}</p>
-      <p>Email: ${email}</p>
-      <p>Numer telefonu: ${phoneNumber}</p>
-      <p>Nazwa firmy: ${companyName}</p>
-    </body>
-  </html>
-  
-    `,
+      <html>
+      <head>
+        <style>
+          * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+          }
+    
+          body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+    
+          h1.title {
+            margin-bottom: 10px;
+          }
+    
+          p, b {
+            line-height: 1;
+            font-size: 15px;
+            padding: 2px;
+          }
+    
+          p.message {
+            margin: 0px 0px 50px 0px;
+          }
+    
+          b {
+            display: block;
+          }
+    
+          .contact {
+            margin-top: 50px;
+          }
+        </style>
+      </head>
+      <body>
+        <h1 class="title">${`Wycena ${servicesType}`}:</h1>
+        <p>Wiadomość:</p>
+        <p class="message">${additionalInformation}</p>
+        <p>Typ: ${textType}</p>
+        <p>Temat przewodni utworu: ${topic}</p>
+        <p>Ilość znaków ze spacją: ${numberOfCharactersWithSpaces}</p>
+        <p>Ilość stron: ${pages}</p>
+        <p>Czas realizacji: ${new Date(deadline).toLocaleDateString("pl-PL", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
+        <b class="contact">Dane kontaktowe:</b>
+        <p>Imię: ${name}</p>
+        <p>Email: ${email}</p>
+        <p>Numer telefonu: ${phoneNumber}</p>
+        <p>Nazwa firmy: ${companyName}</p>
+      </body>
+    </html>
+    
+      `,
   });
 
   return info.response;

@@ -11,8 +11,8 @@ import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import Link from "next/link";
 
 const Blog = async () => {
-  const blogAriclesResponse = await blogGetSome(0, 3);
-  const blogAriclesResponse1 = await blogGetSome(1, 1);
+  const blogAriclesResponse = await blogGetSome(0, 3, true);
+  const blogAriclesResponse1 = await blogGetSome(1, 1, true);
 
   return (
     <>

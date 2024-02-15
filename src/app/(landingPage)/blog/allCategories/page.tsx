@@ -6,7 +6,7 @@ import Section11 from "@/components/sections/Section11/Section11";
 import Button from "@/components/UI/Button/Button";
 
 const allCategoriesPage = async () => {
-  const { data } = await blogGetSome();
+  const { data } = await blogGetSome(0, 3, true);
 
   return (
     <div className={`${styles.allCategoriesPage}`}>

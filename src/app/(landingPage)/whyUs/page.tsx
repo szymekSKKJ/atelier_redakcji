@@ -1,5 +1,4 @@
 import Section13 from "@/components/sections/Section13/Section13";
-import styles from "./styles.module.scss";
 import Section14 from "@/components/sections/Section14/Section14";
 import Section15 from "@/components/sections/Section15/Section15";
 import Section16 from "@/components/sections/Section16/Section16";
@@ -24,7 +23,7 @@ const WhyUs = () => {
       <Section6></Section6>
       <Section18></Section18>
       <Section5></Section5>
-      <Section9 style={{ marginTop: "0px" }}></Section9>
+      {/* <Section9 style={{ marginTop: "0px" }}></Section9> */}
       <Section10></Section10>
       <Section11></Section11>
     </>

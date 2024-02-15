@@ -40,11 +40,21 @@ const GET = async (request: Request) => {
 
 export { GET };
 
-const blogGetSome = async (skip: number = 0, take: number = 3): Promise<response<blogArticle[]>> => {
-  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/some/?skip=${skip}&take=${take}`, {
-    method: "GET",
-    cache: "no-cache",
-  }).then((response) => response.json());
+const blogGetSome = async (skip: number = 0, take: number = 3, isServerSide = false): Promise<response<blogArticle[]>> => {
+  if (isServerSide) {
+    const headers = await import("next/headers");
+
+    return await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/some/?skip=${skip}&take=${take}`, {
+      method: "GET",
+      cache: "no-cache",
+      headers: new Headers(headers.headers()),
+    }).then((response) => response.json());
+  } else {
+    return await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/some/?skip=${skip}&take=${take}`, {
+      method: "GET",
+      cache: "no-cache",
+    }).then((response) => response.json());
+  }
 };
 
 export { blogGetSome };

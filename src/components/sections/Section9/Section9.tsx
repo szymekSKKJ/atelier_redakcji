@@ -2,14 +2,16 @@ import styles from "./styles.module.scss";
 import CurvedLines from "@/design/CurvedLines/CurvedLines";
 import BlogArticlesBrief from "@/components/BlogArticlesBrief/BlogArticlesBrief";
 import { blogGetSome } from "@/app/api/blog/get/some/route";
+import { HTMLAttributes } from "react";
 
-interface componentProps {
+export const runtime = "edge";
+
+interface componentProps extends HTMLAttributes<HTMLElement> {
   type?: "landing page" | "blog";
-  style?: {};
 }
 
 const Section9 = async ({ type = "landing page", style }: componentProps) => {
-  const blogAriclesResponse = await blogGetSome(0, 3);
+  const blogAriclesResponse = await blogGetSome(0, 3, true);
 
   return (
     <section className={styles.section} style={style}>
