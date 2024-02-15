@@ -30,6 +30,8 @@ const POST = async (request: Request) => {
 
 export { POST };
 
+export const dynamic = "force-dynamic";
+
 const blogCreate = async (url: string, categoryTitle: string, title: string, content: string, entry: string, image: File): Promise<response<null>> => {
   const formData = new FormData();
 

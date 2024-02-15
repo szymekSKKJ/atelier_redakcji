@@ -11,8 +11,6 @@ const GET = async (request: Request) => {
     const stringOfWords = url.searchParams.get("stringOfWords") as string;
     const formattedString = stringOfWords.split(" ").join(" | ");
 
-    console.log(formattedString);
-
     const bolgArticles = await prisma.blogArticle.findMany({
       take: parseInt(url.searchParams.get("take") as string),
       skip: parseInt(url.searchParams.get("skip") as string),
@@ -65,6 +63,8 @@ const GET = async (request: Request) => {
 };
 
 export { GET };
+
+export const dynamic = "force-dynamic";
 
 const blogFind = async (stringOfWords: string, take: number = 10, skip: number = 0): Promise<response<blogArticle[]>> => {
   const formattedString = stringOfWords.replace(/\s+/g, " ").trim().toLowerCase();

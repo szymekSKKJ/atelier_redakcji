@@ -35,6 +35,8 @@ const POST = async (request: Request, { params }: { params: { id: string } }) =>
 
 export { POST };
 
+export const dynamic = "force-dynamic";
+
 const blogUpdate = async (
   id: string,
   url: string,
