@@ -7,15 +7,16 @@ import { blogArticle } from "@/app/api/blog/get/[url]/route";
 
 interface componentProps {
   articles: blogArticle[];
+  page?: null | "blog";
   callback?: () => void;
 }
 
-const BlogArticlesBrief = ({ articles, callback }: componentProps) => {
+const BlogArticlesBrief = ({ articles, page, callback }: componentProps) => {
   if (articles.length !== 0) {
     return (
       <div className={`${styles.articles}`} role="group">
         {articles.map((articleData) => {
-          const { id, image, title, entry, url } = articleData;
+          const { id, image, title, entry, url, category } = articleData;
 
           if (articles.length > 1) {
             return (
@@ -28,15 +29,22 @@ const BlogArticlesBrief = ({ articles, callback }: componentProps) => {
                   <figure>
                     <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
                       <Image height={380} width={275} src={image} alt="Zdjęcie artykułu bloga"></Image>
+                      {page === "blog" && (
+                        <div className={`${styles.category}`}>
+                          <p>{category}</p>
+                        </div>
+                      )}
                     </div>
                     <figcaption>
                       <h3 className={`${styles.title}`}>{title}</h3>
                     </figcaption>
                   </figure>
                   <p dangerouslySetInnerHTML={{ __html: entry[0].content }}></p>
-                  <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute={`/blog/${id}`}>
-                    Czytaj więcej
-                  </Button>
+                  {page === "blog" || (
+                    <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute={`/blog/${id}`}>
+                      Czytaj więcej
+                    </Button>
+                  )}
                 </Link>
               </article>
             );
@@ -51,13 +59,20 @@ const BlogArticlesBrief = ({ articles, callback }: componentProps) => {
                   <figure>
                     <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
                       <Image height={1000} width={1000} src={image} alt="Zdjęcie artykułu bloga"></Image>
+                      {page === "blog" && (
+                        <div className={`${styles.category}`}>
+                          <p>{category}</p>
+                        </div>
+                      )}
                     </div>
                     <figcaption>
                       <h3 className={`${styles.title}`}>{title}</h3>
                       <p className={`${styles.entry}`} dangerouslySetInnerHTML={{ __html: entry[0].content }}></p>
-                      <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute={`/blog/${id}`}>
-                        Czytaj więcej
-                      </Button>
+                      {page !== "blog" && (
+                        <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute={`/blog/${id}`}>
+                          Czytaj więcej
+                        </Button>
+                      )}
                     </figcaption>
                   </figure>
                 </Link>

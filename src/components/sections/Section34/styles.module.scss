@@ -32,13 +32,19 @@
 
     span {
       display: flex;
-      gap: 40px;
       align-items: center;
 
       p {
+        line-height: 1;
         font-weight: 800;
         font-size: 24px;
         color: #0e4d7a;
+        border-right: solid 1px #dee5e3;
+        padding-right: 20px;
+      }
+
+      img {
+        margin-left: 20px;
       }
     }
 

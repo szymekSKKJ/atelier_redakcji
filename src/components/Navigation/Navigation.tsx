@@ -119,6 +119,18 @@ const Navigation = () => {
       href: "/blog",
       content: "Kategorie artykułów",
       activeCondition: "allCategoriesw",
+      subLinks: [
+        { id: 1, content: "Prace licencjackie", href: "/blog/allCategories/?category=prace-licenjcackie" },
+        { id: 2, content: "Prace inżynierskie", href: "/blog/allCategories/?category=prace-inzynierskie" },
+        { id: 3, content: "Prace magisterskie", href: "/blog/allCategories/?category=prace-magisterskie" },
+        { id: 4, content: "Prace doktorskie i habilitacyjne", href: "/blog/allCategories/?category=prace-doktorskie-i-habilitacyjne" },
+        { id: 5, content: "Prace zaliczeniowe", href: "/blog/allCategories/?category=prace-zaliczeniowe" },
+        { id: 6, content: "Prace dyplomowe", href: "/blog/allCategories/?category=prace-dyplomowe" },
+        { id: 7, content: "Prace naukowe", href: "/blog/allCategories/?category=prace-naukowe" },
+        { id: 8, content: "Teksty specjalistyczne", href: "/blog/allCategories/?category=teksty-specjalistyczne" },
+        { id: 9, content: "Inne teksty", href: "/blog/allCategories/?category=inne-teksty" },
+        { id: 10, content: "Wszystko", href: "/blog/allCategories/?category=wszystko" },
+      ],
     },
   ];
 
@@ -182,19 +194,37 @@ const Navigation = () => {
                 </div>
               </div>
               <div className={`${styles.wrapper2}`}>
-                <div className={`${styles.imageLogoWrapper}`}>
-                  <Image src={logo} alt="Main logo"></Image>
-                </div>
-                <div className={`${styles.imageBlogWrapper}`}>
-                  <Image src={blogImage} alt="Zdjęcie napisu blog"></Image>
-                </div>
+                <Link href={"/blog"} className={`${styles.linkBlogWrapper}`}>
+                  <div className={`${styles.imageLogoWrapper}`}>
+                    <Image src={logo} alt="Main logo"></Image>
+                  </div>
+                  <div className={`${styles.imageBlogWrapper}`}>
+                    <Image src={blogImage} alt="Zdjęcie napisu blog"></Image>
+                  </div>
+                </Link>
                 <div className={`${styles.links}`}>
                   {blogLinks.map((data) => {
-                    const { id, content, activeCondition, href } = data;
+                    const { id, content, activeCondition, href, subLinks } = data;
+
                     return (
-                      <Link key={id} className={`${formattedPathnameArray.at(-1) === activeCondition ? styles.active : ""}`} href={href}>
-                        {content}
-                      </Link>
+                      <div className={`${styles.link_wrapper}`} key={id}>
+                        <Link key={id} className={`${formattedPathnameArray.at(-1) === activeCondition ? styles.active : ""}`} href={subLinks ? "" : href}>
+                          {content}
+                          {subLinks && <Image src={arrowDownBlue} alt="Ikonka strzałki w dół"></Image>}
+                        </Link>
+                        {subLinks && (
+                          <div className={`${styles.sub_menu}`}>
+                            {subLinks.map((linkData) => {
+                              const { id, content, href } = linkData;
+                              return (
+                                <Link href={href} key={id}>
+                                  {content}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
                     );
                   })}
                   <div className={`${styles.inputWrapper}`}>
@@ -239,20 +269,39 @@ const Navigation = () => {
             </div>
             <div className={`${styles.hamburgerMenu} ${isMobileMenuOpen ? styles.open : ""}`}>
               {blogLinks.map((data) => {
-                const { id, content, activeCondition, href } = data;
+                const { id, content, href, subLinks } = data;
+
+                const isActive = href === "/" ? pathname === href : pathname.includes(href.split("/").splice(-1, 1).join(""));
+
                 return (
-                  <Link
-                    key={id}
-                    className={`${formattedPathnameArray.at(-1) === activeCondition ? styles.active : ""}`}
-                    href={href}
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setTimeout(() => {
-                        setFoundArticles([]);
-                      }, 500);
-                    }}>
-                    {content}
-                  </Link>
+                  <div key={id}>
+                    {subLinks ? (
+                      <a
+                        onClick={() => {
+                          setIsSubMenuOpen((currentValue) => (currentValue === true ? false : true));
+                        }}>
+                        {content}
+                        <Image src={arrowDownBlue} alt="Ikonka strzałki w dół"></Image>
+                      </a>
+                    ) : (
+                      <Link href={href} className={` ${isActive ? styles.active : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
+                        {content}
+                      </Link>
+                    )}
+
+                    {subLinks && (
+                      <div className={`${styles.sub_menu} ${isSubMenuOpen ? styles.open : ""}`}>
+                        {subLinks.map((linkData) => {
+                          const { id, content, href } = linkData;
+                          return (
+                            <Link href={href} key={id} onClick={() => setIsMobileMenuOpen(false)}>
+                              {content}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
               <Button

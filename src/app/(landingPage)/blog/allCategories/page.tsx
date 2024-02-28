@@ -4,9 +4,53 @@ import Article from "@/components/allCategoriesPage/Article/Article";
 import Section13 from "@/components/sections/Section13/Section13";
 import Section11 from "@/components/sections/Section11/Section11";
 import Button from "@/components/UI/Button/Button";
+import Link from "next/link";
 
-const allCategoriesPage = async () => {
+interface componentProps {
+  searchParams: { category: string };
+}
+
+const allCategoriesPage = async ({ searchParams: { category } }: componentProps) => {
   const response = await blogGetSome(0, 3, true);
+
+  const categories = [
+    {
+      key: "prace-licenjcackie",
+      value: "Prace licencjackie",
+    },
+    {
+      key: "prace-inzynierskie",
+      value: "Prace inżynierskie",
+    },
+    {
+      key: "prace-doktorskie-i-habilitacyjne",
+      value: "Prace doktorskie i habilitacyjne",
+    },
+    {
+      key: "prace-zaliczeniowe",
+      value: "Prace zaliczeniowe",
+    },
+    {
+      key: "prace-dyplomowe",
+      value: "Prace dyplomowe",
+    },
+    {
+      key: "prace-naukowe",
+      value: "Prace naukowe",
+    },
+    {
+      key: "teksty-specjalistyczne",
+      value: "Teksty specjalistyczne",
+    },
+    {
+      key: "inne-teksty",
+      value: "Inne teksty",
+    },
+    {
+      key: "wszystko",
+      value: "wszystko",
+    },
+  ];
 
   return (
     <div className={`${styles.allCategoriesPage}`}>
@@ -32,15 +76,15 @@ const allCategoriesPage = async () => {
         <div className={`${styles.wrapper}`}>
           <aside>
             <h3>Kategorie</h3>
-            <p>Prace licencjackie</p>
-            <p className={`${styles.choosen}`}>Prace inżynierskie</p>
-            <p>Prace inżynierskie</p>
-            <p>Prace doktorskie i habilitacyjne</p>
-            <p>Prace zaliczeniowe</p>
-            <p>Prace dyplomowe</p>
-            <p>Prace naukowe</p>
-            <p>Prace specjalistyczne</p>
-            <p>Inne teksty</p>
+            {categories.map((data) => {
+              const { key, value } = data;
+
+              return (
+                <Link key={key} className={`${category === key ? styles.choosen : ""}`} href={`/blog/allCategories?category=${key}`}>
+                  {value}
+                </Link>
+              );
+            })}
           </aside>
           <Section13 allCategoriesPage={true}></Section13>
         </div>

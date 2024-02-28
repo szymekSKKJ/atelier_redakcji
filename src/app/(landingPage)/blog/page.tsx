@@ -18,8 +18,8 @@ const Blog = async () => {
     <>
       <div className={`${styles.blog_articles_brief_wrapper}`}>
         <div className={`${styles.wrapper}`}>
-          {blogAriclesResponse1.data && <BlogArticlesBrief articles={blogAriclesResponse1.data}></BlogArticlesBrief>}
-          {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+          {blogAriclesResponse1.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse1.data}></BlogArticlesBrief>}
+          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
 
           <Link href={`/blog/allCategories`}>
             <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px" }}>
@@ -33,7 +33,7 @@ const Blog = async () => {
         <h2>
           <span>Najczęściej</span> czytane
         </h2>
-        {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+        {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
       </div>
       <div className={`${styles.blog_articles_brief_wrapper} ${styles.transparent}`}>
         <h2>
@@ -47,7 +47,7 @@ const Blog = async () => {
         <p className={`${styles.subTitlte}`}>
           Podstawowe <span>pojęcia i porady językowe</span>
         </p>
-        {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+        {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
         <Link href={`/blog/allCategories`}>
           Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
         </Link>
@@ -61,7 +61,7 @@ const Blog = async () => {
         <p className={`${styles.subTitlte}`}>
           <span>Jak właściwie napisać i przygotować</span> pracę?
         </p>
-        {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+        {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
       </div>
       <Section13 fullscreen={true}></Section13>
       <div className={`${styles.backgroundWrapper}`}>
@@ -77,7 +77,7 @@ const Blog = async () => {
           <p className={`${styles.subTitlte}`} style={{ marginTop: "80px" }}>
             Prace <span>licencjackie</span>
           </p>
-          {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
           <Link href={`/blog/allCategories`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
@@ -91,7 +91,7 @@ const Blog = async () => {
           <p className={`${styles.subTitlte}`}>
             Prace <span>inżynierskie</span>
           </p>
-          {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
           <a>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </a>
@@ -105,7 +105,7 @@ const Blog = async () => {
           <p className={`${styles.subTitlte}`}>
             Prace <span>magisterskie</span>
           </p>
-          {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
           <Link href={`/blog/allCategories`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
@@ -119,7 +119,7 @@ const Blog = async () => {
           <p className={`${styles.subTitlte}`}>
             Prace <span>doktorskie i habilitacyjne</span>
           </p>
-          {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
           <Link href={`/blog/allCategories`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>

@@ -14,7 +14,7 @@ const Section9 = async ({ type = "landing page", style }: componentProps) => {
   const blogAriclesResponse = await blogGetSome(0, 3, true);
 
   return (
-    <section className={styles.section} style={style}>
+    <section className={`${styles.section} ${type === "blog" ? styles.blog : ""}`} style={style}>
       <header>
         <h2>
           {type === "blog" ? (
@@ -30,7 +30,7 @@ const Section9 = async ({ type = "landing page", style }: componentProps) => {
           Znajdziesz tam praktyczne wskazówki dot. m.in.:<br></br> aspektów związanych z pisaniem prac oraz poprawnością językową.
         </p>
       </header>
-      {blogAriclesResponse.data && <BlogArticlesBrief articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+      {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
     </section>
   );
 };
