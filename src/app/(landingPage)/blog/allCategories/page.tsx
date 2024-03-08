@@ -176,7 +176,7 @@ const allCategoriesPage = async ({ searchParams: { category, page } }: component
               const { key, value } = data;
 
               return (
-                <Link key={key} className={`${category === key ? styles.choosen : ""}`} href={`/blog/allCategories?category=${key}`}>
+                <Link key={key} className={`${category === key ? styles.choosen : ""}`} href={`/blog/allCategories?category=${key}&page=1`}>
                   {value}
                 </Link>
               );
