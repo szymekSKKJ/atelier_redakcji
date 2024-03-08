@@ -31,8 +31,10 @@
     }
   }
 
-  input:not(:placeholder-shown) + img {
-    display: none;
+  @media screen and (width <= 1024px) {
+    input:not(:placeholder-shown) + img {
+      display: none;
+    }
   }
 
   img {

@@ -93,11 +93,13 @@ const ArticleEditor = ({ setCurrentActiveArticle, currentActiveArticle }: compon
       setAppendCahnges(false);
       (async () => {
         // @ts-ignore
-        const isAnyValueNull = Object.keys(articleData).find((key) => articleData[key] === null);
+        const isAnyValueNull = Object.keys(articleData).find((key) => key !== "id" && articleData[key] === null);
 
         const isAnyEntryEmpty = articleData.entry.find((data) => isEmpty(data.content));
 
         const isAnyContentEmpty = articleData.content.find((data) => isEmpty(data.title) || data.content.some((data) => isEmpty(data.content)));
+
+        console.log(isAnyValueNull, isAnyEntryEmpty, isAnyContentEmpty);
 
         if (isAnyValueNull === undefined && isAnyEntryEmpty === undefined && isAnyContentEmpty === undefined) {
           if (articleData.id && typeof articleData.image === "string") {

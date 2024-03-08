@@ -92,7 +92,6 @@ const BlogArticle = ({ data }: componentProps) => {
             }
           })}
         </div>
-        <Section34></Section34>
       </div>
     </div>
   );

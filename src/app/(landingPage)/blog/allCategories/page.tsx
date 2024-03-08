@@ -4,14 +4,110 @@ import Article from "@/components/allCategoriesPage/Article/Article";
 import Section13 from "@/components/sections/Section13/Section13";
 import Section11 from "@/components/sections/Section11/Section11";
 import Button from "@/components/UI/Button/Button";
+import doubleArrowsIcon from "../../../../../public/Double arrows.svg";
 import Link from "next/link";
+import Image from "next/image";
+import { blogCountAll } from "@/app/api/blog/countAll/route";
 
 interface componentProps {
-  searchParams: { category: string };
+  searchParams: { category: string; page: string | undefined };
 }
 
-const allCategoriesPage = async ({ searchParams: { category } }: componentProps) => {
-  const response = await blogGetSome(0, 3, true);
+const allCategoriesPage = async ({ searchParams: { category, page } }: componentProps) => {
+  const numberOfArticlesToDisplayPerPage = 1;
+
+  const response =
+    page === undefined || parseInt(page) === 1
+      ? await blogGetSome(0, numberOfArticlesToDisplayPerPage, true)
+      : await blogGetSome(numberOfArticlesToDisplayPerPage * parseInt(page) - 1, numberOfArticlesToDisplayPerPage, true);
+
+  const allArticlesCountResponse = await blogCountAll();
+
+  const buttonsCount = allArticlesCountResponse.data ? Math.ceil(allArticlesCountResponse.data / numberOfArticlesToDisplayPerPage) : 1;
+
+  const paginationButtonsElements = [];
+
+  if (page) {
+    for (let i = 1; i <= buttonsCount; i++) {
+      if (i === 1) {
+        paginationButtonsElements.push(
+          <Link href={`/blog/allCategories/?category=${category}&page=${i}`}>
+            <button className={`${parseInt(page) === i ? styles.current : ""}`}>{i}</button>
+          </Link>
+        );
+      }
+
+      if (i === parseInt(page)) {
+        if (i >= 3) {
+          if (i >= 4) {
+            paginationButtonsElements.push(
+              <Link href={`/blog/allCategories/?category=${category}&page=${i - 2}`}>
+                <button className={`${parseInt(page) === i - 2 ? styles.current : ""}`}>{i - 2}</button>
+              </Link>
+            );
+          }
+
+          paginationButtonsElements.push(
+            <Link href={`/blog/allCategories/?category=${category}&page=${i - 1}`}>
+              <button className={`${parseInt(page) === i - 1 ? styles.current : ""}`}>{i - 1}</button>
+            </Link>
+          );
+        }
+
+        if (i === buttonsCount) {
+          if (i + 1 < buttonsCount) {
+            paginationButtonsElements.push(
+              <Link href={`/blog/allCategories/?category=${category}&page=${i + 1}`}>
+                <button className={`${parseInt(page) === i + 1 ? styles.current : ""}`}>{i + 1}</button>
+              </Link>
+            );
+
+            if (i + 2 < buttonsCount) {
+              paginationButtonsElements.push(
+                <Link href={`/blog/allCategories/?category=${category}&page=${i + 2}`}>
+                  <button className={`${parseInt(page) === i + 2 ? styles.current : ""}`}>{i + 2}</button>
+                </Link>
+              );
+            }
+          }
+        }
+
+        if (i !== 1 && i !== buttonsCount) {
+          paginationButtonsElements.push(
+            <Link href={`/blog/allCategories/?category=${category}&page=${i}`}>
+              <button className={`${parseInt(page) === i ? styles.current : ""}`}>{i}</button>
+            </Link>
+          );
+        }
+
+        if (i !== buttonsCount) {
+          if (i + 1 < buttonsCount) {
+            paginationButtonsElements.push(
+              <Link href={`/blog/allCategories/?category=${category}&page=${i + 1}`}>
+                <button className={`${parseInt(page) === i + 1 ? styles.current : ""}`}>{i + 1}</button>
+              </Link>
+            );
+
+            if (i + 2 < buttonsCount) {
+              paginationButtonsElements.push(
+                <Link href={`/blog/allCategories/?category=${category}&page=${i + 2}`}>
+                  <button className={`${parseInt(page) === i + 2 ? styles.current : ""}`}>{i + 2}</button>
+                </Link>
+              );
+            }
+          }
+        }
+      }
+
+      if (i === buttonsCount) {
+        paginationButtonsElements.push(
+          <Link href={`/blog/allCategories/?category=${category}&page=${i}`}>
+            <button className={`${parseInt(page) === i ? styles.current : ""}`}>{i}</button>
+          </Link>
+        );
+      }
+    }
+  }
 
   const categories = [
     {
@@ -89,7 +185,23 @@ const allCategoriesPage = async ({ searchParams: { category } }: componentProps)
           <Section13 allCategoriesPage={true}></Section13>
         </div>
       </div>
-      <Button style={{ padding: "20px 30px 20px 30px", margin: "40px auto 40px auto", alignSelf: "flex-start" }}>Pokaż więcej artykułów</Button>
+      <div className={`${styles.paginationButtons}`}>
+        {page && parseInt(page) > 1 && (
+          <Link href={`/blog/allCategories/?category=${category}&page=${parseInt(page) - 1}`}>
+            <button className={`${styles.doubleArrows} ${styles.backward}`}>
+              <Image src={doubleArrowsIcon} alt="Ikonka podwójnej strzałki"></Image>
+            </button>
+          </Link>
+        )}
+        {paginationButtonsElements}
+        {page && parseInt(page) < buttonsCount && (
+          <Link href={`/blog/allCategories/?category=${category}&page=${parseInt(page) + 1}`}>
+            <button className={`${styles.doubleArrows}`}>
+              <Image src={doubleArrowsIcon} alt="Ikonka podwójnej strzałki"></Image>
+            </button>
+          </Link>
+        )}
+      </div>
       <Section11 type="blog"></Section11>
     </div>
   );

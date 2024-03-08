@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import logo from "../../../public/logo.svg";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Button from "../UI/Button/Button";
 import arrowDown from "../../../public/arrow.svg";
@@ -18,6 +18,8 @@ import BlogArticlesBrief from "../BlogArticlesBrief/BlogArticlesBrief";
 import { blogGetSome } from "@/app/api/blog/get/some/route";
 
 const Navigation = () => {
+  const router = useRouter();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [foundArticles, setFoundArticles] = useState<blogArticle[]>([]);
@@ -171,25 +173,11 @@ const Navigation = () => {
                   <Image src={searchIcon} alt="Ikonka lupty"></Image>
                   <input
                     placeholder="Szukaj..."
-                    onChange={async (event) => {
-                      const inputElement = event.currentTarget as HTMLInputElement;
-
-                      onChangeInputSearchTimeoutDebounce.current && clearTimeout(onChangeInputSearchTimeoutDebounce.current);
-                      onChangeInputSearchTimeoutDebounce.current = setTimeout(async () => {
-                        const response = await blogFind(inputElement.value);
-
-                        if (response.data && response.data.length !== 0) {
-                          setPaginationSkipVaue(10);
-                          setFoundArticles(() => response.data!);
-                          setAreAllArticlesDisplayed(false);
-                        } else {
-                          const response = await blogGetSome(0, 3);
-
-                          if (response.data) {
-                            setFoundArticles(() => response.data!);
-                          }
-                        }
-                      }, 1000);
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        const inputElement = event.currentTarget as HTMLInputElement;
+                        router.push(`/blog/searchResults/${inputElement.value}`);
+                      }
                     }}></input>
                 </div>
               </div>
@@ -231,25 +219,11 @@ const Navigation = () => {
                     <Image src={searchIcon} alt="Ikonka lupty"></Image>
                     <input
                       placeholder="Szukaj..."
-                      onChange={async (event) => {
-                        const inputElement = event.currentTarget as HTMLInputElement;
-
-                        onChangeInputSearchTimeoutDebounce.current && clearTimeout(onChangeInputSearchTimeoutDebounce.current);
-                        onChangeInputSearchTimeoutDebounce.current = setTimeout(async () => {
-                          const response = await blogFind(inputElement.value);
-
-                          if (response.data && response.data.length !== 0) {
-                            setPaginationSkipVaue(10);
-                            setFoundArticles(() => response.data!);
-                            setAreAllArticlesDisplayed(false);
-                          } else {
-                            const response = await blogGetSome(0, 3);
-
-                            if (response.data) {
-                              setFoundArticles(() => response.data!);
-                            }
-                          }
-                        }, 1000);
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          const inputElement = event.currentTarget as HTMLInputElement;
+                          router.push(`/blog/searchResults/${inputElement.value}`);
+                        }
                       }}></input>
                   </div>
                 </div>

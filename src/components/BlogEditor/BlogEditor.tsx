@@ -88,7 +88,7 @@ const BlogEditor = () => {
 
   return (
     <div className={`${styles.blog_editor}`}>
-      {currentActiveArticle === null && (
+      {/* {currentActiveArticle === null && (
         <div className={`${styles.inputWrapper}`}>
           <input placeholder="Url artykułu"></input>
           <Button
@@ -140,7 +140,9 @@ const BlogEditor = () => {
         <ArticleEditor currentActiveArticle={currentActiveArticle} setCurrentActiveArticle={setCurrentActiveArticle}></ArticleEditor>
       ) : (
         blogArticles.value.length !== 0 && <BlogArticles blogArticles={blogArticles.value} setCurrentActiveArticle={setCurrentActiveArticle}></BlogArticles>
-      )}
+      )} */}
+
+      <ArticleEditor currentActiveArticle={currentActiveArticle} setCurrentActiveArticle={setCurrentActiveArticle}></ArticleEditor>
     </div>
   );
 };

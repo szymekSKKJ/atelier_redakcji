@@ -1,0 +1,60 @@
+.searchResultsPage {
+  width: 100%;
+  max-width: 1180px; // This same as BlogArticlesBrief
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px auto 0px auto;
+  padding: 0px 30px 0px 30px;
+  gap: 40px;
+
+  .resultsString {
+    align-self: flex-start;
+    margin-bottom: 80px;
+    color: #0e4d7a;
+    font-weight: 800;
+    font-size: 44px;
+    line-height: 1.1;
+
+    @media screen and (width <= 768px) {
+      font-size: 30px;
+      margin-bottom: 40px;
+    }
+
+    span {
+      color: #18a77c;
+    }
+  }
+
+  .notFoundWrapper {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+
+    .notFound {
+      color: #0e4d7a;
+      font-weight: 800;
+      font-size: 30px;
+      line-height: 1.1;
+      text-align: center;
+
+      &:nth-child(2) {
+        font-size: 44px;
+
+        @media screen and (width <= 768px) {
+          font-size: 30px;
+        }
+      }
+
+      @media screen and (width <= 768px) {
+        font-size: 22px;
+      }
+
+      span {
+        color: #18a77c;
+      }
+    }
+  }
+}
