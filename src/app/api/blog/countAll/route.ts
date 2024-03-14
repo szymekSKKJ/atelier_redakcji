@@ -3,7 +3,18 @@ import { createResponse, response } from "../response";
 
 export const GET = async (request: Request) => {
   try {
-    const response = await prisma.blogArticle.count();
+    const url = new URL(request.url);
+
+    const category = url.searchParams.get("category") as string;
+
+    const response =
+      category === "wszystko"
+        ? await prisma.blogArticle.count()
+        : await prisma.blogArticle.count({
+            where: {
+              category: url.searchParams.get("category") as string,
+            },
+          });
 
     return createResponse(200, null, response);
   } catch (e) {
@@ -12,8 +23,8 @@ export const GET = async (request: Request) => {
   }
 };
 
-export const blogCountAll = async (): Promise<response<number>> => {
-  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/countAll`, {
+export const blogCountAll = async (category: string): Promise<response<number>> => {
+  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/countAll/?category=${category}`, {
     method: "GET",
     cache: "no-cache",
   }).then((response) => response.json());

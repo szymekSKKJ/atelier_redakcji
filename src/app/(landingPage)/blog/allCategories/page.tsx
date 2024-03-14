@@ -13,15 +13,56 @@ interface componentProps {
   searchParams: { category: string; page: string };
 }
 
-const allCategoriesPage = async ({ searchParams: { category = "prace-licenjcackie", page = "1" } }: componentProps) => {
+const allCategoriesPage = async ({ searchParams: { category = "wszystko", page = "1" } }: componentProps) => {
+  const categories = [
+    {
+      key: "prace-licenjcackie",
+      value: "Prace licencjackie",
+    },
+    {
+      key: "prace-inzynierskie",
+      value: "Prace inżynierskie",
+    },
+    {
+      key: "prace-magisterskie",
+      value: "Prace magisterskie",
+    },
+
+    {
+      key: "prace-doktorskie-i-habilitacyjne",
+      value: "Prace doktorskie i habilitacyjne",
+    },
+    {
+      key: "prace-zaliczeniowe",
+      value: "Prace zaliczeniowe",
+    },
+    {
+      key: "prace-dyplomowe",
+      value: "Prace dyplomowe",
+    },
+    {
+      key: "prace-naukowe",
+      value: "Prace naukowe",
+    },
+    {
+      key: "teksty-specjalistyczne",
+      value: "Teksty specjalistyczne",
+    },
+    {
+      key: "inne-teksty",
+      value: "Inne teksty",
+    },
+    {
+      key: "wszystko",
+      value: "wszystko",
+    },
+  ];
+
+  const foundCurrentCategory = categories.find((data) => data.key === category)!;
+
   const numberOfArticlesToDisplayPerPage = 1;
 
-  const response =
-    page === undefined || parseInt(page) === 1
-      ? await blogGetSome(0, numberOfArticlesToDisplayPerPage, true)
-      : await blogGetSome(numberOfArticlesToDisplayPerPage * parseInt(page) - 1, numberOfArticlesToDisplayPerPage, true);
-
-  const allArticlesCountResponse = await blogCountAll();
+  const allArticlesCountResponse = await blogCountAll(foundCurrentCategory.value.toLocaleLowerCase());
 
   const buttonsCount = allArticlesCountResponse.data ? Math.ceil(allArticlesCountResponse.data / numberOfArticlesToDisplayPerPage) : 1;
 
@@ -29,7 +70,7 @@ const allCategoriesPage = async ({ searchParams: { category = "prace-licenjcacki
 
   if (page) {
     for (let i = 1; i <= buttonsCount; i++) {
-      if (i === 1) {
+      if (i === 1 && buttonsCount !== 1) {
         paginationButtonsElements.push(
           <Link href={`/blog/allCategories/?category=${category}&page=${i}`}>
             <button className={`${parseInt(page) === i ? styles.current : ""}`}>{i}</button>
@@ -109,44 +150,15 @@ const allCategoriesPage = async ({ searchParams: { category = "prace-licenjcacki
     }
   }
 
-  const categories = [
-    {
-      key: "prace-licenjcackie",
-      value: "Prace licencjackie",
-    },
-    {
-      key: "prace-inzynierskie",
-      value: "Prace inżynierskie",
-    },
-    {
-      key: "prace-doktorskie-i-habilitacyjne",
-      value: "Prace doktorskie i habilitacyjne",
-    },
-    {
-      key: "prace-zaliczeniowe",
-      value: "Prace zaliczeniowe",
-    },
-    {
-      key: "prace-dyplomowe",
-      value: "Prace dyplomowe",
-    },
-    {
-      key: "prace-naukowe",
-      value: "Prace naukowe",
-    },
-    {
-      key: "teksty-specjalistyczne",
-      value: "Teksty specjalistyczne",
-    },
-    {
-      key: "inne-teksty",
-      value: "Inne teksty",
-    },
-    {
-      key: "wszystko",
-      value: "wszystko",
-    },
-  ];
+  const response =
+    page === undefined || parseInt(page) === 1
+      ? await blogGetSome(0, numberOfArticlesToDisplayPerPage, true, foundCurrentCategory.value.toLocaleLowerCase())
+      : await blogGetSome(
+          numberOfArticlesToDisplayPerPage * parseInt(page) - 1,
+          numberOfArticlesToDisplayPerPage,
+          true,
+          foundCurrentCategory.value.toLocaleLowerCase()
+        );
 
   return (
     <div className={`${styles.allCategoriesPage}`}>
