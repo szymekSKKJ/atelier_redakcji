@@ -14,6 +14,9 @@ const Article = ({ data }: componentProps) => {
       <Link href={`/${data.url}`}>
         <div className={`${styles.imageWrappper}`}>
           <Image src={data.image} alt="Zdjęcie artykułu" width={600} height={450}></Image>
+          <div className={`${styles.category}`}>
+            <p>{data.category}</p>
+          </div>
         </div>
         <div className={`${styles.data}`}>
           <p className={`${styles.date}`}>

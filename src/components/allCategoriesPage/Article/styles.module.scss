@@ -21,10 +21,31 @@
       border-radius: 16px;
       overflow: hidden;
       aspect-ratio: 240 / 180;
+      position: relative;
 
       img {
         width: auto;
         height: 100%;
+      }
+
+      .category {
+        width: auto;
+        height: auto;
+        background-color: rgba(251, 251, 251, 0.9);
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        padding: 10px 20px 10px 20px;
+        border-radius: 8px;
+
+        p {
+          font-size: 14px;
+          font-weight: 700;
+
+          &::first-letter {
+            text-transform: capitalize;
+          }
+        }
       }
     }
 

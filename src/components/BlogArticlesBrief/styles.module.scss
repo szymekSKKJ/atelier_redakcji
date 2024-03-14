@@ -91,6 +91,10 @@
             p {
               font-size: 14px;
               font-weight: 700;
+
+              &::first-letter {
+                text-transform: capitalize;
+              }
             }
           }
         }
@@ -251,6 +255,10 @@
             p {
               font-size: 14px;
               font-weight: 700;
+
+              &::first-letter {
+                text-transform: capitalize;
+              }
             }
           }
         }

@@ -44,7 +44,7 @@ const BlogArticle = ({ data }: componentProps) => {
         <div className={`${styles.imageWrapper}`}>
           <Image src={data.image} width={1180} height={500} alt="Zdjęcie artykułu"></Image>
         </div>
-        <div className={`${styles.TableOfContents}`}>
+        <div className={`${styles.tableOfContents}`}>
           <p>Spis treści</p>
           <ol>
             {data.content.map((contentData) => {

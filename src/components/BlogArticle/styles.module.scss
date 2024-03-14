@@ -27,6 +27,10 @@
 
       p.current {
         color: #1a2125;
+
+        &::first-letter {
+          text-transform: capitalize;
+        }
       }
 
       img {
@@ -119,8 +123,13 @@
       }
     }
 
-    .TableOfContents {
+    .tableOfContents {
       background-color: #fbfbfb;
+      padding: 40px;
+
+      @media screen and (width <= 425px) {
+        padding: 30px;
+      }
 
       p {
         font-weight: 800;
@@ -135,6 +144,10 @@
           font-weight: 400;
           font-size: 20px;
           margin: 20px 0px 20px 0px;
+
+          @media screen and (width <= 425px) {
+            font-size: 18px;
+          }
 
           a {
             text-decoration: none;

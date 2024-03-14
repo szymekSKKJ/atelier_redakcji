@@ -10,10 +10,10 @@ import Image from "next/image";
 import { blogCountAll } from "@/app/api/blog/countAll/route";
 
 interface componentProps {
-  searchParams: { category: string; page: string | undefined };
+  searchParams: { category: string; page: string };
 }
 
-const allCategoriesPage = async ({ searchParams: { category, page } }: componentProps) => {
+const allCategoriesPage = async ({ searchParams: { category = "prace-licenjcackie", page = "1" } }: componentProps) => {
   const numberOfArticlesToDisplayPerPage = 1;
 
   const response =

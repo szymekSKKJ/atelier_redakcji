@@ -58,11 +58,11 @@ const SearchResultsPage = async ({ params: { query } }: { params: { query: strin
         formattedArticlesForQuery.map((data) => {
           return (
             <>
-              <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-              <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-              <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-              <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-              <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
             </>
           );
         })
@@ -75,11 +75,11 @@ const SearchResultsPage = async ({ params: { query } }: { params: { query: strin
           {formattedArticlesIfNoneFound.map((data) => {
             return (
               <>
-                <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-                <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-                <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-                <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-                <BlogArticlesBrief key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
               </>
             );
           })}
