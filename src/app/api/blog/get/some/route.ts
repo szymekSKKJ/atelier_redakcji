@@ -1,7 +1,7 @@
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { createResponse, response } from "../../response";
 import { prisma } from "../../../../../../prisma/prisma";
-import { blogArticle } from "../[url]/route";
+import { blogArticle } from "../[pathname]/route";
 import "../../../firebaseInitialize";
 
 const GET = async (request: Request) => {
@@ -38,7 +38,10 @@ const GET = async (request: Request) => {
 
         return {
           ...data,
-          image: image,
+          image: {
+            file: null,
+            string: image,
+          },
           content: JSON.parse(data.content as string),
           entry: JSON.parse(data.entry as string),
         };
@@ -56,12 +59,7 @@ export { GET };
 
 export const dynamic = "force-dynamic";
 
-const blogGetSome = async (
-  skip: number = 0,
-  take: number = 3,
-  isServerSide = false,
-  category: string | undefined = undefined
-): Promise<response<blogArticle[]>> => {
+const blogGetSome = async (skip: number = 0, take: number = 3, isServerSide = false, category: string = "wszystko"): Promise<response<blogArticle[]>> => {
   if (isServerSide) {
     const headers = await import("next/headers");
 

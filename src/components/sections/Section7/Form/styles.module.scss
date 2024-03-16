@@ -83,7 +83,7 @@
   }
 
   textarea {
-    height: 100%;
+    height: 140px;
     min-height: 150px;
   }
 
@@ -154,6 +154,7 @@
 
   .drop_down_section {
     width: 100%;
+    height: auto;
     position: relative;
 
     input {
@@ -164,15 +165,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-
-      &:valid + label {
-        outline-color: #18a77c;
-      }
     }
 
     label {
-      height: 100%;
-      min-height: 150px;
+      height: 150px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -256,6 +252,12 @@
         transform: translate(-5px, 0px);
         animation: dragging 333ms infinite;
       }
+    }
+  }
+
+  .drop_down_section.fileAttached {
+    label {
+      outline-color: #18a77c;
     }
   }
 
@@ -381,6 +383,7 @@
   &::after {
     opacity: 1;
     pointer-events: all;
+    z-index: 10;
   }
 }
 

@@ -53,7 +53,7 @@ const sendMainForm = async (formData: FormData): Promise<string> => {
   } as {
     servicesType: string;
     additionalInformation: string;
-    file: File;
+    file: File | null;
     userData: {
       name: string;
       email: string;
@@ -77,20 +77,24 @@ const sendMainForm = async (formData: FormData): Promise<string> => {
     textData: { type: textType, deadline, pages, numberOfCharactersWithSpaces, topic },
   } = data;
 
-  const fileArrayBuffer = await file.arrayBuffer();
+  const fileArrayBuffer = file ? await file.arrayBuffer() : null;
+
+  const attachments = file
+    ? [
+        {
+          filename: file.name,
+          //@ts-ignore
+          content: Buffer.from(fileArrayBuffer, "binary"),
+          encoding: "base64",
+        },
+      ]
+    : [];
 
   const info = await transporter.sendMail({
     from: `${name} <${email}>`,
     to: "kontakt@atelier-redakcji.eu",
     subject: `Wycena ${servicesType} od ${name} <${email}>`,
-    attachments: [
-      {
-        filename: file.name,
-        //@ts-ignore
-        content: Buffer.from(fileArrayBuffer, "binary"),
-        encoding: "base64",
-      },
-    ],
+    attachments: attachments,
     html: `
       <html>
       <head>

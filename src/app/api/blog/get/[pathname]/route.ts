@@ -7,28 +7,31 @@ export type blogArticle = {
   id: string;
   title: string;
   category: string;
-  url: string;
+  pathname: string;
   createdAt: Date;
   entry: {
-    id: string;
+    order: number;
     content: string;
   }[];
-  image: string;
+  image: {
+    file: File | null;
+    string: string;
+  };
   content: {
-    id: string;
+    order: number;
     title: string;
     content: {
-      id: string;
+      order: number;
       content: string;
     }[];
   }[];
 };
 
-const GET = async (request: Request, { params }: { params: { url: string } }) => {
+const GET = async (request: Request, { params }: { params: { pathname: string } }) => {
   try {
     const blogArticle = await prisma.blogArticle.findUnique({
       where: {
-        url: params.url,
+        pathname: params.pathname,
       },
     });
 
@@ -39,7 +42,10 @@ const GET = async (request: Request, { params }: { params: { url: string } }) =>
 
       const formatedBlogArticle = {
         ...blogArticle,
-        image: image,
+        image: {
+          file: null,
+          string: image,
+        },
         content: JSON.parse(blogArticle!.content as string),
         entry: JSON.parse(blogArticle!.entry as string),
       };
@@ -57,11 +63,11 @@ export { GET };
 
 export const dynamic = "force-dynamic";
 
-const blogGetByUrl = async (url: string): Promise<response<blogArticle>> => {
-  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/${url}`, {
+const blogGetByPathname = async (pathname: string): Promise<response<blogArticle>> => {
+  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/${pathname}`, {
     method: "GET",
     cache: "no-cache",
   }).then((response) => response.json());
 };
 
-export { blogGetByUrl };
+export { blogGetByPathname };

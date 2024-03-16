@@ -12,7 +12,7 @@ import arrowDownBlue from "../../../public/arrow down blue.svg";
 import doubleArrowIcon from "../../../public/Double arrows.svg";
 import blogImage from "../../../public/BLOG.svg";
 import searchIcon from "../../../public/search.svg";
-import { blogArticle } from "@/app/api/blog/get/[url]/route";
+import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import { blogFind } from "@/app/api/blog/find/route";
 import BlogArticlesBrief from "../BlogArticlesBrief/BlogArticlesBrief";
 import { blogGetSome } from "@/app/api/blog/get/some/route";

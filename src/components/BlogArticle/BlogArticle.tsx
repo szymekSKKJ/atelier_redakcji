@@ -3,7 +3,7 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import arrowRightGrayIcon from "../../../public/arrow_right_grey.svg";
-import { blogArticle } from "@/app/api/blog/get/[url]/route";
+import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import Section13 from "../sections/Section13/Section13";
 import Section34 from "../sections/Section34/Section34";
 
@@ -38,19 +38,19 @@ const BlogArticle = ({ data }: componentProps) => {
         </div>
         <div className={`${styles.entry}`}>
           {data.entry.map((entryData) => {
-            return <p key={entryData.id} dangerouslySetInnerHTML={{ __html: entryData.content }}></p>;
+            return <p key={entryData.order} dangerouslySetInnerHTML={{ __html: entryData.content }}></p>;
           })}
         </div>
         <div className={`${styles.imageWrapper}`}>
-          <Image src={data.image} width={1180} height={500} alt="Zdjęcie artykułu"></Image>
+          <Image src={data.image.string} width={1180} height={500} alt="Zdjęcie artykułu"></Image>
         </div>
         <div className={`${styles.tableOfContents}`}>
           <p>Spis treści</p>
           <ol>
             {data.content.map((contentData) => {
               return (
-                <li key={contentData.id}>
-                  <a href={`${data.url}#${contentData.id}`}>{contentData.title}</a>
+                <li key={contentData.order}>
+                  <a href={`/blog/${data.pathname}#${contentData.order}`}>{contentData.title}</a>
                 </li>
               );
             })}
@@ -58,19 +58,19 @@ const BlogArticle = ({ data }: componentProps) => {
         </div>
         <div className={`${styles.articleContentDataWrapper}`}>
           {data.content.map((contentData, index, array) => {
-            const { id, title, content } = contentData;
+            const { order, title, content } = contentData;
 
             if (index === (array.length - 1) / 2) {
               return (
-                <div key={id}>
+                <div key={order}>
                   <Section13 blog={true}></Section13>
-                  <div className={`${styles.singleData}`} id={`${id}`}>
+                  <div className={`${styles.singleData}`} id={`${order}`}>
                     <h2>
                       {index + 1}. {title}
                     </h2>
                     <div className={`${styles.content}`}>
                       {content.map((contentData) => {
-                        return <p key={contentData.id} dangerouslySetInnerHTML={{ __html: contentData.content }}></p>;
+                        return <p key={contentData.order} dangerouslySetInnerHTML={{ __html: contentData.content }}></p>;
                       })}
                     </div>
                   </div>
@@ -78,13 +78,13 @@ const BlogArticle = ({ data }: componentProps) => {
               );
             } else {
               return (
-                <div className={`${styles.singleData}`} key={id} id={`${id}`}>
+                <div className={`${styles.singleData}`} key={order} id={`${order}`}>
                   <h2>
                     {index + 1}. {title}
                   </h2>
                   <div className={`${styles.content}`}>
                     {content.map((contentData) => {
-                      return <p key={contentData.id} dangerouslySetInnerHTML={{ __html: contentData.content }}></p>;
+                      return <p key={contentData.order} dangerouslySetInnerHTML={{ __html: contentData.content }}></p>;
                     })}
                   </div>
                 </div>

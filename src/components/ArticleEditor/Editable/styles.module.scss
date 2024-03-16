@@ -1,0 +1,138 @@
+.editable {
+  color: inherit;
+  padding: 4px;
+  // display: flex;
+  // align-items: center;
+  border: solid 2px transparent;
+  border-radius: 4px;
+  transition: 250ms;
+  outline: unset;
+  display: block;
+  cursor: text;
+
+  * {
+    color: inherit;
+  }
+
+  &:focus {
+    border: solid 2px #18a77c;
+  }
+
+  // .editable_child {
+  //   display: flex;
+  //   align-items: flex-start;
+
+  //   > * {
+  //     width: 100%;
+  //     border-radius: 4px;
+  //     outline: 2px solid transparent;
+  //     transition: outline 150ms;
+  //     position: relative;
+  //     cursor: pointer;
+
+  //     &:empty::before {
+  //       content: attr(placeholder);
+  //       color: inherit;
+  //       font-style: italic;
+  //       pointer-events: none;
+  //       opacity: 0.5;
+  //     }
+
+  //     &:focus {
+  //       outline: 2px solid #18a77c;
+
+  //       .createdElement {
+  //         &:hover {
+  //           outline: 2px #18a77c solid;
+  //         }
+  //       }
+  //     }
+
+  //     // .createdElement {
+  //     //   background-color: rgba(0, 0, 0, 0);
+  //     //   cursor: pointer;
+  //     //   border-radius: 3px;
+  //     //   transition: 150ms;
+  //     //   outline: 2px transparent solid;
+  //     // }
+  //   }
+
+  //   .delete {
+  //     width: auto;
+  //     height: auto;
+  //     background-color: #ff667d;
+  //     border-radius: 4px;
+  //     display: flex;
+  //     flex-shrink: 0;
+  //     justify-content: center;
+  //     align-items: center;
+  //     z-index: 1;
+  //     cursor: pointer;
+  //     transition: 250ms;
+  //     padding: 6px;
+  //     margin-left: 10px;
+  //     overflow: hidden;
+
+  //     &:hover {
+  //       background-color: #ff8093;
+  //     }
+  //   }
+  // }
+}
+
+.editable.childrenEmpty {
+  &::after {
+    content: attr(data-placeholder);
+    opacity: 0.5;
+    font-style: italic;
+  }
+}
+
+.context_menu {
+  width: auto;
+  height: 36px;
+  background-color: white;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  z-index: 1000000000;
+  border-radius: 4px;
+  transform: translate(-50%, -100%);
+  box-shadow: 0px 0px 6px black;
+  overflow: hidden;
+
+  .option {
+    width: auto;
+    height: 100%;
+    font-size: 18px;
+    text-align: left;
+    padding: 12px;
+    background-color: white;
+    border: unset;
+    transition: 250ms;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+
+    &:hover {
+      background-color: rgba(0, 130, 230, 0.1);
+
+      &:has(i.faTrashCan) {
+        background-color: rgba(255, 0, 51, 0.1);
+      }
+    }
+
+    i {
+      color: #0082e6;
+    }
+
+    i.faTrashCan {
+      font-weight: 600;
+      color: #ff0033;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { blogArticle } from "@/app/api/blog/get/[url]/route";
+import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
@@ -11,7 +11,7 @@ interface componentProps {
 const Article = ({ data }: componentProps) => {
   return (
     <article className={`${styles.article}`}>
-      <Link href={`/${data.url}`}>
+      <Link href={`/${data.pathname}`}>
         <div className={`${styles.imageWrappper}`}>
           <Image src={data.image} alt="Zdjęcie artykułu" width={600} height={450}></Image>
           <div className={`${styles.category}`}>

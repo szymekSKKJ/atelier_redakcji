@@ -3,7 +3,7 @@ import Link from "next/link";
 import Button from "../UI/Button/Button";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import { blogArticle } from "@/app/api/blog/get/[url]/route";
+import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 
 interface componentProps {
   articles: blogArticle[];
@@ -16,19 +16,19 @@ const BlogArticlesBrief = ({ articles, page, callback }: componentProps) => {
     return (
       <div className={`${styles.articles}`} role="group">
         {articles.map((articleData) => {
-          const { id, image, title, entry, url, category } = articleData;
+          const { id, image, title, entry, pathname, category } = articleData;
 
           if (articles.length > 1) {
             return (
               <article key={id} className={`${styles.notSingle}`}>
                 <Link
-                  href={`/${url}`}
+                  href={`/${pathname}`}
                   onClick={() => {
                     callback && callback();
                   }}>
                   <figure>
                     <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
-                      <Image height={380} width={275} src={image} alt="Zdjęcie artykułu bloga"></Image>
+                      <Image height={380} width={275} src={image.string} alt="Zdjęcie artykułu bloga"></Image>
                       {page === "blog" && (
                         <div className={`${styles.category}`}>
                           <p>{category}</p>
@@ -52,13 +52,13 @@ const BlogArticlesBrief = ({ articles, page, callback }: componentProps) => {
             return (
               <article key={id} className={`${styles.single}`}>
                 <Link
-                  href={`/${url}`}
+                  href={`/${pathname}`}
                   onClick={() => {
                     callback && callback();
                   }}>
                   <figure>
                     <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
-                      <Image height={1000} width={1000} src={image} alt="Zdjęcie artykułu bloga"></Image>
+                      <Image height={1000} width={1000} src={image.string} alt="Zdjęcie artykułu bloga"></Image>
                       {page === "blog" && (
                         <div className={`${styles.category}`}>
                           <p>{category}</p>

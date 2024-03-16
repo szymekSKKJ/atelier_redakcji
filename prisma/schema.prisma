@@ -12,7 +12,7 @@ model BlogArticle {
     id        String   @id @unique @default(uuid())
     createdAt DateTime @default(now())
     title     String
-    url       String   @unique
+    pathname  String   @unique
     category  String
     content   Json
     entry     Json

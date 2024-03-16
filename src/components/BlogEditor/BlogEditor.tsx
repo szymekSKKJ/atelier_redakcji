@@ -1,14 +1,11 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import ArticleEditor from "./ArticleEditor/ArticleEditor";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-
 import { signal } from "@preact/signals-react";
-import Button from "../UI/Button/Button";
 import { useSignals } from "@preact/signals-react/runtime";
 import BlogArticles from "./BlogArticles/BlogArticles";
-import { blogArticle, blogGetByUrl } from "@/app/api/blog/get/[url]/route";
+import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import { blogGetSome } from "@/app/api/blog/get/some/route";
 
 const notifications = signal<
@@ -18,6 +15,30 @@ const notifications = signal<
     type: "error" | "success";
   }[]
 >([]);
+
+export type activeBlogArticle = {
+  id: string | null;
+  title: string | null;
+  category: string | null;
+  createdAt: Date | null;
+  pathname: string | null;
+  entry: {
+    order: number;
+    content: string | null;
+  }[];
+  image: {
+    file: File | null;
+    string: string | null;
+  };
+  content: {
+    order: number;
+    title: string | null;
+    content: {
+      order: number;
+      content: string | null;
+    }[];
+  }[];
+};
 
 export const createNotification = (content: string, type: "error" | "success" = "success") => {
   const copiedValue = [...notifications.value];
@@ -46,7 +67,7 @@ export const getMoreArticles = async (skip: number) => {
   const blogArticlesLocal = await blogGetSome(skip, 10);
 
   if (blogArticlesLocal.data) {
-    const copiedValue = [...blogArticles.value];
+    const copiedValue = structuredClone(blogArticles.value);
 
     const meregedArticles = [...copiedValue, ...blogArticlesLocal.data];
 
@@ -59,7 +80,7 @@ export const getMoreArticles = async (skip: number) => {
 const BlogEditor = () => {
   useSignals();
 
-  const [currentActiveArticle, setCurrentActiveArticle] = useState<null | blogArticle>(null);
+  const [currentActiveArticle, setCurrentActiveArticle] = useState<null | activeBlogArticle>(null);
   const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
@@ -83,11 +104,10 @@ const BlogEditor = () => {
     };
   });
 
-  //lookaszek86@gmail.com
-  //Lookaszek321
-
   return (
     <div className={`${styles.blog_editor}`}>
+      <BlogArticles blogArticles={blogArticles.value} setCurrentActiveArticle={setCurrentActiveArticle}></BlogArticles>
+
       {/* {currentActiveArticle === null && (
         <div className={`${styles.inputWrapper}`}>
           <input placeholder="Url artykułu"></input>
@@ -106,9 +126,9 @@ const BlogEditor = () => {
             Szukaj
           </Button>
         </div>
-      )}
+      )} */}
 
-      <div className={`${styles.notifications}`}>
+      {/* <div className={`${styles.notifications}`}>
         {notifications.value.map((data) => {
           const { content, type, id } = data;
 
@@ -118,8 +138,8 @@ const BlogEditor = () => {
             </div>
           );
         })}
-      </div>
-      {false === null ? (
+      </div> */}
+      {/* {false === null ? (
         <form className={`${styles.login}`} onSubmit={(event) => event.preventDefault()} method="POST">
           {error && <p className={`${styles.error}`}>{error}</p>}
           <input placeholder="Email (admin@gmail.com)" name="email" required></input>
@@ -141,8 +161,6 @@ const BlogEditor = () => {
       ) : (
         blogArticles.value.length !== 0 && <BlogArticles blogArticles={blogArticles.value} setCurrentActiveArticle={setCurrentActiveArticle}></BlogArticles>
       )} */}
-
-      <ArticleEditor currentActiveArticle={currentActiveArticle} setCurrentActiveArticle={setCurrentActiveArticle}></ArticleEditor>
     </div>
   );
 };

@@ -222,17 +222,13 @@ const Form = () => {
                 <textarea placeholder="" className={`${mulishFont.className}`} name="additionalInformation"></textarea>
               </div>
               <div className={`${styles.input_wrapper}`}>
-                <label className={`${styles.title}`}>
-                  Załącz plik
-                  <em className={`${styles.mandatory_field}`}>(Pole obowiązkowe)</em>
-                </label>
-                <div className={`${styles.drop_down_section}`}>
+                <label className={`${styles.title}`}>Załącz plik</label>
+                <div className={`${styles.drop_down_section} ${attachedFile ? styles.fileAttached : ""}`}>
                   <input
                     type="file"
                     id="fileInput"
                     placeholder=""
                     accept="text/*, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    required={attachedFile === undefined || attachedFile === null ? true : false}
                     onChange={(event) => {
                       const inputFileElement = event.currentTarget as HTMLInputElement;
                       setAttachedFile(inputFileElement.files ? inputFileElement.files[0] : null);
@@ -285,9 +281,12 @@ const Form = () => {
             className={`${formStatus === "sending" ? styles.sending : ""}`}
             style={{ padding: "20px 30px 20px 30px", alignSelf: "center" }}
             onClick={async () => {
-              if (formElementRef.current && attachedFile) {
+              if (formElementRef.current) {
                 const formData = new FormData(formElementRef.current!);
-                formData.append("file", attachedFile);
+
+                if (attachedFile) {
+                  formData.append("file", attachedFile);
+                }
 
                 const areAllInputsCorrect = [...formElementRef.current.elements].every((element) => {
                   const inputElement = element as HTMLInputElement;
@@ -323,7 +322,7 @@ const Form = () => {
                 <path fill="#18A77C" d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
               </svg>
               <p>
-                Już nie długo <mark>skontakujemy się z Tobą!</mark>
+                Już niedługo <mark>skontakujemy się z Tobą!</mark>
               </p>
             </div>
           ) : (

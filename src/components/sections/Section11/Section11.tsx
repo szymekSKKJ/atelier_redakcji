@@ -25,7 +25,7 @@ const Section11 = ({ type = "landing page" }: componentProps) => {
         </h2>
         {type === "landing page" ? (
           <>
-            <p>Skorzystaj zatem z prostego i intuicyjnego formularza, w którym wstawisz swój plik, a my wrócimy do Ciebie zi nformacjami i wyceną.</p>
+            <p>Skorzystaj zatem z prostego i intuicyjnego formularza, w którym wstawisz swój plik, a my wrócimy do Ciebie z informacjami i wyceną.</p>
           </>
         ) : (
           <>

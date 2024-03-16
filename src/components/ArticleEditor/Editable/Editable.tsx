@@ -1,16 +1,9 @@
 "use client";
 
 import styles from "./styles.module.scss";
-import { Children, cloneElement, useEffect, useRef, useState } from "react";
+import { Children, cloneElement, useEffect, useLayoutEffect, useRef, useState } from "react";
 
-const DeleteIcon = ({ width = 24, height = 24, color = "white" }) => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" height={height} viewBox="0 -960 960 960" width={width} fill={color}>
-      <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-    </svg>
-  );
-};
-
+const isEmpty = (string: string) => string.trim().length === 0;
 type textFormattingTypes = "italic" | "bold";
 
 const createElementBaesOnType = (type: textFormattingTypes) => {
@@ -116,10 +109,16 @@ const ContextMenu = ({
       x: number;
       y: number;
     };
+    onRemove: () => void;
   };
 }) => {
   return (
-    <div className={`${styles.context_menu}`} style={{ top: `${contextMenuOptions.position.y}px`, left: `${contextMenuOptions.position.x}px` }}>
+    <span
+      onMouseDown={(event) => {
+        event.stopPropagation();
+      }}
+      className={`${styles.context_menu}`}
+      style={{ top: `${contextMenuOptions.position.y}px`, left: `${contextMenuOptions.position.x}px` }}>
       <button
         className={`${styles.option}`}
         onClick={() => {
@@ -134,23 +133,29 @@ const ContextMenu = ({
         }}>
         <i className="fa-solid fa-italic"></i>
       </button>
-    </div>
+      <button
+        className={`${styles.option}`}
+        onClick={() => {
+          contextMenuOptions.onRemove();
+        }}>
+        <i className={`fa-regular fa-trash-can ${styles.faTrashCan}`}></i>
+      </button>
+    </span>
   );
 };
 
 interface componentProps {
-  children: JSX.Element;
-  onSave: (event: any, value: string) => any;
-  onRemove?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => any;
+  children?: string | null;
   defaultValue?: string;
+  onRemove?: () => void;
+  onSave: (value: string | null) => void;
 }
 
-const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: componentProps) => {
-  const currentChild = Children.only(children);
+const Editable = ({ children, defaultValue = "Edytuj", onRemove, onSave }: componentProps) => {
+  const [isContentEmpty, setIsContentEmpty] = useState(children === null || children === undefined ? true : isEmpty(children) ? true : false);
 
-  const thisElementRef = useRef<null | HTMLElement>(null);
+  const componentElementRef = useRef<null | HTMLDivElement>(null);
 
-  const [uniqueKey] = useState(crypto.randomUUID());
   const [contextMenuOptions, setContextMenuOptions] = useState<{
     isOpen: boolean;
     editableChild: HTMLElement | null;
@@ -158,67 +163,24 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
       x: number;
       y: number;
     };
+    onRemove: () => void;
   }>({
-    editableChild: thisElementRef.current,
+    editableChild: componentElementRef.current,
     isOpen: false,
     position: {
       x: 0,
       y: 0,
     },
-  });
-
-  const copiedChild = cloneElement(currentChild, {
-    contentEditable: true,
-    suppressContentEditableWarning: true,
-    ref: thisElementRef,
-    key: uniqueKey,
-    placeholder: defaultValue,
-    onContextMenu: (event: MouseEvent) => {
-      event.preventDefault();
-      setContextMenuOptions((currentValue) => {
-        const copiedCurrentValue = Object.assign({}, currentValue);
-
-        copiedCurrentValue.isOpen = true;
-        copiedCurrentValue.editableChild = thisElementRef.current;
-        copiedCurrentValue.position = {
-          x: event.clientX,
-          y: event.clientY,
-        };
-
-        return copiedCurrentValue;
-      });
-    },
-    onClick: (event: MouseEvent) => {
-      const currentSelection = window.getSelection()!;
-
-      // if (event.target !== event.currentTarget && currentSelection.isCollapsed) {
-      //   const anyChildElement = event.target as HTMLElement;
-      //   const anyChildElementContent = anyChildElement.innerHTML;
-
-      //   anyChildElement.outerHTML = anyChildElementContent;
-      // }
-    },
-
-    onPaste: (event: ClipboardEvent) => {
-      event.preventDefault();
-      if (event.clipboardData && event.currentTarget) {
-        const clipboardData = event.clipboardData.getData("text/plain");
-
-        document.execCommand("insertText", false, clipboardData);
-      }
-    },
-
-    onBlur: (event: FocusEvent) => {
-      setTimeout(() => {
-        onSave(event, thisElementRef.current!.innerHTML);
-      }, 100);
+    onRemove: () => {
+      onRemove && onRemove();
     },
   });
 
   useEffect(() => {
-    const closeContextMenu = () => {
+    const closeContextMenu = (event: MouseEvent) => {
       setContextMenuOptions((currentValue) => {
-        const copiedCurrentValue = Object.assign({}, currentValue);
+        const target = {};
+        const copiedCurrentValue = Object.assign(target, currentValue);
 
         copiedCurrentValue.isOpen = false;
 
@@ -234,24 +196,50 @@ const Editable = ({ children, onSave, onRemove, defaultValue = "Edytuj" }: compo
   }, []);
 
   return (
-    <div className={`${styles.editable}`}>
-      <div
-        className={`${styles.editable_child}`}
-        onMouseDown={(event) => {
-          // For 100% sure
-          const copiedChildElement = event.currentTarget.firstChild as HTMLElement;
-          copiedChildElement.focus();
-        }}>
-        {copiedChild}
-        {onRemove && (
-          <div className={`${styles.delete}`} onClick={(event) => onRemove(event)}>
-            <DeleteIcon width={24} height={24}></DeleteIcon>
-          </div>
-        )}
-      </div>
+    <>
+      <span
+        className={`${styles.editable} ${isContentEmpty ? styles.childrenEmpty : ""}`}
+        data-placeholder={defaultValue}
+        ref={componentElementRef}
+        contentEditable={true}
+        suppressContentEditableWarning={true}
+        onContextMenu={(event) => {
+          event.preventDefault();
 
+          setContextMenuOptions((currentValue) => {
+            const target = {};
+            const copiedCurrentValue = Object.assign(target, currentValue);
+
+            copiedCurrentValue.isOpen = true;
+            copiedCurrentValue.position = {
+              x: event.clientX,
+              y: event.clientY,
+            };
+
+            return copiedCurrentValue;
+          });
+        }}
+        onInput={(event) => {
+          const thisElement = event.currentTarget as HTMLDivElement;
+          if (isEmpty(thisElement.innerText)) {
+            thisElement.innerText = "";
+            setIsContentEmpty(true);
+          } else {
+            setIsContentEmpty(false);
+          }
+        }}
+        onBlur={(event) => {
+          event.currentTarget.innerText = event.currentTarget.innerText.trim();
+          if (isContentEmpty) {
+            onSave(null);
+          } else {
+            onSave(event.currentTarget.innerText);
+          }
+        }}>
+        {children}
+      </span>
       {contextMenuOptions.isOpen && <ContextMenu contextMenuOptions={contextMenuOptions}></ContextMenu>}
-    </div>
+    </>
   );
 };
 

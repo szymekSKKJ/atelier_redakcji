@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import { blogFind } from "@/app/api/blog/find/route";
-import { blogArticle } from "@/app/api/blog/get/[url]/route";
+import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import { blogGetSome } from "@/app/api/blog/get/some/route";
 import BlogArticlesBrief from "@/components/BlogArticlesBrief/BlogArticlesBrief";
 

@@ -15,21 +15,18 @@ const OpinionsGallery = () => {
   const opinions = [
     {
       id: 1,
-      username: "Karolina",
-      description:
-        "Z całego serca polecam Atelier redakcji tekstu! Przemiła, życzliwa i pomocna obsługa klienta, a do tego ekspresowy czas działania. Nic dodać, nic ująć - rewelacja :):):)",
+      username: "Stefan",
+      description: "Spoko cena za usługi. Fachowo poprawili mi pracę.",
     },
     {
       id: 2,
-      username: "Ania",
-      description:
-        "Zlecona przeze mnie redakcja pracy magisterskiej wykonana została terminowo, jestem bardzo zadowolona z usługi. Przez cały czas realizacji mieliśmy świetny kontakt. Dzięki Atelier mogę się pochwalić 5 na dyplomie.",
+      username: "Denis",
+      description: "Jak ktoś szuka korekty tekstu to tu mam zaufaną firmę. Polecam ich!",
     },
     {
       id: 3,
-      username: "Paulina",
-      description:
-        "Korzystałam z oferty Atelier przy pisaniu pracy zaliczeniowej. Korekta i redakcja mojej pracy została wykonana świetnie - zauważyli błędy, na które ja nie zwróciłabym uwagi.",
+      username: "Klaudia",
+      description: "Mega polecam! Widać po efektach pracy, że zatrudniają doświadczonych korektorów tekstu.",
     },
     {
       id: 4,
@@ -39,21 +36,53 @@ const OpinionsGallery = () => {
     },
     {
       id: 5,
-      username: "Karolina",
-      description:
-        "Z całego serca polecam Atelier redakcji tekstu! Przemiła, życzliwa i pomocna obsługa klienta, a do tego ekspresowy czas działania. Nic dodać, nic ująć - rewelacja :):):)",
+      username: "Mikołaj",
+      description: "Najlepsza korekta. Nie spodziewałem się, że tak szybko się uwinął.",
     },
     {
       id: 6,
-      username: "Karolina",
-      description:
-        "Z całego serca polecam Atelier redakcji tekstu! Przemiła, życzliwa i pomocna obsługa klienta, a do tego ekspresowy czas działania. Nic dodać, nic ująć - rewelacja :):):)",
+      username: "Agnieszka",
+      description: "Bardzo uprzejmi. Widać, że są perfekcjonalistami i świetnie poprawili tekst",
     },
     {
       id: 7,
-      username: "Karolina",
-      description:
-        "Z całego serca polecam Atelier redakcji tekstu! Przemiła, życzliwa i pomocna obsługa klienta, a do tego ekspresowy czas działania. Nic dodać, nic ująć - rewelacja :):):)",
+      username: "Danuta",
+      description: "Moja ulubiona redakcja! Wszystko poprawili jak ich prosiłam.",
+    },
+    {
+      id: 8,
+      username: "Aleksandra",
+      description: "Nie mogę powiedzieć złego słowa. Najlepsza redakcja!",
+    },
+    {
+      id: 9,
+      username: "Kacper",
+      description: "Bardzo porządne zredagowanie tekstu. Moim zdaniem same plusy.",
+    },
+    {
+      id: 10,
+      username: "Alina",
+      description: "Porządna redakcja pracy naukowej. Polecam!",
+    },
+    {
+      id: 11,
+      username: "Ewelina",
+      description: "Bardzo dobrze redagują prace naukowe. Jestem zadowolona.",
+    },
+    {
+      id: 12,
+      username: "Urszula",
+      description: "Redakcja zrobiła na mnie dobre wrażenie. Sprostali oczekiwaniom.",
+    },
+    {
+      id: 13,
+      username: "Teresa",
+      description: "Redaktorzy na medal! Jestem im mega wdzięczna za pomoc.",
+    },
+    {
+      id: 14,
+      username: "Zuzanna",
+      description: "Tekst gotowy do druku. A to wszystko dzięki nim!",
     },
   ];
 

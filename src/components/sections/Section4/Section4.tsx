@@ -27,8 +27,8 @@ const Section4 = () => {
     {
       id: 1,
       image: image6,
-      content: <>Prace licenjcackie</>,
-      href: "/offer/prace-licenjcackie",
+      content: <>Prace licencjackie</>,
+      href: "/offer/prace-licencjackie",
     },
     {
       id: 2,

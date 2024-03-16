@@ -10,8 +10,9 @@
     padding: 15px;
   }
 
-  .blogArticle {
+  a.blogArticle {
     width: calc(33.33% - 30px);
+    background-color: #e0e4eb;
     margin: 15px;
     height: auto;
     aspect-ratio: 16/9;
@@ -22,6 +23,12 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    transition: 250ms;
+    text-decoration: none;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
 
     @media screen and (max-width: 1024px) {
       width: calc(50% - 16px);
@@ -104,6 +111,16 @@
           font-size: 16px;
         }
       }
+    }
+  }
+
+  .blogArticle.addNew {
+    justify-content: center;
+    align-items: center;
+
+    i {
+      font-size: 64px;
+      color: #19ba8a;
     }
   }
 }

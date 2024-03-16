@@ -14,7 +14,7 @@ import Section32 from "@/components/sections/Section32/Section32";
 
 const sectionsContentData = [
   {
-    key: "prace-licenjcackie",
+    key: "prace-licencjackie",
     section27: {
       headerTitlte: "Prace licencjackie",
       title: (
