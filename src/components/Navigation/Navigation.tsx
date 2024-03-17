@@ -138,8 +138,6 @@ const Navigation = () => {
 
   const linksContentForNotBlog = links.map((data) => data.href != "/blog" && data.href);
 
-  const onChangeInputSearchTimeoutDebounce = useRef<null | ReturnType<typeof setTimeout>>(null);
-
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -159,7 +157,9 @@ const Navigation = () => {
   return (
     <>
       <div className={`${styles.wrapper}`}>
-        {linksContentForNotBlog.includes(`/${formattedPathnameArray.at(-1)!}`) === false ? (
+        {linksContentForNotBlog.includes(`/${formattedPathnameArray.at(-1)!}`) === false &&
+        formattedPathnameArray.at(-1)! !== "termsOfService" &&
+        formattedPathnameArray.at(-1)! !== "privacyPolicy" ? (
           <nav className={`${styles.blogMenu}`}>
             <div className={`${styles.wrapper}`}>
               <div className={`${styles.wrapper1}`}>

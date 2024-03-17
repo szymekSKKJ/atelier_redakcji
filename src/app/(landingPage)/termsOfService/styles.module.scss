@@ -4,16 +4,60 @@
   padding: 0px 30px 0px 30px;
   display: flex;
   flex-direction: column;
-  gap: 75px;
+
+  .imageWrapper {
+    width: 275px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto 0px auto;
+    margin-bottom: 75px;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
 
   h1 {
     text-align: center;
+    font-size: 32px;
   }
 
-  > div {
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
+  h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 22px;
+  }
+
+  > .content {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    div {
+      margin-top: 25px;
+
+      h3 {
+        text-align: center;
+        font-size: 26px;
+        margin-bottom: 25px;
+      }
+
+      > .content {
+        font-size: 16px;
+
+        ol {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          li {
+          }
+        }
+      }
     }
   }
 }
