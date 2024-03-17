@@ -2,10 +2,26 @@ import { blogGetByPathname } from "@/app/api/blog/get/[pathname]/route";
 import BlogArticle from "@/components/BlogArticle/BlogArticle";
 import Section11 from "@/components/sections/Section11/Section11";
 import Section9 from "@/components/sections/Section9/Section9";
+import { Metadata } from "next";
 
 interface componentProps {
   params: { blogPathname: string };
 }
+
+export const generateMetadata = async ({ params }: componentProps): Promise<Metadata> => {
+  const blogArticleResponse = await blogGetByPathname(params.blogPathname);
+
+  if (blogArticleResponse.data) {
+    return {
+      title: `${blogArticleResponse.data.title} - Atelier redakcji`,
+      description: `${blogArticleResponse.data.entry[0].content}`,
+    };
+  } else {
+    return {
+      title: "Artykuł bloga",
+    };
+  }
+};
 
 const BlogArticlePage = async ({ params }: componentProps) => {
   const blogArticleResponse = await blogGetByPathname(params.blogPathname);

@@ -5,7 +5,7 @@ import Image from "next/image";
 import arrowRightGrayIcon from "../../../public/arrow_right_grey.svg";
 import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import Section13 from "../sections/Section13/Section13";
-import Section34 from "../sections/Section34/Section34";
+import Link from "next/link";
 
 interface componentProps {
   data: blogArticle;
@@ -50,7 +50,7 @@ const BlogArticle = ({ data }: componentProps) => {
             {data.content.map((contentData) => {
               return (
                 <li key={contentData.order}>
-                  <a href={`/blog/${data.pathname}#${contentData.order}`}>{contentData.title}</a>
+                  <Link href={`/${data.pathname}#${contentData.order}`}>{contentData.title}</Link>
                 </li>
               );
             })}
@@ -60,25 +60,10 @@ const BlogArticle = ({ data }: componentProps) => {
           {data.content.map((contentData, index, array) => {
             const { order, title, content } = contentData;
 
-            if (index === (array.length - 1) / 2) {
-              return (
-                <div key={order}>
-                  <Section13 blog={true}></Section13>
-                  <div className={`${styles.singleData}`} id={`${order}`}>
-                    <h2>
-                      {index + 1}. {title}
-                    </h2>
-                    <div className={`${styles.content}`}>
-                      {content.map((contentData) => {
-                        return <p key={contentData.order} dangerouslySetInnerHTML={{ __html: contentData.content }}></p>;
-                      })}
-                    </div>
-                  </div>
-                </div>
-              );
-            } else {
-              return (
-                <div className={`${styles.singleData}`} key={order} id={`${order}`}>
+            return (
+              <div key={order}>
+                {index === (array.length - 1) / 2 && <Section13 blog={true}></Section13>}
+                <div className={`${styles.singleData}`} id={`${order}`}>
                   <h2>
                     {index + 1}. {title}
                   </h2>
@@ -88,8 +73,8 @@ const BlogArticle = ({ data }: componentProps) => {
                     })}
                   </div>
                 </div>
-              );
-            }
+              </div>
+            );
           })}
         </div>
       </div>

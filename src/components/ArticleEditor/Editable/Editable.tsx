@@ -152,7 +152,9 @@ interface componentProps {
 }
 
 const Editable = ({ children, defaultValue = "Edytuj", onRemove, onSave }: componentProps) => {
-  const [isContentEmpty, setIsContentEmpty] = useState(children === null || children === undefined ? true : isEmpty(children) ? true : false);
+  const [savedChildren] = useState(children);
+  const [isContentEmpty, setIsContentEmpty] = useState(savedChildren === null || savedChildren === undefined ? true : isEmpty(savedChildren) ? true : false);
+  const [runOnSave, setRunOnSave] = useState(false);
 
   const componentElementRef = useRef<null | HTMLDivElement>(null);
 
@@ -195,6 +197,20 @@ const Editable = ({ children, defaultValue = "Edytuj", onRemove, onSave }: compo
     };
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (runOnSave === true) {
+        if (isContentEmpty) {
+          onSave(null);
+        } else {
+          onSave(componentElementRef.current!.innerHTML);
+        }
+
+        setRunOnSave(false);
+      }
+    }, 100);
+  }, [runOnSave, isContentEmpty, onSave]);
+
   return (
     <>
       <span
@@ -228,15 +244,10 @@ const Editable = ({ children, defaultValue = "Edytuj", onRemove, onSave }: compo
             setIsContentEmpty(false);
           }
         }}
-        onBlur={(event) => {
-          event.currentTarget.innerText = event.currentTarget.innerText.trim();
-          if (isContentEmpty) {
-            onSave(null);
-          } else {
-            onSave(event.currentTarget.innerText);
-          }
+        onBlur={() => {
+          setRunOnSave(true);
         }}>
-        {children}
+        {savedChildren}
       </span>
       {contextMenuOptions.isOpen && <ContextMenu contextMenuOptions={contextMenuOptions}></ContextMenu>}
     </>

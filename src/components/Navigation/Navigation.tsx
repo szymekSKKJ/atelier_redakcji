@@ -22,21 +22,10 @@ const Navigation = () => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-  const [foundArticles, setFoundArticles] = useState<blogArticle[]>([]);
   const [paginationSkipValue, setPaginationSkipVaue] = useState(0);
   const [areAllArticlesDisplayed, setAreAllArticlesDisplayed] = useState(false);
 
   const formattedArticles: blogArticle[][] = [];
-
-  foundArticles.forEach((data, index) => {
-    if (index % 3 === 0) {
-      const newArray = [];
-      newArray.push(data);
-      formattedArticles.push(newArray);
-    } else {
-      formattedArticles.at(-1)!.push(data);
-    }
-  });
 
   const pathname = usePathname();
   const formattedPathnameArray = pathname.split("/").splice(1, pathname.split("/").length);
@@ -107,7 +96,7 @@ const Navigation = () => {
     {
       id: 1,
       href: "/blog",
-      content: "Start",
+      content: "Blog",
       activeCondition: "blog",
     },
     {
@@ -146,14 +135,6 @@ const Navigation = () => {
     }
   }, [isMobileMenuOpen]);
 
-  useEffect(() => {
-    if (foundArticles.length !== 0) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-  }, [foundArticles]);
-
   return (
     <>
       <div className={`${styles.wrapper}`}>
@@ -163,7 +144,7 @@ const Navigation = () => {
           <nav className={`${styles.blogMenu}`}>
             <div className={`${styles.wrapper}`}>
               <div className={`${styles.wrapper1}`}>
-                <Link href={`/`}>
+                <Link href={`/blog`}>
                   <Image src={doubleArrowIcon} alt="Ikonka podwójnej strzałki"></Image> Wróć do Atelier redakcji tekstu
                 </Link>
                 <Button style={{ padding: "15px 20px 15px 20px" }} changeRoute="/#mainForm">
@@ -196,7 +177,7 @@ const Navigation = () => {
 
                     return (
                       <div className={`${styles.link_wrapper}`} key={id}>
-                        <Link key={id} className={`${formattedPathnameArray.at(-1) === activeCondition ? styles.active : ""}`} href={subLinks ? "" : href}>
+                        <Link key={id} className={`${formattedPathnameArray.at(-1) === activeCondition ? styles.active : ""}`} href={href}>
                           {content}
                           {subLinks && <Image src={arrowDownBlue} alt="Ikonka strzałki w dół"></Image>}
                         </Link>
@@ -231,9 +212,6 @@ const Navigation = () => {
                   className={`${styles.toggle_mobile_navigation} ${isMobileMenuOpen ? styles.open : ""}`}
                   onClick={() => {
                     setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true));
-                    setTimeout(() => {
-                      setFoundArticles([]);
-                    }, 500);
                   }}>
                   <span></span>
                   <span></span>
@@ -250,13 +228,13 @@ const Navigation = () => {
                 return (
                   <div key={id}>
                     {subLinks ? (
-                      <a
+                      <span
                         onClick={() => {
                           setIsSubMenuOpen((currentValue) => (currentValue === true ? false : true));
                         }}>
                         {content}
                         <Image src={arrowDownBlue} alt="Ikonka strzałki w dół"></Image>
-                      </a>
+                      </span>
                     ) : (
                       <Link href={href} className={` ${isActive ? styles.active : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
                         {content}
@@ -283,9 +261,6 @@ const Navigation = () => {
                 changeRoute="/#mainForm"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  setTimeout(() => {
-                    setFoundArticles([]);
-                  }, 500);
                 }}>
                 Skorzystaj z pomocy redaktora
               </Button>
@@ -314,6 +289,7 @@ const Navigation = () => {
                 })()}
 
                 <button
+                  aria-label="Otwórz / zamknij nawigację"
                   className={`${styles.toggle_mobile_navigation} ${isMobileMenuOpen ? styles.open : ""}`}
                   onClick={() => setIsMobileMenuOpen((currentValue) => (currentValue === true ? false : true))}>
                   <span></span>
@@ -422,47 +398,6 @@ const Navigation = () => {
             </nav>
           </div>
         )}
-      </div>
-      <div
-        className={`${styles.foundArticles} ${formattedArticles.length !== 0 ? styles.open : ""}`}
-        tabIndex={1}
-        onKeyDown={(event) => {
-          if (event.key === "Escape") {
-            setFoundArticles([]);
-          }
-        }}
-        onClick={() => {
-          setFoundArticles([]);
-        }}>
-        <div
-          className={`${styles.content}`}
-          tabIndex={2}
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
-          onKeyDown={(event) => {
-            if (event.key === "Escape") {
-              setFoundArticles([]);
-            }
-          }}>
-          <button
-            onClick={() => {
-              setFoundArticles([]);
-            }}>
-            <i aria-hidden className="fa-solid fa-xmark"></i>
-          </button>
-          {formattedArticles.length !== 0 &&
-            formattedArticles.map((dataArray) => {
-              return (
-                <BlogArticlesBrief
-                  key={crypto.randomUUID()}
-                  callback={() => {
-                    setFoundArticles([]);
-                  }}
-                  articles={dataArray}></BlogArticlesBrief>
-              );
-            })}
-        </div>
       </div>
     </>
   );

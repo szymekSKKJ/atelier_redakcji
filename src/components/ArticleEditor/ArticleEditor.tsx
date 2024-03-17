@@ -57,7 +57,7 @@ const saveBlog = async (articleData: {
     foundEmptyValue = "category";
   } else if (pathname === null) {
     foundEmptyValue = "pathname";
-  } else if (image.file === null) {
+  } else if (image.file === null && image.string === null) {
     foundEmptyValue = "image";
   }
 
@@ -82,7 +82,7 @@ const saveBlog = async (articleData: {
   }
 
   if (foundEmptyValue === null) {
-    const createdBlogResponse = await blogCreateOrUpdate(pathname!, category!, title!, content, entry, image.file!);
+    const createdBlogResponse = await blogCreateOrUpdate(pathname!, category!, title!, content, entry, image.file);
 
     console.log(createdBlogResponse);
   } else {
@@ -180,16 +180,16 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
             onClick={() => {
               router.push("/blogEditor");
             }}>
-            <i className={`fa-solid fa-right-to-bracket ${styles.faRightToBracket}`}></i>
+            <i className={`fa-solid fa-right-to-bracket ${styles.faRightToBracket}`} aria-hidden></i>
           </button>
           <button
             onClick={() => {
               saveBlog(articleData);
             }}>
-            <i className="fa-regular fa-floppy-disk"></i>
+            <i className="fa-regular fa-floppy-disk" aria-hidden></i>
           </button>
           <button style={{ marginLeft: "auto" }}>
-            <i className={`fa-solid fa-trash-can ${styles.faTrashCan}`}></i>
+            <i className={`fa-solid fa-trash-can ${styles.faTrashCan}`} aria-hidden></i>
           </button>
         </div>
       </div>
@@ -367,17 +367,21 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
                   }
 
                   avatarEditorBounceTimeoutRef.current = setTimeout(() => {
-                    avatarEditorRef.current!.getImageScaledToCanvas().toBlob((blob) => {
-                      const file = blob as File;
+                    avatarEditorRef.current!.getImageScaledToCanvas().toBlob(
+                      (blob) => {
+                        const file = blob as File;
 
-                      setArticleData((currentValue) => {
-                        const copiedCurrentValue = structuredClone(currentValue);
+                        setArticleData((currentValue) => {
+                          const copiedCurrentValue = structuredClone(currentValue);
 
-                        copiedCurrentValue.image.file = file;
+                          copiedCurrentValue.image.file = file;
 
-                        return copiedCurrentValue;
-                      });
-                    });
+                          return copiedCurrentValue;
+                        });
+                      },
+                      "image/webp",
+                      75
+                    );
                   }, 100);
                 }}
                 image={articleData.image.string}
@@ -434,7 +438,7 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
                 <div key={order}>
                   <div className={`${styles.singleData}`} id={`${order}`}>
                     <h2>
-                      {index + 1}.{" "}
+                      {index + 1}.
                       <Editable
                         onSave={(value) => {
                           setArticleData((currentValue) => {

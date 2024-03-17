@@ -98,18 +98,14 @@
       padding: 0px 10px 0px 10px;
       z-index: 2;
       display: -webkit-box;
-      -webkit-line-clamp: 10;
+      -webkit-line-clamp: 5;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
 
       p {
         line-height: 1.2;
-        font-size: 18px;
-
-        @media screen and (max-width: 425px) {
-          font-size: 16px;
-        }
+        font-size: 16px;
       }
     }
   }

@@ -29,9 +29,13 @@ const POST = async (request: Request) => {
         },
       });
 
-      const storage = getStorage();
+      const image = requestData.get("image") as null | File;
 
-      await uploadBytes(ref(storage, `blogArticles/${createdBlogArticle.id}/image.webp`), requestData.get("image") as File);
+      if (image) {
+        const storage = getStorage();
+
+        await uploadBytes(ref(storage, `blogArticles/${createdBlogArticle.id}/image.webp`), requestData.get("image") as File);
+      }
 
       return createResponse(200, null, null);
     } else {
@@ -77,14 +81,15 @@ const blogCreateOrUpdate = async (
     order: number;
     content: string | null;
   }[],
-  image: File
+  image: File | null
 ): Promise<response<null>> => {
   const formData = new FormData();
 
   formData.append("pathname", pathname);
   formData.append("category", category);
   formData.append("content", `${JSON.stringify(content)}`);
-  formData.append("image", image);
+
+  image && formData.append("image", image);
   formData.append("title", title);
   formData.append("entry", `${JSON.stringify(entry)}`);
 

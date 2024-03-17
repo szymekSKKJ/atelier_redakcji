@@ -144,19 +144,24 @@
           font-weight: 400;
           font-size: 20px;
           margin: 20px 0px 20px 0px;
+          transition: 250ms;
 
           @media screen and (width <= 425px) {
             font-size: 18px;
+          }
+
+          &:hover {
+            color: rgb(24, 167, 124);
+
+            a {
+              color: rgb(24, 167, 124);
+            }
           }
 
           a {
             text-decoration: none;
             cursor: pointer;
             transition: 250ms;
-
-            &:hover {
-              color: rgb(24, 167, 124);
-            }
           }
         }
       }
@@ -168,7 +173,7 @@
 
       .singleData {
         margin-top: 120px;
-        scroll-margin-top: 150px;
+        scroll-margin-top: 250px;
 
         h2 {
           color: #0e4d7a;
