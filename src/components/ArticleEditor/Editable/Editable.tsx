@@ -197,18 +197,20 @@ const Editable = ({ children, defaultValue = "Edytuj", onRemove, onSave }: compo
     };
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (runOnSave === true) {
-        if (isContentEmpty) {
-          onSave(null);
-        } else {
-          onSave(componentElementRef.current!.innerHTML);
-        }
+  useLayoutEffect(() => {
+    componentElementRef.current!.innerHTML = savedChildren ? savedChildren : "";
+  }, []);
 
-        setRunOnSave(false);
+  useEffect(() => {
+    if (runOnSave === true) {
+      if (isContentEmpty) {
+        onSave(null);
+      } else {
+        onSave(componentElementRef.current!.innerHTML);
       }
-    }, 100);
+
+      setRunOnSave(false);
+    }
   }, [runOnSave, isContentEmpty, onSave]);
 
   return (
@@ -245,10 +247,9 @@ const Editable = ({ children, defaultValue = "Edytuj", onRemove, onSave }: compo
           }
         }}
         onBlur={() => {
+          // Lepiej jest wykonywać tę funkcję w momencie kiedy faktycznie wiemy, że dana akcja jest wykonywana, niż zawsze kiedy jest "blur" (np. wykonać "onSave" dopiero po wykonanej akcji z contextmenu)
           setRunOnSave(true);
-        }}>
-        {savedChildren}
-      </span>
+        }}></span>
       {contextMenuOptions.isOpen && <ContextMenu contextMenuOptions={contextMenuOptions}></ContextMenu>}
     </>
   );

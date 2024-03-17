@@ -91,43 +91,11 @@ const saveBlog = async (articleData: {
 };
 
 interface componentProps {
-  currentActiveArticle: activeBlogArticle | null;
+  currentActiveArticle: activeBlogArticle;
 }
 
 const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
-  const [articleData, setArticleData] = useState<activeBlogArticle>(
-    currentActiveArticle
-      ? currentActiveArticle
-      : {
-          id: null,
-          title: null,
-          category: null,
-          createdAt: null,
-          pathname: null,
-          entry: [
-            {
-              order: 0,
-              content: null,
-            },
-          ],
-          image: {
-            file: null,
-            string: null,
-          },
-          content: [
-            {
-              order: 0,
-              title: null,
-              content: [
-                {
-                  order: 0,
-                  content: null,
-                },
-              ],
-            },
-          ],
-        }
-  );
+  const [articleData, setArticleData] = useState<activeBlogArticle>(currentActiveArticle);
 
   const [isMovingInAvatarEditor, setIsMovingInAvatarEditor] = useState(false);
   const [isHoveringOnAvatarEditor, setIsHoveringOnAvatarEditor] = useState(false);
@@ -424,7 +392,7 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
 
                 return (
                   <li key={order}>
-                    <a href={`/blogEditor/#${order}`}>{title}</a>
+                    <a href={`/blogEditor/${articleData.pathname}/#${order}`}>{title}</a>
                   </li>
                 );
               })}

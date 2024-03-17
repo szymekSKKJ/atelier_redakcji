@@ -14,7 +14,7 @@ const BlogEditorPageWithArticlePathname = async ({ params: { blogArticlePathname
             title: null,
             createdAt: null,
             category: null,
-            pathname: null,
+            pathname: blogArticlePathname,
             entry: [
               {
                 order: 0,
