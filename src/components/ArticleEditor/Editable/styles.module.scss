@@ -1,22 +1,22 @@
 .editable {
+  width: 100%;
   color: inherit;
   padding: 4px;
-  // display: flex;
-  // align-items: center;
-  border: solid 2px transparent;
+  outline: solid 2px transparent;
   border-radius: 4px;
-  transition: 250ms;
-  outline: unset;
-  display: block;
   cursor: text;
   box-sizing: border-box;
+  transition: 250ms;
+  position: relative;
+  word-break: break-word;
+  flex-grow: 1;
 
   * {
     color: inherit;
   }
 
   &:focus {
-    border: solid 2px #18a77c;
+    outline: solid 2px #18a77c;
   }
 
   // .editable_child {
@@ -81,17 +81,28 @@
   // }
 }
 
+.editable.ul {
+}
+
+.editable.span {
+  display: block;
+}
+
 .editable.childrenEmpty {
   &::after {
     content: attr(data-placeholder);
     opacity: 0.5;
     font-style: italic;
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
 .context_menu {
   width: auto;
-  height: 36px;
+  height: auto;
   background-color: white;
   position: fixed;
   top: 0px;
@@ -101,7 +112,7 @@
   border-radius: 4px;
   transform: translate(-50%, -100%);
   box-shadow: 0px 0px 6px black;
-  overflow: hidden;
+  overflow: auto;
 
   .option {
     width: auto;
@@ -117,7 +128,8 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    aspect-ratio: 1/1;
+    //aspect-ratio: 1/1;
+    color: #0082e6;
 
     &:hover {
       background-color: rgba(0, 130, 230, 0.1);
@@ -134,6 +146,23 @@
     i.faTrashCan {
       font-weight: 600;
       color: #ff0033;
+    }
+  }
+}
+
+.tableWrapper {
+  width: 100%;
+  padding: 4px;
+  outline: solid 2px transparent;
+  border-radius: 4px;
+  transition: 250ms;
+  overflow: auto;
+
+  &:has(> *:focus) {
+    outline: solid 2px #18a77c;
+
+    > * {
+      outline-color: transparent;
     }
   }
 }

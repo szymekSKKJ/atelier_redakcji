@@ -1,64 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import { signal } from "@preact/signals-react";
 import { useSignals } from "@preact/signals-react/runtime";
 import BlogArticles from "./BlogArticles/BlogArticles";
 import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import { blogGetSome } from "@/app/api/blog/get/some/route";
-
-const notifications = signal<
-  {
-    id: string;
-    content: string;
-    type: "error" | "success";
-  }[]
->([]);
+import { blogFind } from "@/app/api/blog/find/route";
 
 export type activeBlogArticle = {
   id: string | null;
   title: string | null;
   category: string | null;
-  createdAt: Date | null;
   pathname: string | null;
+  createdAt: Date;
   entry: {
     order: number;
     content: string | null;
   }[];
   image: {
-    file: File | null;
-    string: string | null;
+    file?: File | null;
+    url: string | null;
   };
-  content: {
+  sections: {
     order: number;
     title: string | null;
-    content: {
+    paragraphs: {
       order: number;
-      content: string | null;
+      content: string;
     }[];
   }[];
-};
-
-export const createNotification = (content: string, type: "error" | "success" = "success") => {
-  const copiedValue = [...notifications.value];
-
-  copiedValue.push({
-    id: crypto.randomUUID(),
-    content: content,
-    type: type,
-  });
-
-  setTimeout(() => {
-    copiedValue.splice(
-      copiedValue.findIndex((data) => data.content === content),
-      1
-    );
-
-    notifications.value = copiedValue;
-  }, 3500); // Animation time
-
-  notifications.value = copiedValue;
 };
 
 const blogArticles = signal<blogArticle[]>([]);
@@ -74,14 +46,21 @@ export const getMoreArticles = async (skip: number) => {
     meregedArticles.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
     blogArticles.value = meregedArticles;
+
+    const areAllArticlesGot = blogArticlesLocal.data.length === 0;
+
+    return areAllArticlesGot;
+  } else {
+    return false;
   }
 };
 
 const BlogEditor = () => {
   useSignals();
 
-  const [currentActiveArticle, setCurrentActiveArticle] = useState<null | activeBlogArticle>(null);
   const [error, setError] = useState<null | string>(null);
+
+  const inputSearchTimeoutRef = useRef<null | ReturnType<typeof setTimeout>>(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -106,7 +85,26 @@ const BlogEditor = () => {
 
   return (
     <div className={`${styles.blog_editor}`}>
-      <BlogArticles blogArticles={blogArticles.value} setCurrentActiveArticle={setCurrentActiveArticle}></BlogArticles>
+      <div className={`${styles.searchbar}`}>
+        <input
+          placeholder="Szukaj artykułów"
+          onInput={(event) => {
+            const thisInputElement = event.currentTarget as HTMLInputElement;
+
+            if (inputSearchTimeoutRef.current) {
+              clearTimeout(inputSearchTimeoutRef.current);
+            }
+
+            inputSearchTimeoutRef.current = setTimeout(async () => {
+              const foundArticlesResponse = await blogFind(thisInputElement.value);
+
+              if (foundArticlesResponse.data) {
+                blogArticles.value = foundArticlesResponse.data;
+              }
+            }, 2000);
+          }}></input>
+      </div>
+      <BlogArticles blogArticles={blogArticles.value}></BlogArticles>
 
       {/* {currentActiveArticle === null && (
         <div className={`${styles.inputWrapper}`}>
@@ -128,17 +126,6 @@ const BlogEditor = () => {
         </div>
       )} */}
 
-      {/* <div className={`${styles.notifications}`}>
-        {notifications.value.map((data) => {
-          const { content, type, id } = data;
-
-          return (
-            <div className={`${styles.notifiaction} ${type === "error" ? styles.error : ""} `} key={id}>
-              <p>{content}</p>
-            </div>
-          );
-        })}
-      </div> */}
       {/* {false === null ? (
         <form className={`${styles.login}`} onSubmit={(event) => event.preventDefault()} method="POST">
           {error && <p className={`${styles.error}`}>{error}</p>}

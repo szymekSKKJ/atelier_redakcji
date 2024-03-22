@@ -191,12 +191,53 @@
           flex-direction: column;
           gap: 25px;
 
-          p {
+          > div {
+            width: 100%;
             font-size: 20px;
-            font-weight: 400;
+            overflow: auto;
 
             @media screen and (max-width: 425px) {
               font-size: 18px;
+            }
+
+            p {
+              font-weight: 400;
+
+              overflow: auto;
+              line-height: 1.3;
+            }
+
+            ul {
+              width: calc(100% - 20px);
+              margin-left: 20px;
+
+              li {
+                margin: 10px 0px 10px 0px;
+              }
+            }
+
+            table {
+              width: 100%;
+              border-collapse: collapse;
+
+              @media screen and (max-width: 425px) {
+                font-size: 16px;
+              }
+
+              th {
+                width: 25%;
+                min-width: 250px;
+
+                @media screen and (max-width: 425px) {
+                  min-width: 240px;
+                }
+              }
+
+              th,
+              td {
+                border: 1px solid black;
+                padding: 5px 25px 5px 25px;
+              }
             }
           }
         }

@@ -41,24 +41,28 @@ const BlogArticle = ({ data }: componentProps) => {
             return <p key={entryData.order} dangerouslySetInnerHTML={{ __html: entryData.content }}></p>;
           })}
         </div>
-        <div className={`${styles.imageWrapper}`}>
-          <Image src={data.image.string} width={1180} height={500} alt="Zdjęcie artykułu"></Image>
-        </div>
+        {data.image.url && (
+          <div className={`${styles.imageWrapper}`}>
+            <Image src={data.image.url} width={1180} height={500} alt="Zdjęcie artykułu"></Image>
+          </div>
+        )}
         <div className={`${styles.tableOfContents}`}>
           <p>Spis treści</p>
           <ol>
-            {data.content.map((contentData) => {
+            {data.sections.map((dataLocal, index) => {
+              const { order, title } = dataLocal;
+
               return (
-                <li key={contentData.order}>
-                  <Link href={`/${data.pathname}#${contentData.order}`}>{contentData.title}</Link>
+                <li key={order}>
+                  <a href={`/${data.pathname}#${order}`}>{title}</a>
                 </li>
               );
             })}
           </ol>
         </div>
         <div className={`${styles.articleContentDataWrapper}`}>
-          {data.content.map((contentData, index, array) => {
-            const { order, title, content } = contentData;
+          {data.sections.map((localData, index, array) => {
+            const { order, title, paragraphs } = localData;
 
             return (
               <div key={order}>
@@ -68,8 +72,10 @@ const BlogArticle = ({ data }: componentProps) => {
                     {index + 1}. {title}
                   </h2>
                   <div className={`${styles.content}`}>
-                    {content.map((contentData) => {
-                      return <p key={contentData.order} dangerouslySetInnerHTML={{ __html: contentData.content }}></p>;
+                    {paragraphs.map((localData) => {
+                      const { order, content } = localData;
+
+                      return <div key={order} dangerouslySetInnerHTML={{ __html: content }}></div>;
                     })}
                   </div>
                 </div>

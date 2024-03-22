@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import arrowRightGrayIcon from "../../../public/arrow_right_grey.svg";
 import Editable from "./Editable/Editable";
@@ -13,8 +13,44 @@ import { Mulish } from "next/font/google";
 import { categories as blogCategories } from "@/data/blog/categories";
 import { useRouter } from "next/navigation";
 import { activeBlogArticle } from "../BlogEditor/BlogEditor";
+import { signal } from "@preact/signals-react";
+import { useSignals } from "@preact/signals-react/runtime";
+
+const notifications = signal<
+  {
+    id: string;
+    content: string;
+    type: "error" | "success";
+  }[]
+>([]);
+
+export const createNotification = (content: string, type: "error" | "success" = "success") => {
+  const copiedValue = [...notifications.value];
+  const generatedId = crypto.randomUUID();
+
+  copiedValue.push({
+    id: generatedId,
+    content: content,
+    type: type,
+  });
+
+  setTimeout(() => {
+    const copiedValue = [...notifications.value];
+
+    copiedValue.splice(
+      copiedValue.findIndex((data) => data.id === generatedId),
+      1
+    );
+
+    notifications.value = copiedValue;
+  }, 3500); // Animation time
+
+  notifications.value = copiedValue;
+};
 
 const mulishFont = Mulish({ subsets: ["latin"] });
+
+const isEmpty = (string: string) => string.trim().length === 0;
 
 function isValidUrl(pathname: string) {
   try {
@@ -26,67 +62,101 @@ function isValidUrl(pathname: string) {
   }
 }
 
-const saveBlog = async (articleData: {
-  id: string | null;
-  title: string | null;
-  category: string | null;
-  pathname: string | null;
-  entry: {
-    order: number;
-    content: string | null;
-  }[];
-  image: {
-    file: File | null;
-    string: string | null;
-  };
-  content: {
-    order: number;
-    title: string | null;
-    content: {
-      order: number;
-      content: string | null;
-    }[];
-  }[];
-}) => {
-  const { category, pathname, entry, image, content, title } = articleData;
-  let foundEmptyValue: null | string = null;
+const saveBlog = async (articleData: activeBlogArticle, setArticleData: Dispatch<SetStateAction<activeBlogArticle>>) => {
+  const { category, pathname, entry, image, sections, title, id } = articleData;
+  let foundEmptyValue = false;
 
   if (title === null) {
-    foundEmptyValue = "title";
+    foundEmptyValue = true;
+    createNotification("Uzupełnij tytuł", "error");
   } else if (category === null) {
-    foundEmptyValue = "category";
+    foundEmptyValue = true;
+    createNotification("Wybierz kategorię", "error");
   } else if (pathname === null) {
-    foundEmptyValue = "pathname";
-  } else if (image.file === null && image.string === null) {
-    foundEmptyValue = "image";
-  }
-
-  if (entry.length === 0) {
-    foundEmptyValue = "entry";
-  } else if (entry.length !== 0) {
+    foundEmptyValue = true;
+    createNotification("Uzupełnij url", "error");
+  } else if (entry.length === 0) {
+    foundEmptyValue = true;
+    createNotification("Jedno z pól pierwszego akapitu jest puste", "error");
+  } else {
     const isAnyContentEmpty = entry.find((data) => data.content === null);
 
     if (isAnyContentEmpty) {
-      foundEmptyValue = "any entry empty";
+      foundEmptyValue = true;
+      createNotification("Jedno z pól pierwszego akapitu jest puste", "error");
+    } else if (sections.length === 0) {
+      foundEmptyValue = true;
+      createNotification("Jedna z sekcji jest nieuzupełnionia", "error");
+    } else {
+      const DomParser = new DOMParser();
+
+      const isAnySectionEmpty = sections.find((data) => {
+        if (data.title === null) {
+          foundEmptyValue = true;
+          createNotification("Jedna z sekcji jest nieuzupełnionia", "error");
+          return true;
+        } else {
+          const isAnyParagraphEmpty = data.paragraphs.find((data) => {
+            const wrapperElement = DomParser.parseFromString(data.content, "text/html").body.firstChild as HTMLElement;
+
+            if (isEmpty(wrapperElement.innerHTML)) {
+              return true;
+            }
+          });
+
+          if (isAnyParagraphEmpty) {
+            foundEmptyValue = true;
+            createNotification("Jedna z sekcji jest nieuzupełnionia", "error");
+
+            return true;
+          }
+        }
+      });
+
+      if (isAnySectionEmpty) {
+        foundEmptyValue = true;
+        createNotification("Jedna z sekcji jest nieuzupełnionia", "error");
+      }
     }
   }
 
-  if (content.length === 0) {
-    foundEmptyValue = "content";
-  } else if (content.length !== 0) {
-    const isAnyContentEmpty = content.find((data) => data.title === null || data.content.find((data) => data.content === null));
+  if (foundEmptyValue === false) {
+    const createdBlogResponse = await blogCreateOrUpdate(
+      id,
+      pathname!,
+      category!,
+      title!,
+      entry as {
+        order: number;
+        content: string;
+      }[],
+      image as {
+        file: File | null;
+        url: string | null;
+      },
+      sections as {
+        order: number;
+        title: string;
+        paragraphs: {
+          order: number;
+          content: string;
+        }[];
+      }[]
+    );
 
-    if (isAnyContentEmpty) {
-      foundEmptyValue = "any content empty";
+    if (createdBlogResponse.error === null) {
+      setArticleData((currentValue) => {
+        const copiedCurrentValue = structuredClone(currentValue);
+
+        copiedCurrentValue.id = createdBlogResponse.data!.id;
+
+        return copiedCurrentValue;
+      });
+
+      createNotification(id === null ? `Artykuł został utworzony` : `Artykuł został zaaktualizowany`);
+    } else {
+      createNotification(createdBlogResponse.error, "error");
     }
-  }
-
-  if (foundEmptyValue === null) {
-    const createdBlogResponse = await blogCreateOrUpdate(pathname!, category!, title!, content, entry, image.file);
-
-    console.log(createdBlogResponse);
-  } else {
-    console.log(foundEmptyValue);
   }
 };
 
@@ -95,8 +165,9 @@ interface componentProps {
 }
 
 const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
-  const [articleData, setArticleData] = useState<activeBlogArticle>(currentActiveArticle);
+  useSignals();
 
+  const [articleData, setArticleData] = useState<activeBlogArticle>(currentActiveArticle);
   const [isMovingInAvatarEditor, setIsMovingInAvatarEditor] = useState(false);
   const [isHoveringOnAvatarEditor, setIsHoveringOnAvatarEditor] = useState(false);
   const [isPressingControlKey, setIsPressingControlKey] = useState(false);
@@ -106,6 +177,7 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
   const avatarEditorBounceTimeoutRef = useRef<null | ReturnType<typeof setTimeout>>(null);
 
   const router = useRouter();
+  const DomParser = new DOMParser();
 
   useEffect(() => {
     const keyDown = (event: KeyboardEvent) => {
@@ -142,6 +214,17 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
 
   return (
     <div className={`${styles.articleEditor}`}>
+      <div className={`${styles.notifications}`}>
+        {notifications.value.map((data) => {
+          const { content, type, id } = data;
+
+          return (
+            <div className={`${styles.notifiaction} ${type === "error" ? styles.error : ""} `} key={id}>
+              <p>{content}</p>
+            </div>
+          );
+        })}
+      </div>
       <div className={`${styles.headerWrapper}`}>
         <div className={`${styles.header}`}>
           <button
@@ -152,7 +235,7 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
           </button>
           <button
             onClick={() => {
-              saveBlog(articleData);
+              saveBlog(articleData, setArticleData);
             }}>
             <i className="fa-regular fa-floppy-disk" aria-hidden></i>
           </button>
@@ -170,13 +253,15 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
                 setArticleData((currentValue) => {
                   const copiedCurrentValue = structuredClone(currentValue);
 
-                  copiedCurrentValue.pathname = value;
+                  const wrapperElementForPathname = DomParser.parseFromString(value, "text/html").body.firstChild as HTMLElement;
+
+                  copiedCurrentValue.pathname = wrapperElementForPathname.innerText;
 
                   return copiedCurrentValue;
                 });
               }}
-              defaultValue="URL">
-              {articleData.pathname}
+              placeholder="URL">
+              {`<span>${articleData.pathname === null ? "" : articleData.pathname}</span>`}
             </Editable>
           </p>
           <div className={`${styles.linksPath}`}>
@@ -186,20 +271,20 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
             <Image src={arrowRightGrayIcon} alt="Ikonka strzałki"></Image>
             <p className={`${styles.current}`}>{articleData.category}</p>
           </div>
-          <h1>
-            <Editable
-              onSave={(value) => {
-                setArticleData((currentValue) => {
-                  const copiedCurrentValue = structuredClone(currentValue);
+          <Editable
+            onSave={(value) => {
+              setArticleData((currentValue) => {
+                const copiedCurrentValue = structuredClone(currentValue);
 
-                  copiedCurrentValue.title = value;
+                const wrappedElement = DomParser.parseFromString(value, "text/html").body.firstChild as HTMLElement;
 
-                  return copiedCurrentValue;
-                });
-              }}>
-              {articleData.title}
-            </Editable>
-          </h1>
+                copiedCurrentValue.title = wrappedElement.innerText;
+
+                return copiedCurrentValue;
+              });
+            }}>
+            {`<h1>${articleData.title === null ? "" : articleData.title}</h1>`}
+          </Editable>
           <div className={`${styles.articleMetaDataWrapper}`}>
             <select
               className={`${styles.category} ${mulishFont.className}`}
@@ -227,7 +312,7 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
               })}
             </select>
             <p className={`${styles.date}`}>
-              {new Date().toLocaleTimeString("pl-PL", {
+              {new Date(articleData.createdAt ? articleData.createdAt : new Date()).toLocaleTimeString("pl-PL", {
                 weekday: "long",
                 year: "numeric",
                 month: "long",
@@ -241,33 +326,34 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
             {articleData.entry.map((entryData) => {
               const { order, content } = entryData;
               return (
-                <p key={order}>
-                  <Editable
-                    onSave={(value) => {
-                      setArticleData((currentValue) => {
-                        const copiedCurrentValue = structuredClone(currentValue);
+                <Editable
+                  key={order}
+                  onSave={(value) => {
+                    setArticleData((currentValue) => {
+                      const copiedCurrentValue = structuredClone(currentValue);
 
-                        const foundContent = copiedCurrentValue.entry.find((data) => data.order === order)!;
+                      const foundContent = copiedCurrentValue.entry.find((data) => data.order === order)!;
 
-                        foundContent.content = value;
+                      const wrapperElement = DomParser.parseFromString(value, "text/html").body.firstChild as HTMLElement;
 
-                        return copiedCurrentValue;
-                      });
-                    }}
-                    onRemove={() => {
-                      setArticleData((currentValue) => {
-                        const copiedCurrentValue = structuredClone(currentValue);
+                      foundContent.content = wrapperElement.innerText;
 
-                        const foundElementIndex = copiedCurrentValue.entry.findIndex((data) => data.order === order);
+                      return copiedCurrentValue;
+                    });
+                  }}
+                  onRemove={() => {
+                    setArticleData((currentValue) => {
+                      const copiedCurrentValue = structuredClone(currentValue);
 
-                        copiedCurrentValue.entry.splice(foundElementIndex, 1);
+                      const foundElementIndex = copiedCurrentValue.entry.findIndex((data) => data.order === order);
 
-                        return copiedCurrentValue;
-                      });
-                    }}>
-                    {content}
-                  </Editable>
-                </p>
+                      copiedCurrentValue.entry.splice(foundElementIndex, 1);
+
+                      return copiedCurrentValue;
+                    });
+                  }}>
+                  {`<p>${content === null ? "" : content}</p>`}
+                </Editable>
               );
             })}
             <Button
@@ -277,7 +363,7 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
                   const copiedCurrentValue = structuredClone(currentValue);
 
                   copiedCurrentValue.entry.push({
-                    content: null,
+                    content: `<p></p>`,
                     order: copiedCurrentValue.entry.at(-1) ? copiedCurrentValue.entry.at(-1)!.order + 1 : 0,
                   });
 
@@ -289,8 +375,7 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
           </div>
           <div
             className={`${styles.imageWrapper} ${
-              (isMovingInAvatarEditor && articleData.image.string !== null) ||
-              (isPressingControlKey && isHoveringOnAvatarEditor && articleData.image.string !== null)
+              (isMovingInAvatarEditor && articleData.image.url !== null) || (isPressingControlKey && isHoveringOnAvatarEditor && articleData.image.url !== null)
                 ? styles.movingInAvatarEditor
                 : ""
             }`}
@@ -309,7 +394,7 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
             onClick={(event) => {
               const inputElement = event.currentTarget.querySelector("input") as HTMLInputElement;
 
-              if (articleData.image.string === null) {
+              if (articleData.image.url === null) {
                 inputElement.click();
               }
             }}
@@ -319,13 +404,13 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
 
                 copiedCurrentValue.image = {
                   file: null,
-                  string: null,
+                  url: null,
                 };
 
                 return copiedCurrentValue;
               });
             }}>
-            {articleData.image.string && (
+            {articleData.image.url && (
               <AvatarEditor
                 crossOrigin="anonymous"
                 ref={avatarEditorRef}
@@ -352,7 +437,7 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
                     );
                   }, 100);
                 }}
-                image={articleData.image.string}
+                image={articleData.image.url}
                 width={1180}
                 height={500}
                 scale={avatarEditorScale}
@@ -372,14 +457,14 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
 
                   copiedCurrentValue.image = {
                     file: file,
-                    string: src,
+                    url: src,
                   };
 
                   return copiedCurrentValue;
                 });
               }}></input>
             <p>
-              {articleData.image.string === null
+              {articleData.image.url === null
                 ? "Dodaj zdjęcie"
                 : "Kliknij dwukrotnie aby usunąć lub przytrzymaj lewy control i użyj scrolla aby przybliżyć lub oddalić"}
             </p>
@@ -387,66 +472,74 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
           <div className={`${styles.tableOfContents}`}>
             <p>Spis treści</p>
             <ol>
-              {articleData.content.map((contentData) => {
+              {articleData.sections.map((contentData) => {
                 const { order, title } = contentData;
 
-                return (
-                  <li key={order}>
-                    <a href={`/blogEditor/${articleData.pathname}/#${order}`}>{title}</a>
-                  </li>
-                );
+                const wrapperElementForTitle = title ? (DomParser.parseFromString(title, "text/html").body as HTMLElement) : null;
+
+                if (wrapperElementForTitle) {
+                  return (
+                    <li key={order}>
+                      <a href={`/blogEditor/${articleData.pathname}#${order}`}>{wrapperElementForTitle.innerText}</a>
+                    </li>
+                  );
+                }
               })}
             </ol>
           </div>
           <div className={`${styles.articleContentDataWrapper}`}>
-            {articleData.content.map((contentData, index, array) => {
-              const { order, title, content } = contentData;
+            {articleData.sections
+              .sort((a, b) => a.order - b.order)
+              .map((contentData, index) => {
+                const { order, title, paragraphs } = contentData;
 
-              return (
-                <div key={order}>
-                  <div className={`${styles.singleData}`} id={`${order}`}>
-                    <h2>
-                      {index + 1}.
-                      <Editable
-                        onSave={(value) => {
-                          setArticleData((currentValue) => {
-                            const copiedCurrentValue = structuredClone(currentValue);
+                return (
+                  <div key={order}>
+                    <div className={`${styles.singleData}`} id={`${order}`}>
+                      <div className={`${styles.h2Wrapper}`}>
+                        {index + 1}.
+                        <Editable
+                          onSave={(value) => {
+                            setArticleData((currentValue) => {
+                              const copiedCurrentValue = structuredClone(currentValue);
 
-                            const foundContent = copiedCurrentValue.content.find((data) => data.order === order)!;
+                              const foundSection = copiedCurrentValue.sections.find((data) => data.order === order)!;
 
-                            foundContent.title = value;
+                              const wrappedElement = DomParser.parseFromString(value, "text/html").body.firstChild as HTMLElement;
 
-                            return copiedCurrentValue;
-                          });
-                        }}
-                        onRemove={() => {
-                          setArticleData((currentValue) => {
-                            const copiedCurrentValue = structuredClone(currentValue);
+                              foundSection.title = wrappedElement.innerText;
 
-                            const foundElementIndex = copiedCurrentValue.content.findIndex((data) => data.order === order);
+                              return copiedCurrentValue;
+                            });
+                          }}
+                          onRemove={() => {
+                            setArticleData((currentValue) => {
+                              const copiedCurrentValue = structuredClone(currentValue);
 
-                            copiedCurrentValue.content.splice(foundElementIndex, 1);
+                              const foundElementIndex = copiedCurrentValue.sections.findIndex((data) => data.order === order);
 
-                            return copiedCurrentValue;
-                          });
-                        }}>
-                        {title}
-                      </Editable>
-                    </h2>
-                    <div className={`${styles.content}`}>
-                      {content.map((contentData) => {
-                        const { order: orderLocal, content } = contentData;
+                              copiedCurrentValue.sections.splice(foundElementIndex, 1);
 
-                        return (
-                          <p key={orderLocal}>
+                              return copiedCurrentValue;
+                            });
+                          }}>
+                          {`<h2>${title === null ? "" : title}</h2>`}
+                        </Editable>
+                      </div>
+                      <div className={`${styles.content}`}>
+                        {paragraphs.map((data) => {
+                          const { order: orderLocal, content } = data;
+
+                          return (
                             <Editable
+                              key={orderLocal}
                               onSave={(value) => {
                                 setArticleData((currentValue) => {
                                   const copiedCurrentValue = structuredClone(currentValue);
 
-                                  const foundContent = copiedCurrentValue.content
+                                  const foundContent = copiedCurrentValue.sections
                                     .find((data) => data.order === order)!
-                                    .content.find((data) => data.order === orderLocal)!;
+                                    .paragraphs.find((data) => data.order === orderLocal)!;
 
                                   foundContent.content = value;
 
@@ -457,56 +550,132 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
                                 setArticleData((currentValue) => {
                                   const copiedCurrentValue = structuredClone(currentValue);
 
-                                  const foundContent = copiedCurrentValue.content.find((data) => data.order === order)!;
+                                  const foundSection = copiedCurrentValue.sections.find((data) => data.order === order)!;
 
-                                  const foundElementIndex = foundContent.content.findIndex((data) => data.order === orderLocal);
+                                  const foundElementIndex = foundSection.paragraphs.findIndex((data) => data.order === orderLocal);
 
-                                  foundContent.content.splice(foundElementIndex, 1);
+                                  foundSection.paragraphs.splice(foundElementIndex, 1);
 
                                   return copiedCurrentValue;
                                 });
                               }}>
                               {content}
                             </Editable>
-                          </p>
-                        );
-                      })}
-                      <Button
-                        style={{ padding: "10px 20px 10px 20px", alignSelf: "flex-start", fontSize: "14px" }}
-                        onClick={() => {
-                          setArticleData((currentValue) => {
-                            const copiedCurrentValue = structuredClone(currentValue);
+                          );
+                        })}
+                      </div>
+                      <div className={`${styles.paragraphOptions}`}>
+                        <Button
+                          style={{ padding: "10px 20px 10px 20px", alignSelf: "flex-start", fontSize: "14px" }}
+                          onClick={() => {
+                            setArticleData((currentValue) => {
+                              const copiedCurrentValue = structuredClone(currentValue);
 
-                            const foundContent = copiedCurrentValue.content.find((data) => data.order === order)!;
+                              const foundSection = copiedCurrentValue.sections.find((data) => data.order === order)!;
 
-                            foundContent.content.push({
-                              order: foundContent.content.at(-1) ? foundContent.content.at(-1)!.order + 1 : 0,
-                              content: null,
+                              foundSection.paragraphs.push({
+                                order: foundSection.paragraphs.at(-1) ? foundSection.paragraphs.at(-1)!.order + 1 : 0,
+                                content: `<p></p>`,
+                              });
+
+                              return copiedCurrentValue;
                             });
+                          }}>
+                          Dodaj Akapit
+                        </Button>
+                        <Button
+                          style={{ padding: "10px 20px 10px 20px", alignSelf: "flex-start", fontSize: "14px" }}
+                          onClick={() => {
+                            setArticleData((currentValue) => {
+                              const copiedCurrentValue = structuredClone(currentValue);
 
-                            return copiedCurrentValue;
-                          });
-                        }}>
-                        Dodaj Akapit
-                      </Button>
+                              const foundSection = copiedCurrentValue.sections.find((data) => data.order === order)!;
+
+                              foundSection.paragraphs.push({
+                                order: foundSection.paragraphs.at(-1) ? foundSection.paragraphs.at(-1)!.order + 1 : 0,
+                                content: `<ul><li></li></ul>`,
+                              });
+
+                              return copiedCurrentValue;
+                            });
+                          }}>
+                          Dodaj listę
+                        </Button>
+                        <Button
+                          style={{ padding: "10px 20px 10px 20px", alignSelf: "flex-start", fontSize: "14px" }}
+                          onClick={() => {
+                            setArticleData((currentValue) => {
+                              const copiedCurrentValue = structuredClone(currentValue);
+
+                              const foundSection = copiedCurrentValue.sections.find((data) => data.order === order)!;
+
+                              foundSection.paragraphs.push({
+                                order: foundSection.paragraphs.at(-1) ? foundSection.paragraphs.at(-1)!.order + 1 : 0,
+                                content: `
+                                  <table>
+                                    <tr>
+                                      <th>Nagłówek 1</th>
+                                      <th>Nagłówek 2</th>
+                                      <th>Nagłówek 3</th>
+                                      <th>Nagłówek 4</th>
+                                    </tr>
+                                    <tr>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                      <td>Dane</td>
+                                    </tr>
+                                  </table>
+                                `,
+                              });
+
+                              return copiedCurrentValue;
+                            });
+                          }}>
+                          Dodaj tabelę
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
             <Button
               style={{ padding: "12px 24px 12px 24px", alignSelf: "flex-start", marginTop: "50px" }}
               onClick={() => {
                 setArticleData((currentValue) => {
                   const copiedCurrentValue = structuredClone(currentValue);
 
-                  copiedCurrentValue.content.push({
-                    order: copiedCurrentValue.content.at(-1) ? copiedCurrentValue.content.at(-1)!.order + 1 : 0,
-                    title: null,
-                    content: [
+                  copiedCurrentValue.sections.push({
+                    order: copiedCurrentValue.sections.at(-1) ? copiedCurrentValue.sections.at(-1)!.order + 1 : 0,
+                    title: `<h2></h2>`,
+                    paragraphs: [
                       {
                         order: 0,
-                        content: null,
+                        content: `<p></p>`,
                       },
                     ],
                   });

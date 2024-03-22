@@ -10,12 +10,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface componentsProps {
-  setCurrentActiveArticle: Dispatch<SetStateAction<null | activeBlogArticle>>;
   blogArticles: blogArticle[];
 }
 
-const BlogArticles = ({ setCurrentActiveArticle, blogArticles }: componentsProps) => {
-  const router = useRouter();
+const BlogArticles = ({ blogArticles }: componentsProps) => {
+  const [areAllArticlesGot, setAreAllArticlesGot] = useState(false);
 
   return (
     <>
@@ -29,9 +28,7 @@ const BlogArticles = ({ setCurrentActiveArticle, blogArticles }: componentsProps
 
           return (
             <Link href={`/blogEditor/${pathname}`} className={`${styles.blogArticle}`} key={id}>
-              <div className={`${styles.background}`}>
-                <Image src={image.string} width={300} height={300} alt="Tło"></Image>
-              </div>
+              <div className={`${styles.background}`}>{image.url && <Image src={image.url} width={300} height={300} alt="Tło"></Image>}</div>
               <h2>{title}</h2>
               <div className={`${styles.entry}`}>
                 <p>{entry[0].content}</p>
@@ -42,10 +39,14 @@ const BlogArticles = ({ setCurrentActiveArticle, blogArticles }: componentsProps
       </div>
       <Button
         style={{ padding: "20px 30px 20px 30px", marginLeft: "auto", marginRight: "auto" }}
-        onClick={() => {
-          getMoreArticles(blogArticles.length);
+        onClick={async () => {
+          if (areAllArticlesGot === false) {
+            const areAllArticlesGot = await getMoreArticles(blogArticles.length);
+
+            setAreAllArticlesGot(areAllArticlesGot);
+          }
         }}>
-        Zobacz wiecej
+        {areAllArticlesGot ? "To już wszystkie artykuły" : "Zobacz wiecej"}
       </Button>
     </>
   );

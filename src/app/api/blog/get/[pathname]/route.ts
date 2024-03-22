@@ -14,13 +14,12 @@ export type blogArticle = {
     content: string;
   }[];
   image: {
-    file: File | null;
-    string: string;
+    url: string | null;
   };
-  content: {
+  sections: {
     order: number;
     title: string;
-    content: {
+    paragraphs: {
       order: number;
       content: string;
     }[];
@@ -44,9 +43,9 @@ const GET = async (request: Request, { params }: { params: { pathname: string } 
         ...blogArticle,
         image: {
           file: null,
-          string: image,
+          url: image,
         },
-        content: JSON.parse(blogArticle!.content as string),
+        sections: JSON.parse(blogArticle!.sections as string),
         entry: JSON.parse(blogArticle!.entry as string),
       };
       return createResponse(200, null, formatedBlogArticle);

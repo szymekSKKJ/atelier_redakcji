@@ -11,7 +11,7 @@ interface componentProps extends HTMLAttributes<HTMLElement> {
 }
 
 const Section9 = async ({ type = "landing page", style }: componentProps) => {
-  const blogAriclesResponse = await blogGetSome(0, 3, true);
+  const blogAriclesResponse = await blogGetSome(1, 3, true);
 
   return (
     <section className={`${styles.section} ${type === "blog" ? styles.blog : ""}`} style={style}>

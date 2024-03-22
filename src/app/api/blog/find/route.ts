@@ -52,7 +52,7 @@ const GET = async (request: Request) => {
             file: null,
             string: image,
           },
-          content: JSON.parse(data.content as string),
+          content: JSON.parse(data.sections as string),
           entry: JSON.parse(data.entry as string),
         };
       })
@@ -69,8 +69,8 @@ export { GET };
 
 export const dynamic = "force-dynamic";
 
-const blogFind = async (stringOfWords: string, take: number = 10, skip: number = 0): Promise<response<blogArticle[]>> => {
-  const formattedString = stringOfWords.replace(/\s+/g, " ").trim().toLowerCase();
+const blogFind = async (stringQuery: string, take: number = 10, skip: number = 0): Promise<response<blogArticle[]>> => {
+  const formattedString = stringQuery.replace(/\s+/g, " ").trim().toLowerCase();
 
   return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/find/?stringOfWords=${formattedString}&take=${take}&skip=${skip}`, {
     method: "GET",

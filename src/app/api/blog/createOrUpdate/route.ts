@@ -7,22 +7,24 @@ const POST = async (request: Request) => {
   try {
     const requestData = await request.formData();
 
+    const articleId = requestData.get("id") as string | null;
+
     const doesBlogAlreadyExists = await prisma.blogArticle.findUnique({
       where: {
-        pathname: requestData.get("pathname") as string,
+        id: articleId ? articleId : "",
       },
     });
 
     if (doesBlogAlreadyExists) {
       const existingBlog = doesBlogAlreadyExists;
 
-      const createdBlogArticle = await prisma.blogArticle.update({
+      const updatedBlogArticle = await prisma.blogArticle.update({
         where: {
           id: existingBlog.id,
         },
         data: {
           pathname: requestData.get("pathname") as string,
-          content: requestData.get("content") as string,
+          sections: requestData.get("sections") as string,
           title: requestData.get("title") as string,
           category: requestData.get("category") as string,
           entry: requestData.get("entry") as string,
@@ -34,26 +36,30 @@ const POST = async (request: Request) => {
       if (image) {
         const storage = getStorage();
 
-        await uploadBytes(ref(storage, `blogArticles/${createdBlogArticle.id}/image.webp`), requestData.get("image") as File);
+        await uploadBytes(ref(storage, `blogArticles/${updatedBlogArticle.id}/image.webp`), requestData.get("image") as File);
       }
 
-      return createResponse(200, null, null);
+      return createResponse(200, null, { id: updatedBlogArticle.id });
     } else {
-      const createdBlogArticle = await prisma.blogArticle.create({
-        data: {
-          pathname: requestData.get("pathname") as string,
-          content: requestData.get("content") as string,
-          title: requestData.get("title") as string,
-          category: requestData.get("category") as string,
-          entry: requestData.get("entry") as string,
-        },
-      });
+      try {
+        const createdBlogArticle = await prisma.blogArticle.create({
+          data: {
+            pathname: requestData.get("pathname") as string,
+            sections: requestData.get("sections") as string,
+            title: requestData.get("title") as string,
+            category: requestData.get("category") as string,
+            entry: requestData.get("entry") as string,
+          },
+        });
 
-      const storage = getStorage();
+        const storage = getStorage();
 
-      await uploadBytes(ref(storage, `blogArticles/${createdBlogArticle.id}/image.webp`), requestData.get("image") as File);
+        await uploadBytes(ref(storage, `blogArticles/${createdBlogArticle.id}/image.webp`), requestData.get("image") as File);
 
-      return createResponse(200, null, null);
+        return createResponse(200, null, { id: createdBlogArticle.id });
+      } catch (e) {
+        return createResponse(500, "Blog o podanym url już istnieje", null);
+      }
     }
   } catch (e) {
     const error = e as Error;
@@ -66,32 +72,43 @@ export { POST };
 export const dynamic = "force-dynamic";
 
 const blogCreateOrUpdate = async (
+  id: string | null,
   pathname: string,
   category: string,
   title: string,
-  content: {
-    order: number;
-    title: string | null;
-    content: {
-      order: number;
-      content: string | null;
-    }[];
-  }[],
   entry: {
     order: number;
-    content: string | null;
+    content: string;
   }[],
-  image: File | null
-): Promise<response<null>> => {
+  image: {
+    file: File | null;
+    url: string | null;
+  },
+  sections: {
+    order: number;
+    title: string;
+    paragraphs: {
+      order: number;
+      content: string;
+    }[];
+  }[]
+): Promise<response<{ id: string }>> => {
   const formData = new FormData();
+
+  if (id) {
+    formData.append("id", id);
+  }
 
   formData.append("pathname", pathname);
   formData.append("category", category);
-  formData.append("content", `${JSON.stringify(content)}`);
+  formData.append("sections", JSON.stringify(sections));
 
-  image && formData.append("image", image);
+  if (image.file) {
+    image && formData.append("image", image.file);
+  }
+
   formData.append("title", title);
-  formData.append("entry", `${JSON.stringify(entry)}`);
+  formData.append("entry", JSON.stringify(entry));
 
   return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/createOrUpdate`, {
     method: "POST",

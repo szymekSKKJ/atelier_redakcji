@@ -13,7 +13,7 @@ const Article = ({ data }: componentProps) => {
     <article className={`${styles.article}`}>
       <Link href={`/${data.pathname}`}>
         <div className={`${styles.imageWrappper}`}>
-          <Image src={data.image.string} alt="Zdjęcie artykułu" width={600} height={450}></Image>
+          {data.image.url && <Image src={data.image.url} alt="Zdjęcie artykułu" width={600} height={450}></Image>}
           <div className={`${styles.category}`}>
             <p>{data.category}</p>
           </div>

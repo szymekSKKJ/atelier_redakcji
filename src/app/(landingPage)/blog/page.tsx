@@ -13,6 +13,12 @@ import Link from "next/link";
 const Blog = async () => {
   const blogAriclesResponse = await blogGetSome(0, 3, true);
   const blogAriclesResponse1 = await blogGetSome(1, 1, true);
+  const blogAriclesResponse2 = await blogGetSome(0, 3, true, "inne teksty");
+  const blogAriclesResponse3 = await blogGetSome(3, 3, true);
+  const blogAriclesResponse4 = await blogGetSome(0, 3, true, "prace licencjackie");
+  const blogAriclesResponse5 = await blogGetSome(0, 3, true, "prace inżynierskie");
+  const blogAriclesResponse6 = await blogGetSome(0, 3, true, "prace magisterskie");
+  const blogAriclesResponse7 = await blogGetSome(0, 3, true, "prace doktorskie i habilitacyjne");
 
   return (
     <>
@@ -47,7 +53,7 @@ const Blog = async () => {
         <p className={`${styles.subTitlte}`}>
           Podstawowe <span>pojęcia i porady językowe</span>
         </p>
-        {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+        {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse2.data!}></BlogArticlesBrief>}
         <Link href={`/blog/allCategories`}>
           Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
         </Link>
@@ -61,7 +67,7 @@ const Blog = async () => {
         <p className={`${styles.subTitlte}`}>
           <span>Jak właściwie napisać i przygotować</span> pracę?
         </p>
-        {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+        {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse3.data!}></BlogArticlesBrief>}
       </div>
       <Section13 fullscreen={true}></Section13>
       <div className={`${styles.backgroundWrapper}`}>
@@ -77,7 +83,7 @@ const Blog = async () => {
           <p className={`${styles.subTitlte}`} style={{ marginTop: "80px" }}>
             Prace <span>licencjackie</span>
           </p>
-          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse4.data!}></BlogArticlesBrief>}
           <Link href={`/blog/allCategories`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
@@ -91,7 +97,7 @@ const Blog = async () => {
           <p className={`${styles.subTitlte}`}>
             Prace <span>inżynierskie</span>
           </p>
-          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse5.data!}></BlogArticlesBrief>}
           <a>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </a>
@@ -105,7 +111,7 @@ const Blog = async () => {
           <p className={`${styles.subTitlte}`}>
             Prace <span>magisterskie</span>
           </p>
-          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse6.data!}></BlogArticlesBrief>}
           <Link href={`/blog/allCategories`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
@@ -119,7 +125,7 @@ const Blog = async () => {
           <p className={`${styles.subTitlte}`}>
             Prace <span>doktorskie i habilitacyjne</span>
           </p>
-          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
+          {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse7.data!}></BlogArticlesBrief>}
           <Link href={`/blog/allCategories`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>

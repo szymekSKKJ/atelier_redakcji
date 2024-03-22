@@ -1,4 +1,4 @@
-import { blogGetSome } from "@/app/api/blog/get/some/route";
+import { blogGetSome, category } from "@/app/api/blog/get/some/route";
 import styles from "./styles.module.scss";
 import Article from "@/components/allCategoriesPage/Article/Article";
 import Section13 from "@/components/sections/Section13/Section13";
@@ -8,61 +8,19 @@ import doubleArrowsIcon from "../../../../../public/Double arrows.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { blogCountAll } from "@/app/api/blog/countAll/route";
+import { category as blogCategory } from "@/app/api/blog/get/some/route";
+import { categories as blogCategories } from "@/data/blog/categories";
 
 interface componentProps {
-  searchParams: { category: string; page: string };
+  searchParams: { category: blogCategory; page: string };
 }
 
 const allCategoriesPage = async ({ searchParams: { category = "wszystko", page = "1" } }: componentProps) => {
-  const categories = [
-    {
-      key: "prace-licenjcackie",
-      value: "Prace licencjackie",
-    },
-    {
-      key: "prace-inzynierskie",
-      value: "Prace inżynierskie",
-    },
-    {
-      key: "prace-magisterskie",
-      value: "Prace magisterskie",
-    },
+  const foundCurrentCategory = blogCategories.find((data) => data.pathname === category)!.name as category;
 
-    {
-      key: "prace-doktorskie-i-habilitacyjne",
-      value: "Prace doktorskie i habilitacyjne",
-    },
-    {
-      key: "prace-zaliczeniowe",
-      value: "Prace zaliczeniowe",
-    },
-    {
-      key: "prace-dyplomowe",
-      value: "Prace dyplomowe",
-    },
-    {
-      key: "prace-naukowe",
-      value: "Prace naukowe",
-    },
-    {
-      key: "teksty-specjalistyczne",
-      value: "Teksty specjalistyczne",
-    },
-    {
-      key: "inne-teksty",
-      value: "Inne teksty",
-    },
-    {
-      key: "wszystko",
-      value: "wszystko",
-    },
-  ];
+  const numberOfArticlesToDisplayPerPage = 6;
 
-  const foundCurrentCategory = categories.find((data) => data.key === category)!;
-
-  const numberOfArticlesToDisplayPerPage = 1;
-
-  const allArticlesCountResponse = await blogCountAll(foundCurrentCategory.value.toLocaleLowerCase());
+  const allArticlesCountResponse = await blogCountAll(foundCurrentCategory.toLocaleLowerCase());
 
   const buttonsCount = allArticlesCountResponse.data ? Math.ceil(allArticlesCountResponse.data / numberOfArticlesToDisplayPerPage) : 1;
 
@@ -152,13 +110,8 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
 
   const response =
     page === undefined || parseInt(page) === 1
-      ? await blogGetSome(0, numberOfArticlesToDisplayPerPage, true, foundCurrentCategory.value.toLocaleLowerCase())
-      : await blogGetSome(
-          numberOfArticlesToDisplayPerPage * parseInt(page) - 1,
-          numberOfArticlesToDisplayPerPage,
-          true,
-          foundCurrentCategory.value.toLocaleLowerCase()
-        );
+      ? await blogGetSome(0, numberOfArticlesToDisplayPerPage, true, foundCurrentCategory)
+      : await blogGetSome(numberOfArticlesToDisplayPerPage * parseInt(page) - 1, numberOfArticlesToDisplayPerPage, true, foundCurrentCategory);
 
   return (
     <div className={`${styles.allCategoriesPage}`}>
@@ -184,12 +137,12 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
         <div className={`${styles.wrapper}`}>
           <aside>
             <h3>Kategorie</h3>
-            {categories.map((data) => {
-              const { key, value } = data;
+            {blogCategories.map((data) => {
+              const { pathname, name } = data;
 
               return (
-                <Link key={key} className={`${category === key ? styles.choosen : ""}`} href={`/blog/allCategories?category=${key}&page=1`}>
-                  {value}
+                <Link key={pathname} className={`${category === name ? styles.choosen : ""}`} href={`/blog/allCategories?category=${pathname}&page=1`}>
+                  {name}
                 </Link>
               );
             })}

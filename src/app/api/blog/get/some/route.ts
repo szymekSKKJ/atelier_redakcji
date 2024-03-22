@@ -3,6 +3,7 @@ import { createResponse, response } from "../../response";
 import { prisma } from "../../../../../../prisma/prisma";
 import { blogArticle } from "../[pathname]/route";
 import "../../../firebaseInitialize";
+import { categories as blogCategories } from "@/data/blog/categories";
 
 const GET = async (request: Request) => {
   try {
@@ -40,9 +41,9 @@ const GET = async (request: Request) => {
           ...data,
           image: {
             file: null,
-            string: image,
+            url: image,
           },
-          content: JSON.parse(data.content as string),
+          sections: JSON.parse(data.sections as string),
           entry: JSON.parse(data.entry as string),
         };
       })
@@ -59,7 +60,22 @@ export { GET };
 
 export const dynamic = "force-dynamic";
 
-const blogGetSome = async (skip: number = 0, take: number = 3, isServerSide = false, category: string = "wszystko"): Promise<response<blogArticle[]>> => {
+const categoriesType = blogCategories.map((data) => data.name) as string[] as [
+  "prace licencjackie",
+  "prace inżynierskie",
+  "prace magisterskie",
+  "prace doktorskie i habilitacyjne",
+  "prace zaliczeniowe",
+  "prace dyplomowe",
+  "prace naukowe",
+  "teksty specjalistyczne",
+  "inne teksty",
+  "wszystko"
+];
+
+export type category = (typeof categoriesType)[number];
+
+const blogGetSome = async (skip: number = 0, take: number = 3, isServerSide = false, category: category = "wszystko"): Promise<response<blogArticle[]>> => {
   if (isServerSide) {
     const headers = await import("next/headers");
 

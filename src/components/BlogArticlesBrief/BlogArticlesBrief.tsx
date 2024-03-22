@@ -28,7 +28,7 @@ const BlogArticlesBrief = ({ articles, page, callback }: componentProps) => {
                   }}>
                   <figure>
                     <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
-                      <Image height={380} width={275} src={image.string} alt="Zdjęcie artykułu bloga"></Image>
+                      {image.url && <Image height={380} width={275} src={image.url} alt="Zdjęcie artykułu bloga"></Image>}
                       {page === "blog" && (
                         <div className={`${styles.category}`}>
                           <p>{category}</p>
@@ -58,7 +58,7 @@ const BlogArticlesBrief = ({ articles, page, callback }: componentProps) => {
                   }}>
                   <figure>
                     <div className={`${styles.wrapper}`} role="img" aria-label="Zdjęcie">
-                      <Image height={1000} width={1000} src={image.string} alt="Zdjęcie artykułu bloga"></Image>
+                      {image.url && <Image height={1000} width={1000} src={image.url} alt="Zdjęcie artykułu bloga"></Image>}
                       {page === "blog" && (
                         <div className={`${styles.category}`}>
                           <p>{category}</p>

@@ -1,5 +1,6 @@
 import { blogGetByPathname } from "@/app/api/blog/get/[pathname]/route";
 import ArticleEditor from "@/components/ArticleEditor/ArticleEditor";
+import { url } from "inspector";
 
 interface componentProps {
   params: { blogArticlePathname: string };
@@ -12,9 +13,9 @@ const BlogEditorPageWithArticlePathname = async ({ params: { blogArticlePathname
           data: {
             id: null,
             title: null,
-            createdAt: null,
+            createdAt: new Date(),
             category: null,
-            pathname: blogArticlePathname,
+            pathname: null,
             entry: [
               {
                 order: 0,
@@ -23,16 +24,16 @@ const BlogEditorPageWithArticlePathname = async ({ params: { blogArticlePathname
             ],
             image: {
               file: null,
-              string: null,
+              url: null,
             },
-            content: [
+            sections: [
               {
                 order: 0,
                 title: null,
-                content: [
+                paragraphs: [
                   {
                     order: 0,
-                    content: null,
+                    content: `<p></p>`,
                   },
                 ],
               },
