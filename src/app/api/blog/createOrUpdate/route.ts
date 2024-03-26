@@ -45,6 +45,7 @@ const POST = async (request: Request) => {
               title: requestData.get("title") as string,
               category: requestData.get("category") as string,
               entry: requestData.get("entry") as string,
+              createdAt: new Date(),
             },
           });
 
