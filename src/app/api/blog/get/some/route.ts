@@ -6,9 +6,8 @@ import { categories as blogCategories } from "@/data/blog/categories";
 import prisma from "../../../../../../prisma/prisma";
 
 const GET = async (request: Request) => {
+  const url = new URL(request.url);
   try {
-    const url = new URL(request.url);
-
     const category = url.searchParams.get("category") as string;
 
     const bolgArticles =

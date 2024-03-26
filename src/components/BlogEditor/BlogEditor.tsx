@@ -76,15 +76,15 @@ const BlogEditor = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      const timeout = setTimeout(() => {
-        if (blogArticles.value.length === 0) {
+      if (blogArticles.value.length === 0) {
+        const timeout = setTimeout(() => {
           getMoreArticles(0, selectedCategory);
-        }
-      });
+        });
 
-      return () => {
-        clearTimeout(timeout);
-      };
+        return () => {
+          clearTimeout(timeout);
+        };
+      }
     }
   }, [isLoggedIn]);
 
