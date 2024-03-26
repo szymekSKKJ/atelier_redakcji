@@ -33,13 +33,11 @@
     }
 
     @media screen and (max-width: 1024px) {
-      width: calc(50% - 16px);
-      margin: 8px;
+      width: calc(50% - 15px);
     }
 
     @media screen and (max-width: 768px) {
       width: calc(100% - 16px);
-      margin: 8px;
     }
 
     .background {

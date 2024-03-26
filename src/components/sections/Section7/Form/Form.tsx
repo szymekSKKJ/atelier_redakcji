@@ -8,7 +8,7 @@ import Button from "@/components/UI/Button/Button";
 import { FormEvent, useRef, useState } from "react";
 
 import Loader from "@/design/Loader/Loader";
-import Checkbox from "@/components/UI/Button/Checkbox/Checkbox";
+import Checkbox from "@/components/UI/Checkbox/Checkbox";
 import Link from "next/link";
 import calendarIcon from "../../../../../public/calendar.svg";
 import sendMainForm from "@/app/api/nodemailer/sendMainForm";

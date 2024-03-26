@@ -1,7 +1,7 @@
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { createResponse, response } from "../../response";
-import { prisma } from "../../../../../../prisma/prisma";
+import { createResponse, response } from "../../../response";
 import "../../../firebaseInitialize";
+import prisma from "../../../../../../prisma/prisma";
 
 export type blogArticle = {
   id: string;
@@ -65,7 +65,7 @@ export const dynamic = "force-dynamic";
 const blogGetByPathname = async (pathname: string): Promise<response<blogArticle>> => {
   return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/${pathname}`, {
     method: "GET",
-    cache: "no-cache",
+    cache: "no-store",
   }).then((response) => response.json());
 };
 

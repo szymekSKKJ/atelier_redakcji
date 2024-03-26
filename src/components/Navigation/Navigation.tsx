@@ -144,7 +144,7 @@ const Navigation = () => {
           <nav className={`${styles.blogMenu}`}>
             <div className={`${styles.wrapper}`}>
               <div className={`${styles.wrapper1}`}>
-                <Link href={`/blog`}>
+                <Link href={`/`}>
                   <Image src={doubleArrowIcon} alt="Ikonka podwójnej strzałki"></Image> Wróć do Atelier redakcji tekstu
                 </Link>
                 <Button style={{ padding: "15px 20px 15px 20px" }} changeRoute="/#mainForm">

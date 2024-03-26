@@ -3,13 +3,14 @@
 import { useId, useLayoutEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import x from "../../../../../public/x green.svg";
+import x from "../../../../public/x green.svg";
 
 interface componentsProps extends React.InputHTMLAttributes<HTMLInputElement> {
   color?: string;
+  isChecked?: boolean;
 }
 
-const Checkbox = ({ children, color, onInput, ...rest }: componentsProps) => {
+const Checkbox = ({ children, color, onInput, isChecked = false, ...rest }: componentsProps) => {
   const [isCheck, setIsChecked] = useState(false);
 
   const id = useId();
@@ -27,6 +28,7 @@ const Checkbox = ({ children, color, onInput, ...rest }: componentsProps) => {
         <input
           id={id}
           type="checkbox"
+          defaultChecked={isChecked}
           onInput={(event) => {
             if (onInput) {
               onInput(event);

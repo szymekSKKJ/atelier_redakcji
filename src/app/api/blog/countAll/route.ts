@@ -1,5 +1,5 @@
-import { prisma } from "../../../../../prisma/prisma";
-import { createResponse, response } from "../response";
+import prisma from "../../../../../prisma/prisma";
+import { createResponse, response } from "../../response";
 
 export const GET = async (request: Request) => {
   try {
@@ -26,6 +26,6 @@ export const GET = async (request: Request) => {
 export const blogCountAll = async (category: string): Promise<response<number>> => {
   return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/countAll/?category=${category}`, {
     method: "GET",
-    cache: "no-cache",
+    cache: "no-store",
   }).then((response) => response.json());
 };

@@ -12,8 +12,10 @@
     "@preact/signals-react": "^2.0.0",
     "@prisma/client": "^5.9.1",
     "@types/nodemailer": "^6.4.14",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "firebase": "^10.8.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "14.0.4",
     "nodemailer": "^6.9.7",
     "react": "^18",
@@ -23,6 +25,7 @@
     "sass": "^1.69.5"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.11.16",
     "@types/react": "^18",
     "@types/react-avatar-editor": "^13.0.2",

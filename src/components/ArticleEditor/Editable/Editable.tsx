@@ -266,6 +266,8 @@ const Editable = ({ children, placeholder = "Edytuj", onRemove, onSave }: compon
     componentElementRef.current!.innerHTML = childElement.innerHTML;
   }, []);
 
+  useEffect(() => {}, []);
+
   const createdElement = createElement(childElement.tagName.toLowerCase(), {
     className: `${styles.editable} ${isContentEmpty ? styles.childrenEmpty : ""}  `,
     ref: componentElementRef,

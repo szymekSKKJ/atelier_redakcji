@@ -6,8 +6,14 @@ import { signal } from "@preact/signals-react";
 import { useSignals } from "@preact/signals-react/runtime";
 import BlogArticles from "./BlogArticles/BlogArticles";
 import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
-import { blogGetSome } from "@/app/api/blog/get/some/route";
+import { blogGetSome, category as blogArticleCategory } from "@/app/api/blog/get/some/route";
 import { blogFind } from "@/app/api/blog/find/route";
+import { categories as articleCategories } from "@/data/blog/categories";
+import Button from "../UI/Button/Button";
+import logoImage from "../../../public/logo.svg";
+import Image from "next/image";
+import { userCreateOrLogin } from "@/app/api/user/createOrLogin/route";
+import Checkbox from "../UI/Checkbox/Checkbox";
 
 export type activeBlogArticle = {
   id: string | null;
@@ -35,15 +41,15 @@ export type activeBlogArticle = {
 
 const blogArticles = signal<blogArticle[]>([]);
 
-export const getMoreArticles = async (skip: number) => {
-  const blogArticlesLocal = await blogGetSome(skip, 10);
+export const getMoreArticles = async (skip: number, category: blogArticleCategory, clear: boolean = false) => {
+  const blogArticlesLocal = await blogGetSome(skip, 10, false, category);
 
   if (blogArticlesLocal.data) {
-    const copiedValue = structuredClone(blogArticles.value);
+    const copiedValue = structuredClone(clear ? [] : blogArticles.value);
 
     const meregedArticles = [...copiedValue, ...blogArticlesLocal.data];
 
-    meregedArticles.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    meregedArticles.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
     blogArticles.value = meregedArticles;
 
@@ -58,96 +64,142 @@ export const getMoreArticles = async (skip: number) => {
 const BlogEditor = () => {
   useSignals();
 
-  const [error, setError] = useState<null | string>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [responseMessage, setResponseMessage] = useState<null | string>(null);
+  const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+  const [isEmailLabelCopied, setIsEmailLabelCopied] = useState(false);
 
   const inputSearchTimeoutRef = useRef<null | ReturnType<typeof setTimeout>>(null);
+  const selectElementRef = useRef<HTMLSelectElement | null>(null);
+  const inputElementRef = useRef<null | HTMLInputElement>(null);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      getMoreArticles(0);
-    });
+    if (isLoggedIn) {
+      getMoreArticles(0, selectElementRef.current!.value as blogArticleCategory);
+    }
+  }, [isLoggedIn]);
 
-    return () => {
-      clearTimeout(timeout);
-      blogArticles.value = [];
-    };
+  useEffect(() => {
+    (async () => {
+      const response = await userCreateOrLogin();
+
+      if (response.data) {
+        if (response.data.user) {
+          setIsLoggedIn(response.data.user.isActivated);
+        } else if (response.data.message) {
+          setResponseMessage(response.data.message);
+        }
+      }
+    })();
   }, []);
-
-  useEffect(() => {
-    const popstate = (event: PopStateEvent) => {};
-
-    window.addEventListener("popstate", popstate);
-
-    return () => {
-      window.removeEventListener("popstate", popstate);
-    };
-  });
 
   return (
     <div className={`${styles.blog_editor}`}>
-      <div className={`${styles.searchbar}`}>
-        <input
-          placeholder="Szukaj artykułów"
-          onInput={(event) => {
-            const thisInputElement = event.currentTarget as HTMLInputElement;
-
-            if (inputSearchTimeoutRef.current) {
-              clearTimeout(inputSearchTimeoutRef.current);
-            }
-
-            inputSearchTimeoutRef.current = setTimeout(async () => {
-              const foundArticlesResponse = await blogFind(thisInputElement.value);
-
-              if (foundArticlesResponse.data) {
-                blogArticles.value = foundArticlesResponse.data;
-              }
-            }, 2000);
-          }}></input>
-      </div>
-      <BlogArticles blogArticles={blogArticles.value}></BlogArticles>
-
-      {/* {currentActiveArticle === null && (
-        <div className={`${styles.inputWrapper}`}>
-          <input placeholder="Url artykułu"></input>
-          <Button
-            style={{ padding: "10px 15px 10px 15px" }}
-            onClick={async (event) => {
-              const parentElement = event.currentTarget.parentElement!;
-              const inputElement = parentElement.querySelector("input")!;
-
-              const articleData = await blogGetByUrl(inputElement.value);
-
-              if (articleData.data) {
-                setCurrentActiveArticle(articleData.data);
-              }
+      {isLoggedIn === false ? (
+        <div className={`${styles.login}`}>
+          <div className={`${styles.imageWrapper}`}>
+            <Image src={logoImage} alt="Zdjęcie logo"></Image>
+          </div>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
             }}>
-            Szukaj
-          </Button>
+            <div className={`${styles.inputWrapper}`}>
+              <label
+                onCopy={() => {
+                  setIsEmailLabelCopied(true);
+                }}>
+                Email
+              </label>
+              <input placeholder=""></input>
+            </div>
+            <div className={`${styles.inputWrapper}`}>
+              <label>Hasło</label>
+              <input type="password" placeholder=""></input>
+            </div>
+            {isEmailLabelCopied && (
+              <div className={`${styles.checkboxWrapper}`}>
+                <Checkbox
+                  isChecked={isCreatingAccount}
+                  onInput={() => {
+                    setIsCreatingAccount((currentValue) => (currentValue ? false : true));
+                  }}>
+                  Chcę utworzyć konto
+                </Checkbox>
+              </div>
+            )}
+            <Button
+              onClick={async (event) => {
+                const formElement = event.currentTarget.parentElement as HTMLFormElement;
+                const inputElements = [...formElement.elements].map((element) => element.tagName === "INPUT" && element);
+                const emailInputElement = inputElements[0] as HTMLInputElement;
+                const passwordInputElement = inputElements[1] as HTMLInputElement;
+                const regexForEmail = /\S+@\S+\.\S+/;
+
+                const isEmialValid = regexForEmail.test(emailInputElement.value);
+
+                if (isEmialValid) {
+                  const response = await userCreateOrLogin(isCreatingAccount, emailInputElement.value, passwordInputElement.value);
+
+                  if (response.data) {
+                    if (response.data.user) {
+                      setIsLoggedIn(response.data.user.isActivated);
+                    } else if (response.data.message) {
+                      setResponseMessage(response.data.message);
+                    }
+                  }
+                } else {
+                  setResponseMessage("Email jest niepoprawny");
+                }
+              }}
+              style={{ padding: "10px 20px 10px 20px" }}>
+              Zaloguj się
+            </Button>
+          </form>
+          {responseMessage && <p className={`${styles.responseMessage}`}>{responseMessage}</p>}
         </div>
-      )} */}
-
-      {/* {false === null ? (
-        <form className={`${styles.login}`} onSubmit={(event) => event.preventDefault()} method="POST">
-          {error && <p className={`${styles.error}`}>{error}</p>}
-          <input placeholder="Email (admin@gmail.com)" name="email" required></input>
-          <input placeholder="Hasło (adminQwe)" name="password" type="password" required></input>
-          <Button
-            type="submit"
-            style={{ padding: "15px 20px 15px 20px" }}
-            onClick={(event) => {
-              const formElement = event.currentTarget.parentElement as HTMLFormElement;
-              const formData = new FormData(formElement);
-              const password = formData.get("password")! as string;
-              const email = formData.get("email")! as string;
-            }}>
-            Zaloguj się
-          </Button>
-        </form>
-      ) : currentActiveArticle ? (
-        <ArticleEditor currentActiveArticle={currentActiveArticle} setCurrentActiveArticle={setCurrentActiveArticle}></ArticleEditor>
       ) : (
-        blogArticles.value.length !== 0 && <BlogArticles blogArticles={blogArticles.value} setCurrentActiveArticle={setCurrentActiveArticle}></BlogArticles>
-      )} */}
+        <>
+          <div className={`${styles.searchbar}`}>
+            <input
+              placeholder="Szukaj artykułów"
+              ref={inputElementRef}
+              onInput={(event) => {
+                const thisInputElement = event.currentTarget as HTMLInputElement;
+
+                if (inputSearchTimeoutRef.current) {
+                  clearTimeout(inputSearchTimeoutRef.current);
+                }
+
+                inputSearchTimeoutRef.current = setTimeout(async () => {
+                  const foundArticlesResponse = await blogFind(thisInputElement.value, 10, 0, selectElementRef.current!.value as blogArticleCategory);
+
+                  if (foundArticlesResponse.data) {
+                    blogArticles.value = foundArticlesResponse.data;
+                  }
+                }, 1500);
+              }}></input>
+          </div>
+          <div className={`${styles.searchOptions}`}>
+            <select
+              defaultValue={"wszystko"}
+              ref={selectElementRef}
+              onInput={() => {
+                getMoreArticles(0, selectElementRef.current!.value as blogArticleCategory, true);
+                inputElementRef.current!.value = "";
+              }}>
+              {articleCategories.map((data) => {
+                const { name } = data;
+
+                return <option key={name}>{name}</option>;
+              })}
+            </select>
+          </div>
+          <BlogArticles
+            blogArticles={blogArticles.value}
+            currentSelectedCategory={selectElementRef.current ? (selectElementRef.current.value as blogArticleCategory) : null}></BlogArticles>
+        </>
+      )}
     </div>
   );
 };

@@ -17,3 +17,12 @@ model BlogArticle {
     sections  Json
     entry     Json
 }
+
+model User {
+    id               String   @id @default(uuid())
+    email            String   @unique
+    password         String
+    cookieExpireDate DateTime @default(now())
+    isActivated      Boolean  @default(false)
+    dataToActivate   String?
+}

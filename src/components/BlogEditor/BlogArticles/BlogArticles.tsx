@@ -5,16 +5,21 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
-import { activeBlogArticle, getMoreArticles } from "../BlogEditor";
-import { useRouter } from "next/navigation";
+import { getMoreArticles } from "../BlogEditor";
 import Link from "next/link";
+import { category as blogArticleCategory } from "@/app/api/blog/get/some/route";
+import { useSignals } from "@preact/signals-react/runtime";
 
 interface componentsProps {
   blogArticles: blogArticle[];
+  currentSelectedCategory: blogArticleCategory | null;
 }
 
-const BlogArticles = ({ blogArticles }: componentsProps) => {
+const BlogArticles = ({ blogArticles, currentSelectedCategory }: componentsProps) => {
+  useSignals();
+
   const [areAllArticlesGot, setAreAllArticlesGot] = useState(false);
+  const [lastSelectedCategry, setLastSelectedCategry] = useState<null | blogArticleCategory>(null);
 
   return (
     <>
@@ -40,10 +45,11 @@ const BlogArticles = ({ blogArticles }: componentsProps) => {
       <Button
         style={{ padding: "20px 30px 20px 30px", marginLeft: "auto", marginRight: "auto" }}
         onClick={async () => {
-          if (areAllArticlesGot === false) {
-            const areAllArticlesGot = await getMoreArticles(blogArticles.length);
-
+          if (areAllArticlesGot === false && currentSelectedCategory) {
+            const areAllArticlesGot = await getMoreArticles(currentSelectedCategory !== lastSelectedCategry ? 0 : blogArticles.length, currentSelectedCategory);
             setAreAllArticlesGot(areAllArticlesGot);
+
+            setLastSelectedCategry(currentSelectedCategory);
           }
         }}>
         {areAllArticlesGot ? "To już wszystkie artykuły" : "Zobacz wiecej"}

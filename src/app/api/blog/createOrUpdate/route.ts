@@ -1,7 +1,7 @@
-import { createResponse, response } from "../response";
+import { createResponse, response } from "../../response";
 import "../../firebaseInitialize";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { prisma } from "../../../../../prisma/prisma";
+import prisma from "../../../../../prisma/prisma";
 
 const POST = async (request: Request) => {
   try {
@@ -69,8 +69,6 @@ const POST = async (request: Request) => {
 
 export { POST };
 
-export const dynamic = "force-dynamic";
-
 const blogCreateOrUpdate = async (
   id: string | null,
   pathname: string,
@@ -113,6 +111,7 @@ const blogCreateOrUpdate = async (
   return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/createOrUpdate`, {
     method: "POST",
     body: formData,
+    cache: "no-store",
   }).then((response) => response.json());
 };
 

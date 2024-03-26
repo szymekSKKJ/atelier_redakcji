@@ -111,7 +111,7 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
   const response =
     page === undefined || parseInt(page) === 1
       ? await blogGetSome(0, numberOfArticlesToDisplayPerPage, true, foundCurrentCategory)
-      : await blogGetSome(numberOfArticlesToDisplayPerPage * parseInt(page) - 1, numberOfArticlesToDisplayPerPage, true, foundCurrentCategory);
+      : await blogGetSome(numberOfArticlesToDisplayPerPage * (parseInt(page) - 1), numberOfArticlesToDisplayPerPage, true, foundCurrentCategory);
 
   return (
     <div className={`${styles.allCategoriesPage}`}>
@@ -141,7 +141,7 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
               const { pathname, name } = data;
 
               return (
-                <Link key={pathname} className={`${category === name ? styles.choosen : ""}`} href={`/blog/allCategories?category=${pathname}&page=1`}>
+                <Link key={pathname} className={`${category === pathname ? styles.choosen : ""}`} href={`/blog/allCategories?category=${pathname}&page=1`}>
                   {name}
                 </Link>
               );

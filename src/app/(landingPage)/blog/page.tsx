@@ -54,7 +54,7 @@ const Blog = async () => {
           Podstawowe <span>pojęcia i porady językowe</span>
         </p>
         {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse2.data!}></BlogArticlesBrief>}
-        <Link href={`/blog/allCategories`}>
+        <Link href={`/blog/allCategories?category=wszystko&page=1`}>
           Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
         </Link>
         <hr></hr>
@@ -84,7 +84,7 @@ const Blog = async () => {
             Prace <span>licencjackie</span>
           </p>
           {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse4.data!}></BlogArticlesBrief>}
-          <Link href={`/blog/allCategories`}>
+          <Link href={`/blog/allCategories?category=prace-licenjcackie&page=1`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
           <hr></hr>
@@ -98,9 +98,9 @@ const Blog = async () => {
             Prace <span>inżynierskie</span>
           </p>
           {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse5.data!}></BlogArticlesBrief>}
-          <a>
+          <Link href={`/blog/allCategories?category=prace-inzynierskie&page=1`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
-          </a>
+          </Link>
           <hr></hr>
         </div>
         <div
@@ -112,7 +112,7 @@ const Blog = async () => {
             Prace <span>magisterskie</span>
           </p>
           {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse6.data!}></BlogArticlesBrief>}
-          <Link href={`/blog/allCategories`}>
+          <Link href={`/blog/allCategories?category=prace-magisterskie&page=1`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
           <hr></hr>
@@ -126,7 +126,7 @@ const Blog = async () => {
             Prace <span>doktorskie i habilitacyjne</span>
           </p>
           {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse7.data!}></BlogArticlesBrief>}
-          <Link href={`/blog/allCategories`}>
+          <Link href={`/blog/allCategories?category=prace-doktorskie-i-habilitacyjne&page=1`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
           <hr></hr>

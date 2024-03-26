@@ -8,7 +8,6 @@ import Button from "@/components/UI/Button/Button";
 import { blogCreateOrUpdate } from "@/app/api/blog/createOrUpdate/route";
 import AvatarEditor from "react-avatar-editor";
 import Image from "next/image";
-import Section13 from "@/components/sections/Section13/Section13";
 import { Mulish } from "next/font/google";
 import { categories as blogCategories } from "@/data/blog/categories";
 import { useRouter } from "next/navigation";

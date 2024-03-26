@@ -8,7 +8,7 @@ import document from "../../../../public/document.svg";
 import { useRef, useState } from "react";
 import Loader from "@/design/Loader/Loader";
 
-import Checkbox from "@/components/UI/Button/Checkbox/Checkbox";
+import Checkbox from "@/components/UI/Checkbox/Checkbox";
 import Link from "next/link";
 import sendCustomOfferForm from "@/app/api/nodemailer/sendCustomOfferForm";
 

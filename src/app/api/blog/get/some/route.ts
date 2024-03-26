@@ -1,9 +1,9 @@
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { createResponse, response } from "../../response";
-import { prisma } from "../../../../../../prisma/prisma";
+import { createResponse, response } from "../../../response";
 import { blogArticle } from "../[pathname]/route";
 import "../../../firebaseInitialize";
 import { categories as blogCategories } from "@/data/blog/categories";
+import prisma from "../../../../../../prisma/prisma";
 
 const GET = async (request: Request) => {
   try {
@@ -58,8 +58,6 @@ const GET = async (request: Request) => {
 
 export { GET };
 
-export const dynamic = "force-dynamic";
-
 const categoriesType = blogCategories.map((data) => data.name) as string[] as [
   "prace licencjackie",
   "prace inżynierskie",
@@ -73,21 +71,26 @@ const categoriesType = blogCategories.map((data) => data.name) as string[] as [
   "wszystko"
 ];
 
+// export const dynamic = "force-dynamic";
+
 export type category = (typeof categoriesType)[number];
 
 const blogGetSome = async (skip: number = 0, take: number = 3, isServerSide = false, category: category = "wszystko"): Promise<response<blogArticle[]>> => {
-  if (isServerSide) {
-    const headers = await import("next/headers");
+  const request = new Request(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/some/?skip=${skip}&take=${take}&category=${category}`);
 
-    return await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/some/?skip=${skip}&take=${take}&category=${category}`, {
-      method: "GET",
-      cache: "no-cache",
-      headers: new Headers(headers.headers()),
-    }).then((response) => response.json());
+  if (isServerSide) {
+    const response = await GET(request).then((response) => response.json());
+
+    return response;
+    // const headers = await import("next/headers");
+    // return await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/some/?skip=${skip}&take=${take}&category=${category}`, {
+    //   method: "GET",
+    //   headers: new Headers(headers.headers()),
+    // }).then((response) => response.json());
   } else {
-    return await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/some/?skip=${skip}&take=${take}&category=${category}`, {
+    return await fetch(request, {
       method: "GET",
-      cache: "no-cache",
+      cache: "no-store",
     }).then((response) => response.json());
   }
 };
