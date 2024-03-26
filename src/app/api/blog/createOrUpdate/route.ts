@@ -5,60 +5,81 @@ import prisma from "../../../../../prisma/prisma";
 
 const POST = async (request: Request) => {
   try {
-    const requestData = await request.formData();
+    const { cookies } = await import("next/headers");
 
-    const articleId = requestData.get("id") as string | null;
+    const userDataCookie = cookies().get("user");
 
-    const doesBlogAlreadyExists = await prisma.blogArticle.findUnique({
-      where: {
-        id: articleId ? articleId : "",
-      },
-    });
+    if (userDataCookie) {
+      const userDataFromCookie = JSON.parse(cookies().get("user")!.value) as {
+        id: string;
+      };
 
-    if (doesBlogAlreadyExists) {
-      const existingBlog = doesBlogAlreadyExists;
-
-      const updatedBlogArticle = await prisma.blogArticle.update({
+      const foundUser = await prisma.user.findUnique({
         where: {
-          id: existingBlog.id,
-        },
-        data: {
-          pathname: requestData.get("pathname") as string,
-          sections: requestData.get("sections") as string,
-          title: requestData.get("title") as string,
-          category: requestData.get("category") as string,
-          entry: requestData.get("entry") as string,
+          id: userDataFromCookie.id,
+          isActivated: true,
         },
       });
 
-      const image = requestData.get("image") as null | File;
+      if (foundUser) {
+        const requestData = await request.formData();
 
-      if (image) {
-        const storage = getStorage();
+        const articleId = requestData.get("id") as string | null;
 
-        await uploadBytes(ref(storage, `blogArticles/${updatedBlogArticle.id}/image.webp`), requestData.get("image") as File);
-      }
-
-      return createResponse(200, null, { id: updatedBlogArticle.id });
-    } else {
-      try {
-        const createdBlogArticle = await prisma.blogArticle.create({
-          data: {
-            pathname: requestData.get("pathname") as string,
-            sections: requestData.get("sections") as string,
-            title: requestData.get("title") as string,
-            category: requestData.get("category") as string,
-            entry: requestData.get("entry") as string,
+        const doesBlogAlreadyExists = await prisma.blogArticle.findUnique({
+          where: {
+            id: articleId ? articleId : "",
           },
         });
 
-        const storage = getStorage();
+        if (doesBlogAlreadyExists) {
+          const existingBlog = doesBlogAlreadyExists;
 
-        await uploadBytes(ref(storage, `blogArticles/${createdBlogArticle.id}/image.webp`), requestData.get("image") as File);
+          const updatedBlogArticle = await prisma.blogArticle.update({
+            where: {
+              id: existingBlog.id,
+            },
+            data: {
+              pathname: requestData.get("pathname") as string,
+              sections: requestData.get("sections") as string,
+              title: requestData.get("title") as string,
+              category: requestData.get("category") as string,
+              entry: requestData.get("entry") as string,
+            },
+          });
 
-        return createResponse(200, null, { id: createdBlogArticle.id });
-      } catch (e) {
-        return createResponse(500, "Blog o podanym url już istnieje", null);
+          const image = requestData.get("image") as null | File;
+
+          if (image) {
+            const storage = getStorage();
+
+            await uploadBytes(ref(storage, `blogArticles/${updatedBlogArticle.id}/image.webp`), requestData.get("image") as File);
+          }
+
+          return createResponse(200, null, { id: updatedBlogArticle.id });
+        } else {
+          try {
+            const createdBlogArticle = await prisma.blogArticle.create({
+              data: {
+                pathname: requestData.get("pathname") as string,
+                sections: requestData.get("sections") as string,
+                title: requestData.get("title") as string,
+                category: requestData.get("category") as string,
+                entry: requestData.get("entry") as string,
+              },
+            });
+
+            const storage = getStorage();
+
+            await uploadBytes(ref(storage, `blogArticles/${createdBlogArticle.id}/image.webp`), requestData.get("image") as File);
+
+            return createResponse(200, null, { id: createdBlogArticle.id });
+          } catch (e) {
+            return createResponse(500, "Blog o podanym url już istnieje", null);
+          }
+        }
+      } else {
+        return createResponse(500, "Ten użytkownik nie ma upranień", null);
       }
     }
   } catch (e) {

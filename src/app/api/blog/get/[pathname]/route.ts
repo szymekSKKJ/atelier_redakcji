@@ -37,18 +37,31 @@ const GET = async (request: Request, { params }: { params: { pathname: string } 
     if (blogArticle) {
       const storage = getStorage();
 
-      const image = await getDownloadURL(ref(storage, `blogArticles/${blogArticle.id}/image.webp`));
+      try {
+        const image = await getDownloadURL(ref(storage, `blogArticles/${blogArticle.id}/image.webp`));
 
-      const formatedBlogArticle = {
-        ...blogArticle,
-        image: {
-          file: null,
-          url: image,
-        },
-        sections: JSON.parse(blogArticle!.sections as string),
-        entry: JSON.parse(blogArticle!.entry as string),
-      };
-      return createResponse(200, null, formatedBlogArticle);
+        const formatedBlogArticle = {
+          ...blogArticle,
+          image: {
+            file: null,
+            url: image,
+          },
+          sections: JSON.parse(blogArticle!.sections as string),
+          entry: JSON.parse(blogArticle!.entry as string),
+        };
+        return createResponse(200, null, formatedBlogArticle);
+      } catch {
+        const formatedBlogArticle = {
+          ...blogArticle,
+          image: {
+            file: null,
+            url: null,
+          },
+          sections: JSON.parse(blogArticle!.sections as string),
+          entry: JSON.parse(blogArticle!.entry as string),
+        };
+        return createResponse(200, null, formatedBlogArticle);
+      }
     } else {
       return createResponse(200, null, null);
     }

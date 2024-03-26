@@ -1,6 +1,7 @@
 import { blogGetByPathname } from "@/app/api/blog/get/[pathname]/route";
 import ArticleEditor from "@/components/ArticleEditor/ArticleEditor";
 import { url } from "inspector";
+import { redirect } from "next/navigation";
 
 interface componentProps {
   params: { blogArticlePathname: string };
@@ -44,6 +45,8 @@ const BlogEditorPageWithArticlePathname = async ({ params: { blogArticlePathname
 
   if (articleResponse.data) {
     return <ArticleEditor currentActiveArticle={articleResponse.data}></ArticleEditor>;
+  } else {
+    redirect("/blogEditor");
   }
 };
 

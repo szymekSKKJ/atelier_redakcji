@@ -33,19 +33,31 @@ const GET = async (request: Request) => {
 
     const formatedBlogArticles = await Promise.all(
       bolgArticles.map(async (data) => {
-        const storage = getStorage();
+        try {
+          const storage = getStorage();
 
-        const image = await getDownloadURL(ref(storage, `blogArticles/${data.id}/image.webp`));
+          const image = await getDownloadURL(ref(storage, `blogArticles/${data.id}/image.webp`));
 
-        return {
-          ...data,
-          image: {
-            file: null,
-            url: image,
-          },
-          sections: JSON.parse(data.sections as string),
-          entry: JSON.parse(data.entry as string),
-        };
+          return {
+            ...data,
+            image: {
+              file: null,
+              url: image,
+            },
+            sections: JSON.parse(data.sections as string),
+            entry: JSON.parse(data.entry as string),
+          };
+        } catch (e) {
+          return {
+            ...data,
+            image: {
+              file: null,
+              url: null,
+            },
+            sections: JSON.parse(data.sections as string),
+            entry: JSON.parse(data.entry as string),
+          };
+        }
       })
     );
 

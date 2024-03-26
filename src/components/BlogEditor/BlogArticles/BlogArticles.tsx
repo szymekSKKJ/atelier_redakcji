@@ -8,18 +8,15 @@ import Button from "@/components/UI/Button/Button";
 import { getMoreArticles } from "../BlogEditor";
 import Link from "next/link";
 import { category as blogArticleCategory } from "@/app/api/blog/get/some/route";
-import { useSignals } from "@preact/signals-react/runtime";
 
 interface componentsProps {
   blogArticles: blogArticle[];
-  currentSelectedCategory: blogArticleCategory | null;
+  currentSelectedCategory: blogArticleCategory;
 }
 
 const BlogArticles = ({ blogArticles, currentSelectedCategory }: componentsProps) => {
-  useSignals();
-
   const [areAllArticlesGot, setAreAllArticlesGot] = useState(false);
-  const [lastSelectedCategry, setLastSelectedCategry] = useState<null | blogArticleCategory>(null);
+  const [lastSelectedCategry, setLastSelectedCategry] = useState<blogArticleCategory>(currentSelectedCategory);
 
   return (
     <>

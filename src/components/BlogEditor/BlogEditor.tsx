@@ -42,7 +42,7 @@ export type activeBlogArticle = {
 const blogArticles = signal<blogArticle[]>([]);
 
 export const getMoreArticles = async (skip: number, category: blogArticleCategory, clear: boolean = false) => {
-  const blogArticlesLocal = await blogGetSome(skip, 10, false, category);
+  const blogArticlesLocal = await blogGetSome(skip, 25, false, category);
 
   if (blogArticlesLocal.data) {
     const copiedValue = structuredClone(clear ? [] : blogArticles.value);
@@ -68,14 +68,23 @@ const BlogEditor = () => {
   const [responseMessage, setResponseMessage] = useState<null | string>(null);
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
   const [isEmailLabelCopied, setIsEmailLabelCopied] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<blogArticleCategory>("wszystko");
 
   const inputSearchTimeoutRef = useRef<null | ReturnType<typeof setTimeout>>(null);
-  const selectElementRef = useRef<HTMLSelectElement | null>(null);
+
   const inputElementRef = useRef<null | HTMLInputElement>(null);
 
   useEffect(() => {
     if (isLoggedIn) {
-      getMoreArticles(0, selectElementRef.current!.value as blogArticleCategory);
+      const timeout = setTimeout(() => {
+        if (blogArticles.value.length === 0) {
+          getMoreArticles(0, selectedCategory);
+        }
+      });
+
+      return () => {
+        clearTimeout(timeout);
+      };
     }
   }, [isLoggedIn]);
 
@@ -172,7 +181,7 @@ const BlogEditor = () => {
                 }
 
                 inputSearchTimeoutRef.current = setTimeout(async () => {
-                  const foundArticlesResponse = await blogFind(thisInputElement.value, 10, 0, selectElementRef.current!.value as blogArticleCategory);
+                  const foundArticlesResponse = await blogFind(thisInputElement.value, 10, 0, selectedCategory);
 
                   if (foundArticlesResponse.data) {
                     blogArticles.value = foundArticlesResponse.data;
@@ -183,9 +192,9 @@ const BlogEditor = () => {
           <div className={`${styles.searchOptions}`}>
             <select
               defaultValue={"wszystko"}
-              ref={selectElementRef}
-              onInput={() => {
-                getMoreArticles(0, selectElementRef.current!.value as blogArticleCategory, true);
+              onInput={(event) => {
+                getMoreArticles(0, event.currentTarget.value as blogArticleCategory, true);
+                setSelectedCategory(event.currentTarget.value as blogArticleCategory);
                 inputElementRef.current!.value = "";
               }}>
               {articleCategories.map((data) => {
@@ -195,9 +204,7 @@ const BlogEditor = () => {
               })}
             </select>
           </div>
-          <BlogArticles
-            blogArticles={blogArticles.value}
-            currentSelectedCategory={selectElementRef.current ? (selectElementRef.current.value as blogArticleCategory) : null}></BlogArticles>
+          <BlogArticles blogArticles={blogArticles.value} currentSelectedCategory={selectedCategory}></BlogArticles>
         </>
       )}
     </div>

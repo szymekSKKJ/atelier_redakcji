@@ -1,6 +1,6 @@
 import BlogEditor from "@/components/BlogEditor/BlogEditor";
 
-const BlogEditorPage = () => {
+const BlogEditorPage = async () => {
   return <BlogEditor></BlogEditor>;
 };
 
