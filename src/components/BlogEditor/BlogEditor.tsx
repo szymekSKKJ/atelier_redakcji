@@ -1,19 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import styles from "./styles.module.scss";
+import { blogFind } from "@/app/api/blog/find/route";
+import { category as blogArticleCategory, blogGetSome } from "@/app/api/blog/get/some/route";
+import { userCreateOrLogin } from "@/app/api/user/createOrLogin/route";
+import { categories as articleCategories } from "@/data/blog/categories";
 import { signal } from "@preact/signals-react";
 import { useSignals } from "@preact/signals-react/runtime";
-import BlogArticles from "./BlogArticles/BlogArticles";
-import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
-import { blogGetSome, category as blogArticleCategory } from "@/app/api/blog/get/some/route";
-import { blogFind } from "@/app/api/blog/find/route";
-import { categories as articleCategories } from "@/data/blog/categories";
-import Button from "../UI/Button/Button";
-import logoImage from "../../../public/logo.svg";
 import Image from "next/image";
-import { userCreateOrLogin } from "@/app/api/user/createOrLogin/route";
+import { useEffect, useRef, useState } from "react";
+import logoImage from "../../../public/logo.svg";
+import Button from "../UI/Button/Button";
 import Checkbox from "../UI/Checkbox/Checkbox";
+import BlogArticles from "./BlogArticles/BlogArticles";
+import styles from "./styles.module.scss";
 
 export type activeBlogArticle = {
   id: string | null;
@@ -39,7 +38,20 @@ export type activeBlogArticle = {
   }[];
 };
 
-const blogArticles = signal<blogArticle[]>([]);
+const blogArticles = signal<
+  {
+    image: {
+      file: null;
+      url: string | null;
+    };
+    entry: any;
+    id: string;
+    createdAt: Date;
+    title: string;
+    pathname: string;
+    category: string;
+  }[]
+>([]);
 
 export const getMoreArticles = async (skip: number, category: blogArticleCategory, clear: boolean = false) => {
   const blogArticlesLocal = await blogGetSome(skip, 25, false, category);

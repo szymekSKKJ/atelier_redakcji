@@ -1,12 +1,22 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import Button from "../UI/Button/Button";
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 
 interface componentProps {
-  articles: blogArticle[];
+  articles: {
+    image: {
+      file: null;
+      url: string | null;
+    };
+    entry: any;
+    id: string;
+    createdAt: Date;
+    title: string;
+    pathname: string;
+    category: string;
+  }[];
   page?: null | "blog";
   callback?: () => void;
 }

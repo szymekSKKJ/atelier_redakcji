@@ -18,6 +18,14 @@ const GET = async (request: Request) => {
             orderBy: {
               createdAt: "desc",
             },
+            select: {
+              id: true,
+              entry: true,
+              title: true,
+              createdAt: true,
+              category: true,
+              pathname: true,
+            },
           })
         : await prisma.blogArticle.findMany({
             where: {
@@ -27,6 +35,14 @@ const GET = async (request: Request) => {
             take: parseInt(url.searchParams.get("take") as string),
             orderBy: {
               createdAt: "desc",
+            },
+            select: {
+              id: true,
+              entry: true,
+              title: true,
+              createdAt: true,
+              category: true,
+              pathname: true,
             },
           });
 
@@ -43,7 +59,6 @@ const GET = async (request: Request) => {
               file: null,
               url: image,
             },
-            sections: JSON.parse(data.sections as string),
             entry: JSON.parse(data.entry as string),
           };
         } catch (e) {
@@ -53,7 +68,6 @@ const GET = async (request: Request) => {
               file: null,
               url: null,
             },
-            sections: JSON.parse(data.sections as string),
             entry: JSON.parse(data.entry as string),
           };
         }
@@ -86,7 +100,27 @@ const categoriesType = blogCategories.map((data) => data.name) as string[] as [
 
 export type category = (typeof categoriesType)[number];
 
-const blogGetSome = async (skip: number = 0, take: number = 3, isServerSide = false, category: category = "wszystko"): Promise<response<blogArticle[]>> => {
+const blogGetSome = async (
+  skip: number = 0,
+  take: number = 3,
+  isServerSide = false,
+  category: category = "wszystko"
+): Promise<
+  response<
+    {
+      image: {
+        file: null;
+        url: string | null;
+      };
+      entry: any;
+      id: string;
+      createdAt: Date;
+      title: string;
+      pathname: string;
+      category: string;
+    }[]
+  >
+> => {
   const request = new Request(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/some/?skip=${skip}&take=${take}&category=${category}`);
 
   if (isServerSide) {

@@ -43,6 +43,14 @@ const GET = async (request: Request) => {
                 },
               ],
             },
+            select: {
+              id: true,
+              entry: true,
+              title: true,
+              createdAt: true,
+              category: true,
+              pathname: true,
+            },
           })
         : await prisma.blogArticle.findMany({
             take: parseInt(url.searchParams.get("take") as string),
@@ -74,6 +82,14 @@ const GET = async (request: Request) => {
                 ],
               },
             },
+            select: {
+              id: true,
+              entry: true,
+              title: true,
+              createdAt: true,
+              category: true,
+              pathname: true,
+            },
           });
 
     const formatedBlogArticles = await Promise.all(
@@ -87,9 +103,8 @@ const GET = async (request: Request) => {
             ...data,
             image: {
               file: null,
-              string: image,
+              url: image,
             },
-            content: JSON.parse(data.sections as string),
             entry: JSON.parse(data.entry as string),
           };
         } catch {
@@ -97,9 +112,8 @@ const GET = async (request: Request) => {
             ...data,
             image: {
               file: null,
-              string: null,
+              url: null,
             },
-            content: JSON.parse(data.sections as string),
             entry: JSON.parse(data.entry as string),
           };
         }
@@ -115,7 +129,27 @@ const GET = async (request: Request) => {
 
 export { GET };
 
-const blogFind = async (stringQuery: string, take: number = 10, skip: number = 0, category: category = "wszystko"): Promise<response<blogArticle[]>> => {
+const blogFind = async (
+  stringQuery: string,
+  take: number = 10,
+  skip: number = 0,
+  category: category = "wszystko"
+): Promise<
+  response<
+    {
+      image: {
+        file: null;
+        url: string | null;
+      };
+      entry: any;
+      id: string;
+      createdAt: Date;
+      title: string;
+      pathname: string;
+      category: string;
+    }[]
+  >
+> => {
   const formattedString = stringQuery.replace(/\s+/g, " ").trim().toLowerCase();
 
   return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/find/?stringOfWords=${formattedString}&take=${take}&skip=${skip}&category=${category}`, {

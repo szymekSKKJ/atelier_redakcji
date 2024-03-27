@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from "./styles.module.scss";
 import logo from "../../../public/logo.svg";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../UI/Button/Button";
 import arrowDown from "../../../public/arrow.svg";
 import arrowDownBlue from "../../../public/arrow down blue.svg";
@@ -13,9 +13,6 @@ import doubleArrowIcon from "../../../public/Double arrows.svg";
 import blogImage from "../../../public/BLOG.svg";
 import searchIcon from "../../../public/search.svg";
 import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
-import { blogFind } from "@/app/api/blog/find/route";
-import BlogArticlesBrief from "../BlogArticlesBrief/BlogArticlesBrief";
-import { blogGetSome } from "@/app/api/blog/get/some/route";
 
 const Navigation = () => {
   const router = useRouter();

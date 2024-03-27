@@ -5,7 +5,18 @@ import Button from "@/components/UI/Button/Button";
 import Link from "next/link";
 
 interface componentProps {
-  data: blogArticle;
+  data: {
+    image: {
+      file: null;
+      url: string | null;
+    };
+    entry: any;
+    id: string;
+    createdAt: Date;
+    title: string;
+    pathname: string;
+    category: string;
+  };
 }
 
 const Article = ({ data }: componentProps) => {

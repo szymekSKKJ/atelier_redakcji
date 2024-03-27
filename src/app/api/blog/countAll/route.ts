@@ -1,5 +1,6 @@
 import prisma from "../../../../../prisma/prisma";
 import { createResponse, response } from "../../response";
+import { category as articleCategory } from "../get/some/route";
 
 export const GET = async (request: Request) => {
   try {
@@ -23,9 +24,9 @@ export const GET = async (request: Request) => {
   }
 };
 
-export const blogCountAll = async (category: string): Promise<response<number>> => {
+export const blogCountAll = async (category: articleCategory): Promise<response<number | null>> => {
   return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/countAll/?category=${category}`, {
     method: "GET",
     cache: "no-store",
-  }).then((response) => response.json());
+  }).then((response) => response.json()) as Promise<response<number | null>>;
 };

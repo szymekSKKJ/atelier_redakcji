@@ -3,7 +3,6 @@ import styles from "./styles.module.scss";
 import Article from "@/components/allCategoriesPage/Article/Article";
 import Section13 from "@/components/sections/Section13/Section13";
 import Section11 from "@/components/sections/Section11/Section11";
-import Button from "@/components/UI/Button/Button";
 import doubleArrowsIcon from "../../../../../public/Double arrows.svg";
 import Link from "next/link";
 import Image from "next/image";

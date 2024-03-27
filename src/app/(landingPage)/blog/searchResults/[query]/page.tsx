@@ -8,8 +8,31 @@ const SearchResultsPage = async ({ params: { query } }: { params: { query: strin
   const decodedQuery = decodeURIComponent(query);
   const response = await blogFind(decodedQuery);
 
-  const formattedArticlesForQuery: blogArticle[][] = [];
-  const formattedArticlesIfNoneFound: blogArticle[][] = [];
+  const formattedArticlesForQuery: {
+    image: {
+      file: null;
+      url: string | null;
+    };
+    entry: any;
+    id: string;
+    createdAt: Date;
+    title: string;
+    pathname: string;
+    category: string;
+  }[][] = [];
+
+  const formattedArticlesIfNoneFound: {
+    image: {
+      file: null;
+      url: string | null;
+    };
+    entry: any;
+    id: string;
+    createdAt: Date;
+    title: string;
+    pathname: string;
+    category: string;
+  }[][] = [];
 
   if (response.data && response.data.length !== 0) {
     const foundArticles = response.data;
@@ -18,12 +41,9 @@ const SearchResultsPage = async ({ params: { query } }: { params: { query: strin
       if (index % 3 === 0) {
         const newArray = [];
         newArray.push(data);
-        newArray.push(data);
-        newArray.push(data);
+
         formattedArticlesForQuery.push(newArray);
       } else {
-        formattedArticlesForQuery.at(-1)!.push(data);
-        formattedArticlesForQuery.at(-1)!.push(data);
         formattedArticlesForQuery.at(-1)!.push(data);
       }
     });
@@ -36,13 +56,10 @@ const SearchResultsPage = async ({ params: { query } }: { params: { query: strin
       foundArticles.forEach((data, index) => {
         if (index % 3 === 0) {
           const newArray = [];
-          newArray.push(data);
-          newArray.push(data);
+
           newArray.push(data);
           formattedArticlesIfNoneFound.push(newArray);
         } else {
-          formattedArticlesIfNoneFound.at(-1)!.push(data);
-          formattedArticlesIfNoneFound.at(-1)!.push(data);
           formattedArticlesIfNoneFound.at(-1)!.push(data);
         }
       });
@@ -58,11 +75,7 @@ const SearchResultsPage = async ({ params: { query } }: { params: { query: strin
         formattedArticlesForQuery.map((data) => {
           return (
             <>
-              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-              <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+              <BlogArticlesBrief page="blog" key={data[0].id} articles={data}></BlogArticlesBrief>
             </>
           );
         })
@@ -75,11 +88,7 @@ const SearchResultsPage = async ({ params: { query } }: { params: { query: strin
           {formattedArticlesIfNoneFound.map((data) => {
             return (
               <>
-                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
-                <BlogArticlesBrief page="blog" key={crypto.randomUUID()} articles={data}></BlogArticlesBrief>
+                <BlogArticlesBrief page="blog" key={data[0].id} articles={data}></BlogArticlesBrief>
               </>
             );
           })}

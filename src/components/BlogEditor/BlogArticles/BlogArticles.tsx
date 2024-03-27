@@ -10,7 +10,18 @@ import Link from "next/link";
 import { category as blogArticleCategory } from "@/app/api/blog/get/some/route";
 
 interface componentsProps {
-  blogArticles: blogArticle[];
+  blogArticles: {
+    image: {
+      file: null;
+      url: string | null;
+    };
+    entry: any;
+    id: string;
+    createdAt: Date;
+    title: string;
+    pathname: string;
+    category: string;
+  }[];
   currentSelectedCategory: blogArticleCategory;
 }
 

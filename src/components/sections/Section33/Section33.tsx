@@ -1,13 +1,10 @@
 "use client";
 
-import styles from "./styles.module.scss";
-import SearchInput from "./SearchInput/SearchInput";
 import Button from "@/components/UI/Button/Button";
-import { useRef, useState } from "react";
-import { blogFind } from "@/app/api/blog/find/route";
-import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
-import BlogArticlesBrief from "@/components/BlogArticlesBrief/BlogArticlesBrief";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
+import SearchInput from "./SearchInput/SearchInput";
+import styles from "./styles.module.scss";
 
 const Section33 = () => {
   const router = useRouter();
