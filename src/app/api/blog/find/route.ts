@@ -152,7 +152,7 @@ const blogFind = async (
 > => {
   const formattedString = stringQuery.replace(/\s+/g, " ").trim().toLowerCase();
 
-  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/find/?stringOfWords=${formattedString}&take=${take}&skip=${skip}&category=${category}`, {
+  return await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/find/?stringOfWords=${formattedString}&take=${take}&skip=${skip}&category=${category}`, {
     method: "GET",
     cache: "no-store",
   }).then((response) => response.json());

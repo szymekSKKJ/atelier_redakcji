@@ -76,7 +76,7 @@ export { GET };
 export const dynamic = "force-dynamic";
 
 const blogGetByPathname = async (pathname: string): Promise<response<blogArticle>> => {
-  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/${pathname}`, {
+  return await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/get/${pathname}`, {
     method: "GET",
     cache: "no-store",
   }).then((response) => response.json());

@@ -130,7 +130,7 @@ const blogCreateOrUpdate = async (
   formData.append("title", title);
   formData.append("entry", JSON.stringify(entry));
 
-  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/createOrUpdate`, {
+  return await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/createOrUpdate`, {
     method: "POST",
     body: formData,
     cache: "no-store",

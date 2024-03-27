@@ -25,8 +25,8 @@ export const GET = async (request: Request) => {
 };
 
 export const blogCountAll = async (category: articleCategory): Promise<response<number | null>> => {
-  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/countAll/?category=${category}`, {
+  return (await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog/countAll/?category=${category}`, {
     method: "GET",
     cache: "no-store",
-  }).then((response) => response.json()) as Promise<response<number | null>>;
+  }).then((response) => response.json())) as Promise<response<number | null>>;
 };

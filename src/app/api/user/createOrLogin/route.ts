@@ -165,11 +165,11 @@ const userCreateOrLogin = async (
     formData.set("password", password);
   }
 
-  return fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/createOrLogin`, {
+  return (await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/createOrLogin`, {
     method: "POST",
     cache: "no-store",
     body: formData,
-  }).then((response) => response.json()) as Promise<
+  }).then((response) => response.json())) as Promise<
     response<{
       message: string | null | undefined;
       user:
