@@ -7,6 +7,12 @@ import Section21 from "@/components/sections/Section21/Section21";
 import Section4 from "@/components/sections/Section4/Section4";
 import Section5 from "@/components/sections/Section5/Section5";
 import Section6 from "@/components/sections/Section6/Section6";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Atelier redakcji - oferta",
+  description: "Oferta",
+};
 
 const Offer = () => {
   return (

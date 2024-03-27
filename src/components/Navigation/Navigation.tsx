@@ -1,28 +1,23 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import styles from "./styles.module.scss";
-import logo from "../../../public/logo.svg";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Button from "../UI/Button/Button";
-import arrowDown from "../../../public/arrow.svg";
 import arrowDownBlue from "../../../public/arrow down blue.svg";
-import doubleArrowIcon from "../../../public/Double arrows.svg";
+import arrowDown from "../../../public/arrow.svg";
 import blogImage from "../../../public/BLOG.svg";
+import doubleArrowIcon from "../../../public/Double arrows.svg";
+import logo from "../../../public/logo.svg";
 import searchIcon from "../../../public/search.svg";
-import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
+import Button from "../UI/Button/Button";
+import styles from "./styles.module.scss";
 
 const Navigation = () => {
   const router = useRouter();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-  const [paginationSkipValue, setPaginationSkipVaue] = useState(0);
-  const [areAllArticlesDisplayed, setAreAllArticlesDisplayed] = useState(false);
-
-  const formattedArticles: blogArticle[][] = [];
 
   const pathname = usePathname();
   const formattedPathnameArray = pathname.split("/").splice(1, pathname.split("/").length);
@@ -137,7 +132,8 @@ const Navigation = () => {
       <div className={`${styles.wrapper}`}>
         {linksContentForNotBlog.includes(`/${formattedPathnameArray.at(-1)!}`) === false &&
         formattedPathnameArray.at(-1)! !== "termsOfService" &&
-        formattedPathnameArray.at(-1)! !== "privacyPolicy" ? (
+        formattedPathnameArray.at(-1)! !== "privacyPolicy" &&
+        formattedPathnameArray.at(-2)! !== "offer" ? (
           <nav className={`${styles.blogMenu}`}>
             <div className={`${styles.wrapper}`}>
               <div className={`${styles.wrapper1}`}>

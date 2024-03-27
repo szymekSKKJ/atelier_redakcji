@@ -1,6 +1,12 @@
 import styles from "./styles.module.scss";
 import logoImage from "../../../../public/logo.svg";
 import Image from "next/image";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Atelier redakcji - ogólne warunki świadczenia usług",
+  description: "Ogólne warunki świadczenia usług",
+};
 
 const data = [
   {

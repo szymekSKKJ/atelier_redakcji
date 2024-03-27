@@ -1,4 +1,10 @@
+import { Metadata } from "next";
 import styles from "./styles.module.scss";
+
+export const metadata: Metadata = {
+  title: "Atelier redakcji - polityka prywatności",
+  description: "Polityka prywatności",
+};
 
 const data = [
   {

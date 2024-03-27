@@ -1,13 +1,5 @@
-import type { Metadata } from "next";
-import "./global.scss";
 import { Mulish } from "next/font/google";
-import Navigation from "@/components/Navigation/Navigation";
-import Footer from "@/components/Footer/Footer";
-
-export const metadata: Metadata = {
-  title: "Atelier redakcji - strona główna",
-  description: "Test description",
-};
+import "./global.scss";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 
