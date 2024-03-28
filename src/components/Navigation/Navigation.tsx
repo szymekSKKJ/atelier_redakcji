@@ -133,7 +133,6 @@ const Navigation = () => {
 
   useEffect(() => {
     const scroll = (event: Event) => {
-      console.log(isTouchDevice());
       if (isTouchDevice() === false) {
         if (lastScrollYOfWindow < window.scrollY) {
           setIsBlogUpperNavigationVisible(false);
