@@ -263,6 +263,7 @@
     padding: 18px 30px 36px 30px;
     position: relative;
     box-shadow: 0px 4px 40px #0e4d7a33;
+    transition: 250ms;
 
     @media screen and (max-width: 425px) {
       padding: 18px 15px 36px 15px;
@@ -643,6 +644,10 @@
     .hamburgerMenu.open {
       translate: 0% 0px;
     }
+  }
+
+  nav.blogMenu.blogUpperNavigationNotVisible {
+    transform: translateY(-87px);
   }
 }
 

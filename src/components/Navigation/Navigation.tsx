@@ -18,6 +18,8 @@ const Navigation = () => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const [lastScrollYOfWindow, setLastScrollYOfWindow] = useState(0);
+  const [isBlogUpperNavigationVisible, setIsBlogUpperNavigationVisible] = useState(true);
 
   const pathname = usePathname();
   const formattedPathnameArray = pathname.split("/").splice(1, pathname.split("/").length);
@@ -127,6 +129,23 @@ const Navigation = () => {
     }
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    const scroll = (event: Event) => {
+      if (lastScrollYOfWindow < window.scrollY) {
+        setIsBlogUpperNavigationVisible(false);
+      } else {
+        setIsBlogUpperNavigationVisible(true);
+      }
+      setLastScrollYOfWindow(window.scrollY);
+    };
+
+    window.addEventListener("scroll", scroll);
+
+    return () => {
+      window.removeEventListener("scroll", scroll);
+    };
+  }, [lastScrollYOfWindow]);
+
   return (
     <>
       <div className={`${styles.wrapper}`}>
@@ -134,7 +153,7 @@ const Navigation = () => {
         formattedPathnameArray.at(-1)! !== "warunki-swiadczenia-uslug" &&
         formattedPathnameArray.at(-1)! !== "polityka-prywatnosci" &&
         formattedPathnameArray.at(-2)! !== "oferta" ? (
-          <nav className={`${styles.blogMenu}`}>
+          <nav className={`${styles.blogMenu} ${isBlogUpperNavigationVisible ? "" : styles.blogUpperNavigationNotVisible}`}>
             <div className={`${styles.wrapper}`}>
               <div className={`${styles.wrapper1}`}>
                 <Link href={`/`}>
