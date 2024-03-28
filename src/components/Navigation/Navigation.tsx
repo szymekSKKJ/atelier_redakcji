@@ -13,6 +13,8 @@ import searchIcon from "../../../public/search.svg";
 import Button from "../UI/Button/Button";
 import styles from "./styles.module.scss";
 
+const isTouchDevice = () => "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
 const Navigation = () => {
   const router = useRouter();
 
@@ -131,12 +133,15 @@ const Navigation = () => {
 
   useEffect(() => {
     const scroll = (event: Event) => {
-      if (lastScrollYOfWindow < window.scrollY) {
-        setIsBlogUpperNavigationVisible(false);
-      } else {
-        setIsBlogUpperNavigationVisible(true);
+      console.log(isTouchDevice());
+      if (isTouchDevice() === false) {
+        if (lastScrollYOfWindow < window.scrollY) {
+          setIsBlogUpperNavigationVisible(false);
+        } else {
+          setIsBlogUpperNavigationVisible(true);
+        }
+        setLastScrollYOfWindow(window.scrollY);
       }
-      setLastScrollYOfWindow(window.scrollY);
     };
 
     window.addEventListener("scroll", scroll);
