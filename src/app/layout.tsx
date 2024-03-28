@@ -2,7 +2,7 @@ import { Mulish } from "next/font/google";
 import "./global.scss";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-// import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const mulishFont = Mulish({ subsets: ["latin"] });
 
@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <Analytics />
         <SpeedInsights />
+        {/* <GoogleAnalytics gaId={}></GoogleAnalytics> */}
       </body>
     </html>
   );

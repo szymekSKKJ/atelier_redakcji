@@ -95,13 +95,13 @@ const Navigation = () => {
       id: 2,
       href: "/blog/kategorie/?category=wszystko&page=1",
       content: "Artykuły",
-      activeCondition: "allCategories",
+      activeCondition: "kategorie",
     },
     {
       id: 3,
       href: "/blog/kategorie/?category=wszystko&page=1",
       content: "Kategorie artykułów",
-      activeCondition: "allCategories",
+      activeCondition: null,
       subLinks: [
         { id: 1, content: "Prace licencjackie", href: "/blog/kategorie/?category=prace-licenjcackie&page=1" },
         { id: 2, content: "Prace inżynierskie", href: "/blog/kategorie/?category=prace-inzynierskie&page=1" },
@@ -280,7 +280,6 @@ const Navigation = () => {
                     </Link>
                   );
                 })()}
-
                 <button
                   aria-label="Otwórz / zamknij nawigację"
                   className={`${styles.toggle_mobile_navigation} ${isMobileMenuOpen ? styles.open : ""}`}
