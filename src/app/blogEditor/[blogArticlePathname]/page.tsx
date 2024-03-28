@@ -1,7 +1,16 @@
 import { blogGetByPathname } from "@/app/api/blog/get/[pathname]/route";
 import ArticleEditor from "@/components/ArticleEditor/ArticleEditor";
-import { url } from "inspector";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    googleBot: {
+      index: false,
+    },
+  },
+};
 
 interface componentProps {
   params: { blogArticlePathname: string };

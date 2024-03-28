@@ -36,7 +36,7 @@ const Section18 = () => {
             nasze ukochane atelierskie grono Klientów oraz partnerów biznesowych ciągle rośnie w nsiłę. Do tego kręgu z największą przyjemnością zapraszamy i
             Ciebie!
           </p>
-          <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute="/offer">
+          <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px", fontSize: "16px" }} changeRoute="/oferta">
             Poznaj ofertę
           </Button>
         </article>

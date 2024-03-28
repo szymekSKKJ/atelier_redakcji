@@ -1,4 +1,14 @@
 import { userActivateAccount } from "@/app/api/user/activateAccount/[uuid]/route";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    googleBot: {
+      index: false,
+    },
+  },
+};
 
 interface componentProps {
   params: { uuid: string };
@@ -6,8 +16,6 @@ interface componentProps {
 
 const activateAccountPage = async ({ params: { uuid } }: componentProps) => {
   const activatedAccountResponseData = await userActivateAccount(uuid);
-
-  console.log(activatedAccountResponseData);
 
   return <>{activatedAccountResponseData.data ? <p>{activatedAccountResponseData.data.message}</p> : <p>{activatedAccountResponseData.error}</p>}</>;
 };

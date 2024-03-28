@@ -553,6 +553,8 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
                                     setArticleData((currentValue) => {
                                       const copiedCurrentValue = structuredClone(currentValue);
 
+                                      console.log(value);
+
                                       const foundContent = copiedCurrentValue.sections
                                         .find((data) => data.order === order)!
                                         .paragraphs.find((data) => data.order === orderLocal)!;

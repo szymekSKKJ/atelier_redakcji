@@ -378,7 +378,7 @@ const Section23 = () => {
           </p>
           <div className={`${styles.wrapper}`}>
             <p>Wycena indywidualna</p>
-            <Link href="/contact">
+            <Link href="/kontakt">
               Zapytaj mailowo <ArrowIcon></ArrowIcon>
             </Link>
           </div>

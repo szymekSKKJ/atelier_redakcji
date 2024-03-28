@@ -6,7 +6,7 @@ import Section24 from "@/components/sections/Section24/Section24";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Atelier redakcji - cennik",
+  title: "Cennik - Atelier redakcji tekstu",
   description: "Cennik",
 };
 

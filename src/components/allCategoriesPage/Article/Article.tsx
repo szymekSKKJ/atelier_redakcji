@@ -1,4 +1,3 @@
-import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";

@@ -22,7 +22,7 @@ const Section33 = () => {
         onClick={async (event) => {
           const searchInputElement = event.currentTarget.parentElement?.querySelector("input") as HTMLInputElement;
 
-          router.push(`/blog/searchResults/${searchInputElement.value}`);
+          router.push(`/blog/wyniki-wyszukiwania/${searchInputElement.value}`);
         }}>
         Szukaj
       </Button>

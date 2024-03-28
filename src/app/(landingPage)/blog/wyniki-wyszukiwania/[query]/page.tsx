@@ -1,8 +1,17 @@
 import styles from "./styles.module.scss";
 import { blogFind } from "@/app/api/blog/find/route";
-import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import { blogGetSome } from "@/app/api/blog/get/some/route";
 import BlogArticlesBrief from "@/components/BlogArticlesBrief/BlogArticlesBrief";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    googleBot: {
+      index: false,
+    },
+  },
+};
 
 const SearchResultsPage = async ({ params: { query } }: { params: { query: string } }) => {
   const decodedQuery = decodeURIComponent(query);

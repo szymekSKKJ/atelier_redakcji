@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Atelier redakcji - ogólne warunki świadczenia usług",
+  title: "Ogólne warunki świadczenia usług - Atelier redakcji tekstu",
   description: "Ogólne warunki świadczenia usług",
 };
 

@@ -217,6 +217,17 @@
         flex-direction: column;
         gap: 25px;
 
+        a {
+          color: #0e4d7a;
+          cursor: pointer;
+          transition: 250ms;
+          text-decoration: underline;
+
+          &:hover {
+            filter: brightness(1.2);
+          }
+        }
+
         p {
           font-weight: 400;
           font-size: 24px;
@@ -367,6 +378,17 @@
               font-weight: 800;
               margin-top: -4px;
 
+              a {
+                color: #0e4d7a;
+                cursor: pointer;
+                transition: 250ms;
+                text-decoration: underline;
+
+                &:hover {
+                  filter: brightness(1.2);
+                }
+              }
+
               @media screen and (max-width: 425px) {
                 font-size: 24px;
               }
@@ -388,6 +410,17 @@
 
             @media screen and (max-width: 425px) {
               font-size: 18px;
+            }
+
+            a {
+              color: #0e4d7a;
+              cursor: pointer;
+              transition: 250ms;
+              text-decoration: underline;
+
+              &:hover {
+                filter: brightness(1.2);
+              }
             }
 
             p {

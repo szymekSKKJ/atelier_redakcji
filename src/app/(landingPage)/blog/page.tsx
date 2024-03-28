@@ -27,7 +27,7 @@ const Blog = async () => {
           {blogAriclesResponse1.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse1.data}></BlogArticlesBrief>}
           {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse.data}></BlogArticlesBrief>}
 
-          <Link href={`/blog/allCategories`}>
+          <Link href={`/blog/kategorie`}>
             <Button theme="transparent-blue" style={{ padding: "20px 30px 20px 30px" }}>
               Zobacz wszystkie artykuły
             </Button>
@@ -54,7 +54,7 @@ const Blog = async () => {
           Podstawowe <span>pojęcia i porady językowe</span>
         </p>
         {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse2.data!}></BlogArticlesBrief>}
-        <Link href={`/blog/allCategories?category=wszystko&page=1`}>
+        <Link href={`/blog/kategorie?category=wszystko&page=1`}>
           Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
         </Link>
         <hr></hr>
@@ -84,7 +84,7 @@ const Blog = async () => {
             Prace <span>licencjackie</span>
           </p>
           {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse4.data!}></BlogArticlesBrief>}
-          <Link href={`/blog/allCategories?category=prace-licenjcackie&page=1`}>
+          <Link href={`/blog/kategorie?category=prace-licenjcackie&page=1`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
           <hr></hr>
@@ -98,7 +98,7 @@ const Blog = async () => {
             Prace <span>inżynierskie</span>
           </p>
           {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse5.data!}></BlogArticlesBrief>}
-          <Link href={`/blog/allCategories?category=prace-inzynierskie&page=1`}>
+          <Link href={`/blog/kategorie?category=prace-inzynierskie&page=1`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
           <hr></hr>
@@ -112,7 +112,7 @@ const Blog = async () => {
             Prace <span>magisterskie</span>
           </p>
           {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse6.data!}></BlogArticlesBrief>}
-          <Link href={`/blog/allCategories?category=prace-magisterskie&page=1`}>
+          <Link href={`/blog/kategorie?category=prace-magisterskie&page=1`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
           <hr></hr>
@@ -126,7 +126,7 @@ const Blog = async () => {
             Prace <span>doktorskie i habilitacyjne</span>
           </p>
           {blogAriclesResponse.data && <BlogArticlesBrief page={"blog"} articles={blogAriclesResponse7.data!}></BlogArticlesBrief>}
-          <Link href={`/blog/allCategories?category=prace-doktorskie-i-habilitacyjne&page=1`}>
+          <Link href={`/blog/kategorie?category=prace-doktorskie-i-habilitacyjne&page=1`}>
             Więcej artykułów z tej kategorii <Image src={doubleArrowsIcon} alt="Ikonka dwóch strzałek"></Image>
           </Link>
           <hr></hr>

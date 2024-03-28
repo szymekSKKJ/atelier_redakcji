@@ -97,6 +97,8 @@ const ContextMenu = ({
     onRemove: () => void;
   };
 }) => {
+  const clickedElement = contextMenuOptions.event?.target as HTMLElement;
+
   return (
     <span
       onMouseDown={(event) => {
@@ -118,6 +120,61 @@ const ContextMenu = ({
         }}>
         <i className="fa-solid fa-italic"></i>
       </button>
+      {clickedElement.tagName !== "A" && (
+        <button
+          className={`${styles.option}`}
+          onClick={async () => {
+            try {
+              const selection = window.getSelection();
+
+              const copiedUrl = await navigator.clipboard.readText();
+
+              if (selection) {
+                const anchorParentElement = selection.anchorNode!.parentElement as HTMLElement;
+                const focusParentElement = selection.focusNode!.parentElement as HTMLElement;
+
+                const selectedText = selection.toString();
+                const range = selection.getRangeAt(0);
+                const aElement = document.createElement("a");
+                aElement.href = copiedUrl;
+
+                aElement.textContent = selectedText;
+
+                range.deleteContents();
+                range.insertNode(aElement);
+
+                if (anchorParentElement.tagName === "A") {
+                  clickedElement.insertBefore(document.createTextNode(anchorParentElement.innerText), anchorParentElement);
+                  anchorParentElement.remove();
+                }
+
+                if (focusParentElement.tagName === "A") {
+                  clickedElement.insertBefore(document.createTextNode(focusParentElement.innerText), focusParentElement);
+                  focusParentElement.remove();
+                }
+              }
+            } catch {}
+          }}>
+          <i className="fa-solid fa-link"></i>
+        </button>
+      )}
+      {clickedElement.tagName === "A" && (
+        <button
+          className={`${styles.option}`}
+          onClick={() => {
+            const selection = window.getSelection();
+            const parentElement = clickedElement.parentElement as HTMLElement;
+
+            if (selection) {
+              const text = clickedElement.innerText;
+              parentElement.insertBefore(document.createTextNode(text), clickedElement);
+
+              clickedElement.remove();
+            }
+          }}>
+          <i className="fa-solid fa-link-slash"></i>
+        </button>
+      )}
       {contextMenuOptions.editableChildTagName === "table" && (
         <button
           className={`${styles.option}`}
@@ -314,11 +371,15 @@ const Editable = ({ children, placeholder = "Edytuj", onRemove, onSave }: compon
       }
     },
     onBlur: (event) => {
-      const clonedThisElement = event.currentTarget.cloneNode(true) as HTMLElement;
+      const thisElement = event.currentTarget as HTMLElement;
 
-      while (clonedThisElement.attributes.length > 0) clonedThisElement.removeAttribute(clonedThisElement.attributes[0].name);
+      setTimeout(() => {
+        const clonedThisElement = thisElement.cloneNode(true) as HTMLElement;
 
-      onSave(clonedThisElement.outerHTML);
+        while (clonedThisElement.attributes.length > 0) clonedThisElement.removeAttribute(clonedThisElement.attributes[0].name);
+
+        onSave(clonedThisElement.outerHTML);
+      }, 100);
     },
   });
 

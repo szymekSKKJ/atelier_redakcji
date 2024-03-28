@@ -3,9 +3,9 @@ import { createResponse, response } from "../../response";
 import { category as articleCategory } from "../get/some/route";
 
 export const GET = async (request: Request) => {
-  try {
-    const url = new URL(request.url);
+  const url = new URL(request.url);
 
+  try {
     const category = url.searchParams.get("category") as string;
 
     const response =

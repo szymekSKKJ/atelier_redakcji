@@ -42,7 +42,7 @@ const Section10 = () => {
         </div>
         <p className={`${styles.caption3}`}>
           Możesz też skorzystać z{" "}
-          <Link href={"./contact#contactForm"}>
+          <Link href={"./kontakt#contactForm"}>
             <mark>naszego formularza.</mark>
           </Link>
         </p>

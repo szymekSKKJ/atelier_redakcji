@@ -39,30 +39,30 @@ const Navigation = () => {
       id: 3,
       content: "Dlaczego my?",
       styles: [],
-      href: "/whyUs",
+      href: "/dlaczego-my",
     },
     {
       id: 4,
       content: "Oferta",
       styles: [],
-      href: "/offer",
+      href: "/oferta",
       subLinks: [
-        { id: 1, content: "Prace licencjackie", href: "/offer/prace-licenjcackie" },
-        { id: 2, content: "Prace inżynierskie", href: "/offer/prace-inzynierskie" },
-        { id: 3, content: "Prace magisterskie", href: "/offer/prace-magisterskie" },
-        { id: 4, content: "Prace doktorskie i habilitacyjne", href: "/offer/prace-doktorskie-i-habilitacyjne" },
-        { id: 5, content: "Prace zaliczeniowe", href: "/offer/prace-zaliczeniowe" },
-        { id: 6, content: "Prace dyplomowe", href: "/offer/prace-dyplomowe" },
-        { id: 7, content: "Prace naukowe", href: "/offer/publikacje-naukowe" },
-        { id: 8, content: "Teksty specjalistyczne", href: "/offer/teksty-specjalistyczne" },
-        { id: 9, content: "Inne teksty", href: "/offer/inne-teksty" },
+        { id: 1, content: "Prace licencjackie", href: "/oferta/prace-licencjackie" },
+        { id: 2, content: "Prace inżynierskie", href: "/oferta/prace-inzynierskie" },
+        { id: 3, content: "Prace magisterskie", href: "/oferta/prace-magisterskie" },
+        { id: 4, content: "Prace doktorskie i habilitacyjne", href: "/oferta/prace-doktorskie-i-habilitacyjne" },
+        { id: 5, content: "Prace zaliczeniowe", href: "/oferta/prace-zaliczeniowe" },
+        { id: 6, content: "Prace dyplomowe", href: "/oferta/prace-dyplomowe" },
+        { id: 7, content: "Prace naukowe", href: "/oferta/publikacje-naukowe" },
+        { id: 8, content: "Teksty specjalistyczne", href: "/oferta/teksty-specjalistyczne" },
+        { id: 9, content: "Inne teksty", href: "/oferta/inne-teksty" },
       ],
     },
     {
       id: 5,
       content: "Cennik",
       styles: [],
-      href: "/priceList",
+      href: "/cennik",
     },
     {
       id: 6,
@@ -74,7 +74,7 @@ const Navigation = () => {
       id: 7,
       content: "Kontakt",
       styles: [],
-      href: "/contact",
+      href: "/kontakt",
     },
     {
       id: 8,
@@ -93,26 +93,26 @@ const Navigation = () => {
     },
     {
       id: 2,
-      href: "/blog/allCategories",
+      href: "/blog/kategorie/?category=wszystko&page=1",
       content: "Artykuły",
       activeCondition: "allCategories",
     },
     {
       id: 3,
-      href: "/blog",
+      href: "/blog/kategorie/?category=wszystko&page=1",
       content: "Kategorie artykułów",
-      activeCondition: "allCategoriesw",
+      activeCondition: "allCategories",
       subLinks: [
-        { id: 1, content: "Prace licencjackie", href: "/blog/allCategories/?category=prace-licenjcackie&page=1" },
-        { id: 2, content: "Prace inżynierskie", href: "/blog/allCategories/?category=prace-inzynierskie&page=1" },
-        { id: 3, content: "Prace magisterskie", href: "/blog/allCategories/?category=prace-magisterskie&page=1" },
-        { id: 4, content: "Prace doktorskie i habilitacyjne", href: "/blog/allCategories/?category=prace-doktorskie-i-habilitacyjne&page=1" },
-        { id: 5, content: "Prace zaliczeniowe", href: "/blog/allCategories/?category=prace-zaliczeniowe&page=1" },
-        { id: 6, content: "Prace dyplomowe", href: "/blog/allCategories/?category=prace-dyplomowe&page=1" },
-        { id: 7, content: "Prace naukowe", href: "/blog/allCategories/?category=prace-naukowe&page=1" },
-        { id: 8, content: "Teksty specjalistyczne", href: "/blog/allCategories/?category=teksty-specjalistyczne&page=1" },
-        { id: 9, content: "Inne teksty", href: "/blog/allCategories/?category=inne-teksty&page=1" },
-        { id: 10, content: "Wszystko", href: "/blog/allCategories/?category=wszystko&page=1" },
+        { id: 1, content: "Prace licencjackie", href: "/blog/kategorie/?category=prace-licenjcackie&page=1" },
+        { id: 2, content: "Prace inżynierskie", href: "/blog/kategorie/?category=prace-inzynierskie&page=1" },
+        { id: 3, content: "Prace magisterskie", href: "/blog/kategorie/?category=prace-magisterskie&page=1" },
+        { id: 4, content: "Prace doktorskie i habilitacyjne", href: "/blog/kategorie/?category=prace-doktorskie-i-habilitacyjne&page=1" },
+        { id: 5, content: "Prace zaliczeniowe", href: "/blog/kategorie/?category=prace-zaliczeniowe&page=1" },
+        { id: 6, content: "Prace dyplomowe", href: "/blog/kategorie/?category=prace-dyplomowe&page=1" },
+        { id: 7, content: "Prace naukowe", href: "/blog/kategorie/?category=prace-naukowe&page=1" },
+        { id: 8, content: "Teksty specjalistyczne", href: "/blog/kategorie/?category=teksty-specjalistyczne&page=1" },
+        { id: 9, content: "Inne teksty", href: "/blog/kategorie/?category=inne-teksty&page=1" },
+        { id: 10, content: "Wszystko", href: "/blog/kategorie/?category=wszystko&page=1" },
       ],
     },
   ];
@@ -150,7 +150,7 @@ const Navigation = () => {
                     onKeyDown={(event) => {
                       if (event.key === "Enter") {
                         const inputElement = event.currentTarget as HTMLInputElement;
-                        router.push(`/blog/searchResults/${inputElement.value}`);
+                        router.push(`/blog/wyniki-wyszukiwania/${inputElement.value}`);
                       }
                     }}></input>
                 </div>
@@ -196,7 +196,7 @@ const Navigation = () => {
                       onKeyDown={(event) => {
                         if (event.key === "Enter") {
                           const inputElement = event.currentTarget as HTMLInputElement;
-                          router.push(`/blog/searchResults/${inputElement.value}`);
+                          router.push(`/blog/wyniki-wyszukiwania/${inputElement.value}`);
                         }
                       }}></input>
                   </div>

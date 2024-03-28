@@ -119,7 +119,7 @@ const CustomOfferForm = ({ theme = "dark" }: props) => {
           <div className={`${styles.input_wrapper} ${styles.agree}`}>
             <Checkbox required>
               Wysyłając zgłoszenie wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na wiadomość. Więcej informacji w{" "}
-              <Link href="/privacyPolicy">Polityce prywatności.</Link>
+              <Link href="/polityka-prywatnosci">Polityce prywatności.</Link>
             </Checkbox>
           </div>
           <Button

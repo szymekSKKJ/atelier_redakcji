@@ -13,7 +13,7 @@ import Section11 from "@/components/sections/Section11/Section11";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Atelier redakcji - strona główna",
+  title: "Korekta i redagowanie tekstu | Korekta online - Atelier-redakcji",
   description: "Strona główna",
 };
 

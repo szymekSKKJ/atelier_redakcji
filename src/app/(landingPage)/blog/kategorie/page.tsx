@@ -19,7 +19,7 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
 
   const numberOfArticlesToDisplayPerPage = 6;
 
-  const allArticlesCountResponse = await blogCountAll(foundCurrentCategory.toLocaleLowerCase());
+  const allArticlesCountResponse = await blogCountAll(foundCurrentCategory);
 
   const buttonsCount = allArticlesCountResponse.data ? Math.ceil(allArticlesCountResponse.data / numberOfArticlesToDisplayPerPage) : 1;
 
@@ -29,7 +29,7 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
     for (let i = 1; i <= buttonsCount; i++) {
       if (i === 1 && buttonsCount !== 1) {
         paginationButtonsElements.push(
-          <Link href={`/blog/allCategories/?category=${category}&page=${i}`}>
+          <Link href={`/blog/kategorie/?category=${category}&page=${i}`}>
             <button className={`${parseInt(page) === i ? styles.current : ""}`}>{i}</button>
           </Link>
         );
@@ -39,14 +39,14 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
         if (i >= 3) {
           if (i >= 4) {
             paginationButtonsElements.push(
-              <Link href={`/blog/allCategories/?category=${category}&page=${i - 2}`}>
+              <Link href={`/blog/kategorie/?category=${category}&page=${i - 2}`}>
                 <button className={`${parseInt(page) === i - 2 ? styles.current : ""}`}>{i - 2}</button>
               </Link>
             );
           }
 
           paginationButtonsElements.push(
-            <Link href={`/blog/allCategories/?category=${category}&page=${i - 1}`}>
+            <Link href={`/blog/kategorie/?category=${category}&page=${i - 1}`}>
               <button className={`${parseInt(page) === i - 1 ? styles.current : ""}`}>{i - 1}</button>
             </Link>
           );
@@ -55,14 +55,14 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
         if (i === buttonsCount) {
           if (i + 1 < buttonsCount) {
             paginationButtonsElements.push(
-              <Link href={`/blog/allCategories/?category=${category}&page=${i + 1}`}>
+              <Link href={`/blog/kategorie/?category=${category}&page=${i + 1}`}>
                 <button className={`${parseInt(page) === i + 1 ? styles.current : ""}`}>{i + 1}</button>
               </Link>
             );
 
             if (i + 2 < buttonsCount) {
               paginationButtonsElements.push(
-                <Link href={`/blog/allCategories/?category=${category}&page=${i + 2}`}>
+                <Link href={`/blog/kategorie/?category=${category}&page=${i + 2}`}>
                   <button className={`${parseInt(page) === i + 2 ? styles.current : ""}`}>{i + 2}</button>
                 </Link>
               );
@@ -72,7 +72,7 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
 
         if (i !== 1 && i !== buttonsCount) {
           paginationButtonsElements.push(
-            <Link href={`/blog/allCategories/?category=${category}&page=${i}`}>
+            <Link href={`/blog/kategorie/?category=${category}&page=${i}`}>
               <button className={`${parseInt(page) === i ? styles.current : ""}`}>{i}</button>
             </Link>
           );
@@ -81,14 +81,14 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
         if (i !== buttonsCount) {
           if (i + 1 < buttonsCount) {
             paginationButtonsElements.push(
-              <Link href={`/blog/allCategories/?category=${category}&page=${i + 1}`}>
+              <Link href={`/blog/kategorie/?category=${category}&page=${i + 1}`}>
                 <button className={`${parseInt(page) === i + 1 ? styles.current : ""}`}>{i + 1}</button>
               </Link>
             );
 
             if (i + 2 < buttonsCount) {
               paginationButtonsElements.push(
-                <Link href={`/blog/allCategories/?category=${category}&page=${i + 2}`}>
+                <Link href={`/blog/kategorie/?category=${category}&page=${i + 2}`}>
                   <button className={`${parseInt(page) === i + 2 ? styles.current : ""}`}>{i + 2}</button>
                 </Link>
               );
@@ -99,7 +99,7 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
 
       if (i === buttonsCount) {
         paginationButtonsElements.push(
-          <Link href={`/blog/allCategories/?category=${category}&page=${i}`}>
+          <Link href={`/blog/kategorie/?category=${category}&page=${i}`}>
             <button className={`${parseInt(page) === i ? styles.current : ""}`}>{i}</button>
           </Link>
         );
@@ -140,7 +140,7 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
               const { pathname, name } = data;
 
               return (
-                <Link key={pathname} className={`${category === pathname ? styles.choosen : ""}`} href={`/blog/allCategories?category=${pathname}&page=1`}>
+                <Link key={pathname} className={`${category === pathname ? styles.choosen : ""}`} href={`/blog/kategorie?category=${pathname}&page=1`}>
                   {name}
                 </Link>
               );
@@ -151,7 +151,7 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
       </div>
       <div className={`${styles.paginationButtons}`}>
         {page && parseInt(page) > 1 && (
-          <Link href={`/blog/allCategories/?category=${category}&page=${parseInt(page) - 1}`}>
+          <Link href={`/blog/kategorie/?category=${category}&page=${parseInt(page) - 1}`}>
             <button className={`${styles.doubleArrows} ${styles.backward}`}>
               <Image src={doubleArrowsIcon} alt="Ikonka podwójnej strzałki"></Image>
             </button>
@@ -159,7 +159,7 @@ const allCategoriesPage = async ({ searchParams: { category = "wszystko", page =
         )}
         {paginationButtonsElements}
         {page && parseInt(page) < buttonsCount && (
-          <Link href={`/blog/allCategories/?category=${category}&page=${parseInt(page) + 1}`}>
+          <Link href={`/blog/kategorie/?category=${category}&page=${parseInt(page) + 1}`}>
             <button className={`${styles.doubleArrows}`}>
               <Image src={doubleArrowsIcon} alt="Ikonka podwójnej strzałki"></Image>
             </button>

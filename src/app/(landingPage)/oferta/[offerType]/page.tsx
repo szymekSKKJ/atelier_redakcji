@@ -1563,13 +1563,20 @@ const sectionsContentData = [
   },
 ];
 
-export const generateMetadata = async ({ params }: { params: { offerType: string } }) => {
+export const generateMetadata = ({ params }: { params: { offerType: string } }) => {
   const matchingParamsToAvailableOfferType = sectionsContentData.find((data) => data.key === params.offerType);
 
-  return {
-    title: `Atelier redakcji - oferta - ${matchingParamsToAvailableOfferType!.section27.headerTitlte}`,
-    description: matchingParamsToAvailableOfferType!.section27.paragraphs[0],
-  };
+  if (matchingParamsToAvailableOfferType) {
+    return {
+      title: `Atelier redakcji - oferta - ${matchingParamsToAvailableOfferType.section27.headerTitlte}`,
+      description: matchingParamsToAvailableOfferType!.section27.paragraphs[0],
+    };
+  } else {
+    return {
+      title: `Atelier redakcji - oferta - Własna oferta`,
+      description: "Utwórz własną ofertę",
+    };
+  }
 };
 
 const OfferType = ({ params }: { params: { offerType: string } }) => {

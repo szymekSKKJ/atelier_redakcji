@@ -273,7 +273,7 @@ const Form = () => {
           <div className={`${styles.agree}`}>
             <Checkbox required placeholder="">
               Wysyłając zgłoszenie wyrażasz zgodę na przetwarzanie Twoich danych osobowych w celu odpowiedzi na wiadomość. Więcej informacji w{" "}
-              <Link href="/privacyPolicy">Polityce prywatności</Link>
+              <Link href="/polityka-prywatnosci">Polityce prywatności</Link>
             </Checkbox>
           </div>
           <Button
