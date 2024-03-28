@@ -131,9 +131,9 @@ const Navigation = () => {
     <>
       <div className={`${styles.wrapper}`}>
         {linksContentForNotBlog.includes(`/${formattedPathnameArray.at(-1)!}`) === false &&
-        formattedPathnameArray.at(-1)! !== "termsOfService" &&
-        formattedPathnameArray.at(-1)! !== "privacyPolicy" &&
-        formattedPathnameArray.at(-2)! !== "offer" ? (
+        formattedPathnameArray.at(-1)! !== "warunki-swiadczenia-uslug" &&
+        formattedPathnameArray.at(-1)! !== "polityka-prywatnosci" &&
+        formattedPathnameArray.at(-2)! !== "oferta" ? (
           <nav className={`${styles.blogMenu}`}>
             <div className={`${styles.wrapper}`}>
               <div className={`${styles.wrapper1}`}>
