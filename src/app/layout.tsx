@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <Analytics />
         <SpeedInsights />
-        {/* <GoogleAnalytics gaId={}></GoogleAnalytics> */}
+        <GoogleAnalytics gaId={"G-1MW4DCTS0T"}></GoogleAnalytics>
       </body>
     </html>
   );
