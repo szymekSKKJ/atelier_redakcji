@@ -1,4 +1,5 @@
 import { blogGetByPathname } from "@/app/api/blog/get/[pathname]/route";
+import { blogGetMetadataByPathname } from "@/app/api/blog/get/metadata/[pathname]/route";
 import BlogArticle from "@/components/BlogArticle/BlogArticle";
 import Section11 from "@/components/sections/Section11/Section11";
 import Section9 from "@/components/sections/Section9/Section9";
@@ -9,12 +10,12 @@ interface componentProps {
 }
 
 export const generateMetadata = async ({ params }: componentProps): Promise<Metadata> => {
-  const blogArticleResponse = await blogGetByPathname(params.blogPathname);
+  const blogArticleResponse = await blogGetMetadataByPathname(params.blogPathname);
 
   if (blogArticleResponse.data) {
     return {
       title: `${blogArticleResponse.data.title} - Atelier redakcji`,
-      description: `${blogArticleResponse.data.entry[0].content}`,
+      description: `${blogArticleResponse.data.description}`,
     };
   } else {
     return {

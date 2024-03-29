@@ -5,7 +5,6 @@ import Image from "next/image";
 import arrowRightGrayIcon from "../../../public/arrow_right_grey.svg";
 import { blogArticle } from "@/app/api/blog/get/[pathname]/route";
 import Section13 from "../sections/Section13/Section13";
-import Link from "next/link";
 
 interface componentProps {
   data: blogArticle;
