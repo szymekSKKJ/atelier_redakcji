@@ -42,7 +42,7 @@ const BlogArticle = ({ data }: componentProps) => {
         </div>
         {data.image.url && (
           <div className={`${styles.imageWrapper}`}>
-            <Image src={data.image.url} width={750} height={315} alt="Zdjęcie artykułu"></Image>
+            <Image priority={true} src={data.image.url} width={750} height={315} alt="Zdjęcie artykułu"></Image>
           </div>
         )}
         <div className={`${styles.tableOfContents}`}>
