@@ -436,21 +436,17 @@ const ArticleEditor = ({ currentActiveArticle }: componentProps) => {
                       }
 
                       avatarEditorBounceTimeoutRef.current = setTimeout(() => {
-                        avatarEditorRef.current!.getImageScaledToCanvas().toBlob(
-                          (blob) => {
-                            const file = blob as File;
+                        avatarEditorRef.current!.getImageScaledToCanvas().toBlob((blob) => {
+                          const file = blob as File;
 
-                            setArticleData((currentValue) => {
-                              const copiedCurrentValue = structuredClone(currentValue);
+                          setArticleData((currentValue) => {
+                            const copiedCurrentValue = structuredClone(currentValue);
 
-                              copiedCurrentValue.image.file = file;
+                            copiedCurrentValue.image.file = file;
 
-                              return copiedCurrentValue;
-                            });
-                          },
-                          "image/webp",
-                          75
-                        );
+                            return copiedCurrentValue;
+                          });
+                        }, "image/webp");
                       }, 100);
                     }}
                     image={articleData.image.url}
